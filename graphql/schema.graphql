@@ -1,0 +1,100 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+
+type Mutation {
+    login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
+    register(input: RegisterInput @spread): UserResponse! @field(resolver: "RegisterMutator")
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]){
+    logout: LogoutResponse! @field(resolver: "LogoutMutator")
+}
+
+type Query {
+
+    users(
+        role: Roles @eq 
+        orderBy:[OrderByInput!] @orderBy
+    ): [User!] 
+    @paginate(
+        type: "paginator" 
+        model: "App\\User" defaultCount: 10
+    )
+
+
+    user(id: ID @eq): User @find(model: "App\\User")
+
+    roles: [RoleResponse!] @field(resolver: "RoleQuery")
+
+}
+
+extend type Query @middleware(checks: ["auth:api"]){
+    me: User @auth
+}
+
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    phone: String!
+    role: Roles!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+# Inputs
+
+input LoginInput {
+    email: String! @rules(apply: ["required", "email"])
+    password: String! @rules(apply: ["required", "min:6"])
+}
+
+input RegisterInput {
+    role: Roles!
+    name: String! @rules(apply: ["required", "string"])
+    email: String! @rules(apply: ["required", "email", "unique:users,email"])
+    phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
+    password: String! @rules(apply: ["required", "confirmed", "min:8"])
+    password_confirmation: String!
+}
+
+input OrderByInput{
+    field: String!
+    order: SortOrder!
+}
+
+# Responses
+
+type UserResponse {
+    user: User!
+    token: String!
+}
+
+type RoleResponse {
+    name: String!
+}
+
+type LogoutResponse {
+    status: String!
+    message: String!
+}
+
+
+#Enums
+
+enum Roles {
+    ADMIN
+    GUEST
+    OWNER
+    USER
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
