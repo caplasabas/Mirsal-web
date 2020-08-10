@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateVetOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('vet_offers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('password')->nullable();
-            $table->string('avatar')->nullable();
-            $table->enum('role', ['ADMIN','VETERINARIAN','DRIVER','CLIENT'])->default('CLIENT');
-            $table->string('api_token', 80)->unique()->nullable()->default(null);
-            
+            $table->bigInteger('vet_id')->unsigned()->nullable();
+            $table->foreign('vet_id')->references('id')->on('users')->onCascade('delete');
+            $table->double('price', 8, 2)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -36,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('vet_offers');
     }
 }
