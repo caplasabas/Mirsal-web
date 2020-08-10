@@ -15,6 +15,8 @@ class CreateVetRequestsTable extends Migration
     {
         Schema::create('vet_requests', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('client_id')->unsigned()->nullable();
+            $table->foreign('client_id')->references('id')->on('users')->onCascade('delete');
             $table->enum('type', ['CONSULTATION','VISIT'])->default('CONSULTATION');
             $table->bigInteger('animal_id')->unsigned()->nullable();
             $table->foreign('animal_id')->references('id')->on('animals')->onCascade('delete');
@@ -30,7 +32,7 @@ class CreateVetRequestsTable extends Migration
             $table->string('postal_code')->nullable();
             $table->string('loc_lat')->nullable();
             $table->string('loc_long')->nullable();
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();

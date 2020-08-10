@@ -8,6 +8,11 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 type Mutation {
     login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
     register(input: RegisterInput @spread): UserResponse! @field(resolver: "RegisterMutator")
+
+    #VETERINARIAN
+    
+    createVetRequest(input: CreateVetRequestInput @spread): VetRequest! @create(model: "App\\Model\\VetRequest")
+    createVetOffer(input: CreateVetOfferInput @spread): VetOffer! @create(model: "App\\Model\\VetOffer")
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]){
@@ -16,21 +21,11 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 type Query {
 
-    users(
-        role: Roles @eq 
-        orderBy:[OrderByInput!] @orderBy
-    ): [User!] 
-    @paginate(
-        type: "paginator" 
-        model: "App\\User" defaultCount: 10
-    )
+    VetRequest(id: ID @eq): VetRequest! @find
+    animals: Animal! @paginate(model: "App\\Model\\Animal")
+    sizes: Size! @paginate(model: "App\\Model\\Size")
 
-
-    user(id: ID @eq): User @find(model: "App\\User")
-
-    roles: [RoleResponse!] @field(resolver: "RoleQuery")
-
-}
+}                                                                                                                                                                                                                                                                                                                              
 
 extend type Query @middleware(checks: ["auth:api"]){
     me: User @auth
@@ -68,6 +63,26 @@ input OrderByInput{
     order: SortOrder!
 }
 
+input CreateVetRequestInput {
+    type: VetRequestTypes
+    animal_id: ID
+    size_id: ID
+    description: String
+    house_number: String
+    street: String
+    city: String
+    postal_code: String
+    loc_lat: String
+    loc_long: String
+}
+
+input CreateVetOfferInput {
+    vet_id: ID
+    vet_request_id: ID
+    price: String
+}
+
+
 # Responses
 
 type UserResponse {
@@ -84,17 +99,60 @@ type LogoutResponse {
     message: String!
 }
 
+type VetRequest {
+    id: ID
+    client: User
+    vet_offer: VetOffer
+    type: VetRequestTypes
+    animal: Animal
+    size: Size
+    description: String
+    house_number: String
+    street: String
+    city: String
+    postal_code: String
+    loc_lat: String
+    loc_long: String
+    created_at: String
+}
+
+type VetOffer {
+    id: ID
+    veterenarian: User
+    vet_request: VetRequest
+    price: String
+    created_at: String
+}
+
+type Animal {
+    id: ID
+    name: String
+    name_ar: String
+}
+
+type Size {
+    id: ID
+    name: String
+    name_ar: String
+}
+
 
 #Enums
 
 enum Roles {
     ADMIN
-    GUEST
-    OWNER
-    USER
+    VETERINARIAN
+    DRIVER
+    CLIENT
 }
 
 enum SortOrder {
     ASC
     DESC
 }
+
+enum VetRequestTypes {
+    CONSULTATION
+    VISIT
+}
+

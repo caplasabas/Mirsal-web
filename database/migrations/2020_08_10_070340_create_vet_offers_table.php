@@ -17,6 +17,8 @@ class CreateVetOffersTable extends Migration
             $table->id();
             $table->bigInteger('vet_id')->unsigned()->nullable();
             $table->foreign('vet_id')->references('id')->on('users')->onCascade('delete');
+            $table->bigInteger('vet_request_id')->unsigned()->nullable();
+            $table->foreign('vet_request_id')->references('id')->on('vet_requests')->onCascade('delete');
             $table->double('price', 8, 2)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

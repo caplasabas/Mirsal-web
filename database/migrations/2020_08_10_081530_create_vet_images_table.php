@@ -15,6 +15,9 @@ class CreateVetImagesTable extends Migration
     {
         Schema::create('vet_images', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('vet_request_id')->unsigned()->nullable();
+            $table->foreign('vet_request_id')->references('id')->on('vet_requests')->onCascade('delete');
+            $table->string('image_name');
             $table->timestamps();
         });
     }
