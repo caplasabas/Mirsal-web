@@ -7,15 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class VetRequest extends Model
 {
     protected $fillable = [
+        'client_id',
         'type',
         'animal_id',
         'size_id',
         'description',
+        'house_number',
+        'street',
+        'city',
+        'postal_code',
+        'loc_lat',
+        'loc_long',
+        'vet_offer_id',
     ]; 
 
     public function client()
     {
-        return $this->belongs('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function animal()

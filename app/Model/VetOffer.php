@@ -10,5 +10,16 @@ class VetOffer extends Model
         'vet_id',
         'vet_request_id',
         'price',
+        'status',
     ]; 
+
+    public function veterenarian()
+    {
+        return $this->belongsTo('App\User','vet_id');
+    }
+    
+    public function vetRequest()
+    {
+        return $this->belongsTo('App\Model\VetRequest');
+    }
 }

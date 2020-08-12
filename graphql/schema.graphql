@@ -12,7 +12,14 @@ type Mutation {
     #VETERINARIAN
     
     createVetRequest(input: CreateVetRequestInput @spread): VetRequest! @create(model: "App\\Model\\VetRequest")
+    updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest! @update(model: "App\\Model\\VetRequest")
+    deleteVetRequest(id: ID!): VetRequest! @delete(model: "App\\Model\\VetRequest")
+
     createVetOffer(input: CreateVetOfferInput @spread): VetOffer! @create(model: "App\\Model\\VetOffer")
+    updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
+    deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
+
+    
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]){
@@ -21,7 +28,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 type Query {
 
-    VetRequest(id: ID @eq): VetRequest! @find
+    VetRequests(client_id: ID @eq): VetRequest! @paginate(model: "App\\Model\\VetRequest")
+    VetOffers(vet_request_id: ID @eq): VetOffer! @paginate(model: "App\\Model\\VetOffer")
     animals: Animal! @paginate(model: "App\\Model\\Animal")
     sizes: Size! @paginate(model: "App\\Model\\Size")
 
@@ -64,6 +72,22 @@ input OrderByInput{
 }
 
 input CreateVetRequestInput {
+    client_id: ID
+    type: VetRequestTypes
+    animal_id: ID!
+    size_id: ID!
+    description: String!
+    house_number: String!
+    street: String!
+    city: String!
+    postal_code: String!
+    loc_lat: String!
+    loc_long: String!
+}
+
+input UpdateVetRequestInput {
+    id: ID!
+    client_id: ID
     type: VetRequestTypes
     animal_id: ID
     size_id: ID
@@ -80,6 +104,15 @@ input CreateVetOfferInput {
     vet_id: ID
     vet_request_id: ID
     price: String
+    status: VetOfferStatuses
+}
+
+input UpdateVetOfferInput {
+    id: ID!
+    vet_id: ID
+    vet_request_id: ID
+    price: String
+    status: VetOfferStatuses
 }
 
 
@@ -102,7 +135,7 @@ type LogoutResponse {
 type VetRequest {
     id: ID
     client: User
-    vet_offer: VetOffer
+    vet_offers: [VetOffer!]
     type: VetRequestTypes
     animal: Animal
     size: Size
@@ -119,8 +152,9 @@ type VetRequest {
 type VetOffer {
     id: ID
     veterenarian: User
-    vet_request: VetRequest
+    vet_request: VetRequest @belongsTo(relation: "VetRequest")
     price: String
+    status: String
     created_at: String
 }
 
@@ -135,6 +169,8 @@ type Size {
     name: String
     name_ar: String
 }
+
+type 
 
 
 #Enums
@@ -154,5 +190,12 @@ enum SortOrder {
 enum VetRequestTypes {
     CONSULTATION
     VISIT
+}
+
+enum VetOfferStatuses{
+    PENDING
+    SKIPPED
+    ACCEPTED
+    COMPLETED
 }
 
