@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VetOffer extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'vet_id',
         'vet_request_id',

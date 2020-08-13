@@ -19,6 +19,11 @@ type Mutation {
     updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
 
+    #INVOICE
+
+    createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
+    updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
+
     
 }
 
@@ -28,10 +33,12 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 type Query {
 
-    VetRequests(client_id: ID @eq): VetRequest! @paginate(model: "App\\Model\\VetRequest")
-    VetOffers(vet_request_id: ID @eq): VetOffer! @paginate(model: "App\\Model\\VetOffer")
-    animals: Animal! @paginate(model: "App\\Model\\Animal")
-    sizes: Size! @paginate(model: "App\\Model\\Size")
+    VetRequests(client_id: ID @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
+    VetOffers(vet_request_id: ID @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
+    animals: [Animal!] @paginate(model: "App\\Model\\Animal")
+    sizes: [Size!] @paginate(model: "App\\Model\\Size")
+
+    Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
 }                                                                                                                                                                                                                                                                                                                              
 
@@ -115,6 +122,23 @@ input UpdateVetOfferInput {
     status: VetOfferStatuses
 }
 
+input CreateInvoiceInput {
+    client_id: ID!
+    vet_offer_id: ID!
+    reference_id: String!
+    payment_gateway: String!
+    amount_paid: String!
+}
+
+input UpdateInvoiceInput {
+    id: ID!
+    client_id: ID
+    vet_offer_id: ID
+    reference_id: String
+    payment_gateway: String
+    amount_paid: String
+}
+
 
 # Responses
 
@@ -152,7 +176,7 @@ type VetRequest {
 type VetOffer {
     id: ID
     veterenarian: User
-    vet_request: VetRequest @belongsTo(relation: "VetRequest")
+    vet_request: VetRequest @belongsTo(relation: "vetRequest")
     price: String
     status: String
     created_at: String
@@ -170,8 +194,14 @@ type Size {
     name_ar: String
 }
 
-type 
-
+type Invoice {
+    id: ID
+    client: User @belongsTo(relation: "client")
+    vet_offer: VetOffer @belongsTo(relation: "vetOffer")
+    amount_paid: String
+    reference_id: String
+    payment_gateway: String
+}
 
 #Enums
 
