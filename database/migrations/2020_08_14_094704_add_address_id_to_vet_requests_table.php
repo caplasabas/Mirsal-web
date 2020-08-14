@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDriverOfferIdReferenceToDriverRequestTable extends Migration
+class AddAddressIdToVetRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddDriverOfferIdReferenceToDriverRequestTable extends Migration
      */
     public function up()
     {
-        Schema::table('driver_requests', function (Blueprint $table) {
-            $table->bigInteger('driver_offer_id')->unsigned()->nullable();
-            $table->foreign('driver_offer_id')->references('id')->on('driver_offers')->onCascade('delete');
+        Schema::table('vet_requests', function (Blueprint $table) {
+            $table->bigInteger('address_id')->unsigned()->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses')->onCascade('delete');
         });
     }
 
@@ -26,7 +26,7 @@ class AddDriverOfferIdReferenceToDriverRequestTable extends Migration
      */
     public function down()
     {
-        Schema::table('driver_requests', function (Blueprint $table) {
+        Schema::table('vet_requests', function (Blueprint $table) {
             //
         });
     }

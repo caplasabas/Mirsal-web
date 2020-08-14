@@ -17,8 +17,9 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('users')->onCascade('delete');
-            $table->bigInteger('vet_offer_id')->unsigned()->nullable();
-            $table->foreign('vet_offer_id')->references('id')->on('vet_offers')->onCascade('delete');
+            $table->bigInteger('offer_id')->unsigned()->nullable();
+            $table->foreign('offer_id')->references('id')->on('vet_offers')->onCascade('delete');
+            $table->enum('payment_for', ['VETERINARIAN','DRIVER','CLIENT'])->nullable();
             $table->string("reference_id")->nullable();
             $table->string("payment_gateway")->nullable();
             $table->double("amount_paid", 8, 2)->default(0);

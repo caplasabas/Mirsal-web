@@ -19,10 +19,24 @@ type Mutation {
     updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
 
+    #DRIVER
+    
+    createDriverRequest(input: CreateVetRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
+    updateDriverRequest(input: UpdateVetRequestInput @spread): DriverRequest! @update(model: "App\\Model\\DriverRequest")
+    deleteDriverRequest(id: ID!): DriverRequest! @delete(model: "App\\Model\\DriverRequest")
+
+    createDriverOffer(input: CreateDriverOfferInput @spread): DriverOffer! @create(model: "App\\Model\\DriverOffer")
+    updateDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @update(model: "App\\Model\\DriverOffer")
+    deleteDriverOffer(id: ID!): DriverOffer! @delete(model: "App\\Model\\DriverOffer")
+
     #INVOICE
 
     createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
     updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
+
+    #Address
+
+    createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
 
     
 }
@@ -78,18 +92,38 @@ input OrderByInput{
     order: SortOrder!
 }
 
+input CreateAddressOperations {
+  connect: ID
+  create: CreateAddressInput @create(relation: "address")
+  update: UpdateAddressInput @update(relation: "address")
+}
+
+input CreateAddressInput {
+    house_number: String
+    street: String
+    city: String
+    postal_code: String
+    loc_lat: String
+    loc_long: String
+}
+
+input UpdateAddressInput {
+    id: ID!
+    house_number: String
+    street: String
+    city: String
+    postal_code: String
+    loc_lat: String
+    loc_long: String
+}
+
 input CreateVetRequestInput {
     client_id: ID
     type: VetRequestTypes
     animal_id: ID!
     size_id: ID!
     description: String!
-    house_number: String!
-    street: String!
-    city: String!
-    postal_code: String!
-    loc_lat: String!
-    loc_long: String!
+    address: CreateAddressOperations @nest
 }
 
 input UpdateVetRequestInput {
@@ -99,12 +133,7 @@ input UpdateVetRequestInput {
     animal_id: ID
     size_id: ID
     description: String
-    house_number: String
-    street: String
-    city: String
-    postal_code: String
-    loc_lat: String
-    loc_long: String
+    address: CreateAddressOperations @nest
 }
 
 input CreateVetOfferInput {
@@ -139,6 +168,38 @@ input UpdateInvoiceInput {
     amount_paid: String
 }
 
+input CreateDriverRequestInput {
+    client_id: ID
+    type: DriverRequestTypes
+    animal_id: ID!
+    size_id: ID!
+    description: String!
+    address: CreateAddressOperations @nest
+}
+
+input UpdateDriverRequestInput {
+    id: ID!
+    client_id: ID
+    animal_id: ID
+    size_id: ID
+    description: String
+    address: CreateAddressOperations @nest
+}
+
+input CreateDriverOfferInput {
+    driver_id: ID
+    driver_request_id: ID
+    price: String
+
+}
+
+input UpdateDriverOfferInput {
+    id: ID!
+    driver_id: ID
+    driver_request_id: ID
+    price: String
+}
+
 
 # Responses
 
@@ -156,6 +217,16 @@ type LogoutResponse {
     message: String!
 }
 
+type Address {
+    id: ID!
+    house_number: String
+    street: String
+    city: String
+    postal_code: String
+    loc_lat: String
+    loc_long: String
+}
+
 type VetRequest {
     id: ID
     client: User
@@ -164,12 +235,7 @@ type VetRequest {
     animal: Animal
     size: Size
     description: String
-    house_number: String
-    street: String
-    city: String
-    postal_code: String
-    loc_lat: String
-    loc_long: String
+    address: Address @belongsTo(relation: "address")
     created_at: String
 }
 

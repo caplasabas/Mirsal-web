@@ -15,12 +15,7 @@ class VetRequest extends Model
         'animal_id',
         'size_id',
         'description',
-        'house_number',
-        'street',
-        'city',
-        'postal_code',
-        'loc_lat',
-        'loc_long',
+        'address_id',
         'vet_offer_id',
     ]; 
 
@@ -37,6 +32,11 @@ class VetRequest extends Model
     public function size()
     {
         return $this->belongsTo('App\Model\Size');
+    }
+
+    public function address()
+    {
+        return $this->belongsTo('App\Model\Address','address_id','id');
     }
 
     public function vetOffers()

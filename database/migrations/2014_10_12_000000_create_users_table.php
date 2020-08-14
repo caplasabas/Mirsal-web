@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->enum('role', ['ADMIN','VETERINARIAN','DRIVER','CLIENT'])->default('CLIENT');
             $table->string('api_token', 80)->unique()->nullable()->default(null);
-            
+            $table->bigInteger('avatar_id')->unsigned()->nullable();
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();

@@ -15,7 +15,7 @@ class AddAddressIdReferenceToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('address_id')->unsigned()->nullable();
-            $table->foreign('address_id')->references('id')->on('address')->onCascade('delete');
+            $table->foreign('address_id')->references('id')->on('addresses')->onCascade('delete');
         });
     }
 
