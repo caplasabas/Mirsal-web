@@ -28,11 +28,12 @@ class CreateClientOffersTable extends Migration
             $table->double('price', 8, 2)->default(0);
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('image_files')->onCascade('delete');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
             $table->string('contact_phone')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('iban')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
         });
     }
