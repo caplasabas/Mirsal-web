@@ -14,6 +14,7 @@ class VetOffer extends Model
         'vet_request_id',
         'price',
         'status',
+        'payment_status',
     ]; 
 
     public function veterenarian()

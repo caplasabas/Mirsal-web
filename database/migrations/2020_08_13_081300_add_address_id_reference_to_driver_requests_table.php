@@ -17,7 +17,7 @@ class AddAddressIdReferenceToDriverRequestsTable extends Migration
             $table->bigInteger('address_from_id')->unsigned()->nullable();
             $table->foreign('address_from_id')->references('id')->on('addresses')->onCascade('delete');
             $table->bigInteger('address_to_id')->unsigned()->nullable();
-            $table->foreign('address_to_id')->references('id')->on('addressese')->onCascade('delete');
+            $table->foreign('address_to_id')->references('id')->on('addresses')->onCascade('delete');
         });
     }
 

@@ -10,19 +10,20 @@ class DriverOffer extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'vet_id',
-        'vet_request_id',
+        'driver_id',
+        'driver_request_id',
         'price',
         'status',
+        'payment_status',
     ]; 
 
-    public function veterenarian()
+    public function driver()
     {
-        return $this->belongsTo('App\User','vet_id');
+        return $this->belongsTo('App\User','driver_id','id');
     }
     
-    public function vetRequest()
+    public function driverRequest()
     {
-        return $this->belongsTo('App\Model\VetRequest');
+        return $this->belongsTo('App\Model\DriverRequest');
     }
 }

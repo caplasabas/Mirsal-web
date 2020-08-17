@@ -15,13 +15,10 @@ class DriverRequest extends Model
         'animal_id',
         'size_id',
         'description',
-        'house_number',
-        'street',
-        'city',
-        'postal_code',
-        'loc_lat',
-        'loc_long',
-        'vet_offer_id',
+        'quantity',
+        'driver_offer_id',
+        'address_to_id',
+        'address_from_id',
     ]; 
 
     public function client()
@@ -39,13 +36,23 @@ class DriverRequest extends Model
         return $this->belongsTo('App\Model\Size');
     }
 
-    public function vetOffers()
+    public function driverOffers()
     {
-        return $this->hasMany('App\Model\VetOffer');
+        return $this->hasMany('App\Model\DriverOffer');
     }
 
-    public function vetOfferAccepted()
+    public function driverOfferAccepted()
     {
-        return $this->belongsTo('App\Model\VetOffer','vet_offer_id');
+        return $this->belongsTo('App\Model\DriverOffer','driver_offer_id');
+    }
+
+    public function addressFrom()
+    {
+        return $this->belongsTo('App\Model\Address','address_from_id','id');
+    }
+
+    public function addressTo()
+    {
+        return $this->belongsTo('App\Model\Address','address_to_id' ,'id');
     }
 }

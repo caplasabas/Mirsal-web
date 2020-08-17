@@ -17,13 +17,14 @@ class CreateDriverRequestsTable extends Migration
             $table->id();
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('users')->onCascade('delete');
-            $table->enum('type', ['CONSULTATION','VISIT'])->default('CONSULTATION');
+            $table->enum('type', ['SHARE','PRIVATE'])->default('SHARE');
             $table->bigInteger('animal_id')->unsigned()->nullable();
             $table->foreign('animal_id')->references('id')->on('animals')->onCascade('delete');
             $table->bigInteger('size_id')->unsigned()->nullable();
             $table->foreign('size_id')->references('id')->on('sizes')->onCascade('delete');
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('image_files')->onCascade('delete');
+            $table->bigInteger('quantity')->default(0);
             $table->longText('description')->nullable();
             $table->date('prefered_date')->nullable();
             $table->string('prefered_time')->nullable();

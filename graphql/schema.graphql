@@ -21,8 +21,8 @@ type Mutation {
 
     #DRIVER
     
-    createDriverRequest(input: CreateVetRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
-    updateDriverRequest(input: UpdateVetRequestInput @spread): DriverRequest! @update(model: "App\\Model\\DriverRequest")
+    createDriverRequest(input: CreateDriverRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
+    updateDriverRequest(input: UpdateDriverRequestInput @spread): DriverRequest! @update(model: "App\\Model\\DriverRequest")
     deleteDriverRequest(id: ID!): DriverRequest! @delete(model: "App\\Model\\DriverRequest")
 
     createDriverOffer(input: CreateDriverOfferInput @spread): DriverOffer! @create(model: "App\\Model\\DriverOffer")
@@ -96,6 +96,18 @@ input CreateAddressOperations {
   connect: ID
   create: CreateAddressInput @create(relation: "address")
   update: UpdateAddressInput @update(relation: "address")
+}
+
+input CreateAddressToOperations {
+  connect: ID
+  create: CreateAddressInput @create(relation: "addressTo")
+  update: UpdateAddressInput @update(relation: "addressTo")
+}
+
+input CreateAddressFromOperations {
+  connect: ID
+  create: CreateAddressInput @create(relation: "addressFrom")
+  update: UpdateAddressInput @update(relation: "addressFrom")
 }
 
 input CreateAddressInput {
@@ -174,23 +186,27 @@ input CreateDriverRequestInput {
     animal_id: ID!
     size_id: ID!
     description: String!
-    address: CreateAddressOperations @nest
+    quantity: String!
+    address_from: CreateAddressFromOperations @nest
+    address_to: CreateAddressToOperations @nest
 }
 
 input UpdateDriverRequestInput {
     id: ID!
     client_id: ID
+    type: DriverRequestTypes
     animal_id: ID
     size_id: ID
     description: String
-    address: CreateAddressOperations @nest
+    address_from: CreateAddressFromOperations @nest
+    address_to: CreateAddressToOperations @nest
 }
 
 input CreateDriverOfferInput {
-    driver_id: ID
-    driver_request_id: ID
-    price: String
-
+    driver_id: ID!
+    driver_request_id: ID!
+    price: String!
+    status: DriverOfferStatuses
 }
 
 input UpdateDriverOfferInput {
@@ -198,6 +214,7 @@ input UpdateDriverOfferInput {
     driver_id: ID
     driver_request_id: ID
     price: String
+    status: DriverOfferStatuses
 }
 
 
@@ -248,6 +265,29 @@ type VetOffer {
     created_at: String
 }
 
+type DriverRequest {
+    id: ID
+    client: User
+    driver_offers: [DriverOffer!]
+    type: DriverRequestTypes
+    animal: Animal
+    size: Size
+    quantity: String
+    description: String
+    address_to: Address @belongsTo(relation: "addressTo")
+    address_from: Address @belongsTo(relation: "addressFrom")
+    created_at: String
+}
+
+type DriverOffer {
+    id: ID
+    driver: User
+    driver_request: DriverRequest @belongsTo(relation: "driverRequest")
+    price: String
+    status: String
+    created_at: String
+}
+
 type Animal {
     id: ID
     name: String
@@ -293,5 +333,17 @@ enum VetOfferStatuses{
     SKIPPED
     ACCEPTED
     COMPLETED
+}
+
+enum DriverOfferStatuses{
+    PENDING
+    SKIPPED
+    ACCEPTED
+    COMPLETED
+}
+
+enum DriverRequestTypes {
+    SHARE
+    PRIVATE
 }
 
