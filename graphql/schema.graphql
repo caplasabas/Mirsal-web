@@ -74,7 +74,7 @@ type User {
 # Inputs
 
 input LoginInput {
-    phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
+    phone: String! @rules(apply: ["required", "min:10"])
     password: String! @rules(apply: ["required", "min:6"])
 }
 
