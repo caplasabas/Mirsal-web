@@ -39,7 +39,7 @@ class LoginMutator
         }else{
             throw new GraphqlException(
                 'Invalid Credentials',
-                'Please check your username and password'
+                'Please check your phone and password'
             );
         }
 
