@@ -35,6 +35,10 @@ type Mutation {
     updateProduct(input: UpdateProductInput @spread): Product @update(model: "App\\Model\\Product")
     deleteProduct(id: ID!): Product @delete(model: "App\\Model\\Product")
 
+    createClientOffer(input: CreateClientOfferInput @spread): ClientOffer! @create(model: "App\\Model\\ClientOffer")
+    updateClientOffer(input: UpdateClientOfferInput @spread): ClientOffer! @update(model: "App\\Model\\ClientOffer")
+    deleteClientOffer(id: ID!): ClientOffer! @delete(model: "App\\Model\\ClientOffer")
+
     #INVOICE
 
     createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
@@ -256,6 +260,25 @@ input UpdateProductInput {
     accepted_client_offer_id: ID
 }
 
+input CreateClientOfferInput {
+    buyer_id: ID
+    product_id: ID
+    offered_price: String
+    status: ClientOfferStatuses
+    payment_status: ClientOfferPaymentStatuses
+    note: String
+}
+
+input UpdateClientOfferInput {
+    id: ID!
+    buyer_id: ID
+    product_id: ID
+    offered_price: String
+    status: ClientOfferStatuses
+    payment_status: ClientOfferPaymentStatuses
+    note: String
+}
+
 
 # Responses
 
@@ -369,7 +392,7 @@ type Product {
 type ClientOffer {
     id: ID
     buyer: User @belongsTo(relation: "buyer")
-    product_id: Product @belongsTo(relation: "product")
+    product: Product @belongsTo(relation: "product")
     offered_price: String
     status: ClientOfferStatuses
     payment_status: ClientOfferPaymentStatuses
