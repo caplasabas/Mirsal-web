@@ -29,6 +29,12 @@ type Mutation {
     updateDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @update(model: "App\\Model\\DriverOffer")
     deleteDriverOffer(id: ID!): DriverOffer! @delete(model: "App\\Model\\DriverOffer")
 
+    #CLIENT
+
+    createProduct(input: CreateProductInput @spread): Product @create(model: "App\\Model\\Product")
+    updateProduct(input: UpdateProductInput @spread): Product @update(model: "App\\Model\\Product")
+    deleteProduct(id: ID!): Product @delete(model: "App\\Model\\Product")
+
     #INVOICE
 
     createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
@@ -217,6 +223,39 @@ input UpdateDriverOfferInput {
     status: DriverOfferStatuses
 }
 
+input CreateProductInput {
+    title: String
+    seller_id: ID
+    address: CreateAddressOperations @nest
+    status: ProductStatus
+    type: ProductType
+    is_vip: Int
+    description: String
+    duration_id: ID
+    price: String
+    contact_phone: String
+    contact_email: String
+    iban: String
+    accepted_client_offer_id: ID
+}
+
+input UpdateProductInput {
+    id: ID!
+    title: String
+    seller_id: ID
+    address: CreateAddressOperations @nest
+    status: ProductStatus
+    type: ProductType
+    is_vip: Int
+    description: String
+    duration_id: ID
+    price: String
+    contact_phone: String
+    contact_email: String
+    iban: String
+    accepted_client_offer_id: ID
+}
+
 
 # Responses
 
@@ -309,6 +348,45 @@ type Invoice {
     payment_gateway: String
 }
 
+type Product {
+    id: ID
+    title: String
+    seller: User @belongsTo(relation: "seller") 
+    address: Address @belongsTo(relation: "address")
+    status: ProductStatus
+    type: ProductType
+    is_vip: Int
+    description: String
+    duration: Duration @belongsTo(relation: "duration")
+    price: String
+    image: ImageFile @belongsTo(relation: "imageFile")
+    contact_phone: String
+    contact_email: String
+    iban: String
+    accepted_client_offer: ClientOffer @belongsTo(relation: "acceptedClientOffer")
+}
+
+type ClientOffer {
+    id: ID
+    buyer: User @belongsTo(relation: "buyer")
+    product_id: Product @belongsTo(relation: "product")
+    offered_price: String
+    status: ClientOfferStatuses
+    payment_status: ClientOfferPaymentStatuses
+    note: String
+}
+
+type ImageFile {
+    id: ID
+    image_name: String
+}
+
+type Duration {
+    id: ID
+    name: String
+    name_ar: String
+}
+
 #Enums
 
 enum Roles {
@@ -335,6 +413,17 @@ enum VetOfferStatuses{
     COMPLETED
 }
 
+enum ProductStatus{
+    PENDING
+    SOLD
+    COMPLETED
+}
+
+enum ProductType{
+    ANIMAL
+    PRODUCT
+}
+
 enum DriverOfferStatuses{
     PENDING
     SKIPPED
@@ -345,5 +434,17 @@ enum DriverOfferStatuses{
 enum DriverRequestTypes {
     SHARE
     PRIVATE
+}
+
+enum ClientOfferStatuses{
+    PENDING
+    SKIPPED
+    ACCEPTED
+    COMPLETED
+}
+
+enum ClientOfferPaymentStatuses{
+    PENDING
+    PAID
 }
 

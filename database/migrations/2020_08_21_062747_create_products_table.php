@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientOffersTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateClientOffersTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_offers', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('seller_id')->unsigned()->nullable();
             $table->foreign('seller_id')->references('id')->on('users')->onCascade('delete');
-            $table->enum('status', ['PENDING','COMPLETED'])->default('PENDING');
-            $table->enum('payment_status', ['PENDING','PAID'])->default('PENDING');
+            $table->enum('status', ['PENDING','SOLD','CANCELLED'])->default('PENDING');
             $table->string('title')->nullable();
-            $table->enum('type', ['Animal','Product'])->default('Animal');
+            $table->enum('type', ['ANIMAL','PRODUCT'])->default('ANIMAL');
             $table->integer('is_vip')->default(0);
             $table->longText('description')->nullable;
             $table->bigInteger('duration_id')->unsigned()->nullable();
@@ -45,6 +44,6 @@ class CreateClientOffersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_offers');
+        Schema::dropIfExists('products');
     }
 }

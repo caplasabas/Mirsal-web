@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVetOfferIdReferenceToVetRequestsTable extends Migration
+class AddAcceptedClientOfferIdToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddVetOfferIdReferenceToVetRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::table('vet_requests', function (Blueprint $table) {
-            $table->bigInteger('accepted_vet_offer_id')->unsigned()->nullable();
-            $table->foreign('accepted_vet_offer_id')->references('id')->on('vet_offers')->onCascade('delete');
+        Schema::table('products', function (Blueprint $table) {
+            $table->bigInteger('accepted_client_offer_id')->unsigned()->nullable();
+            $table->foreign('accepted_client_offer_id')->references('id')->on('client_offers')->onCascade('delete');
         });
     }
 
@@ -26,7 +26,7 @@ class AddVetOfferIdReferenceToVetRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('vet_requests', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }
