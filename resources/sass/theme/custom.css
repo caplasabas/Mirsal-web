@@ -1,0 +1,35 @@
+.table-responsive{
+    direction: rtl;
+    text-align: right;
+  }
+.page-item:last-child .page-link {
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+border-top-left-radius: 0.25rem;
+border-bottom-left-radius: 0.25rem;
+}
+.page-item:first-child .page-link{
+margin-left: 0;
+border-top-left-radius: 0;
+border-bottom-left-radius: 0;
+border-top-right-radius: 0.25rem;
+border-bottom-right-radius: 0.25rem;
+}
+
+div.dataTables_wrapper div.dataTables_filter{
+text-align:left;
+}
+
+.card {
+    direction: rtl;
+    text-align:right;
+}
+
+.card.card-authentication1 {
+    direction: ltr;
+    text-align: left;
+  }
+
+.card .card-body .nav{
+    padding-right: 0;
+}

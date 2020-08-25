@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,29 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        // $this->user = new User;
+    }
+
+    public function login(Request $request)
+    {
+        // Check validation
+        $this->validate($request, [
+            'phone' => 'required|regex:/[0-9]{10}/|digits:10',
+        ]);
+
+        $credentials = $request->only('phone', 'password');
+
+        if (\Auth::attempt($credentials)) {
+            $user = \Auth::user();
+            if($user->role == "ADMIN")
+                return redirect()->route('home');
+                else{
+                    \Auth::logout();
+                    return back()->withErrors(['credentials' => 'Credentials do not match']);
+                }
+        } else {
+            return back()->withErrors(['credentials' => 'Credentials do not match']);
+        }
+        
     }
 }

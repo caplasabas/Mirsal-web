@@ -8,9 +8,11 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 type Mutation {
     login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
     register(input: RegisterInput @spread): UserResponse! @field(resolver: "RegisterMutator")
+}
 
-    #VETERINARIAN
+extend type Mutation @middleware(checks: ["auth:api"]){
     
+    #VETERINARIAN
     createVetRequest(input: CreateVetRequestInput @spread): VetRequest! @create(model: "App\\Model\\VetRequest")
     updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest! @update(model: "App\\Model\\VetRequest")
     deleteVetRequest(id: ID!): VetRequest! @delete(model: "App\\Model\\VetRequest")
@@ -20,7 +22,6 @@ type Mutation {
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
 
     #DRIVER
-    
     createDriverRequest(input: CreateDriverRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
     updateDriverRequest(input: UpdateDriverRequestInput @spread): DriverRequest! @update(model: "App\\Model\\DriverRequest")
     deleteDriverRequest(id: ID!): DriverRequest! @delete(model: "App\\Model\\DriverRequest")
@@ -30,7 +31,6 @@ type Mutation {
     deleteDriverOffer(id: ID!): DriverOffer! @delete(model: "App\\Model\\DriverOffer")
 
     #CLIENT
-
     createProduct(input: CreateProductInput @spread): Product @create(model: "App\\Model\\Product")
     updateProduct(input: UpdateProductInput @spread): Product @update(model: "App\\Model\\Product")
     deleteProduct(id: ID!): Product @delete(model: "App\\Model\\Product")
@@ -40,34 +40,35 @@ type Mutation {
     deleteClientOffer(id: ID!): ClientOffer! @delete(model: "App\\Model\\ClientOffer")
 
     #INVOICE
-
     createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
     updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
 
     #Address
-
     createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
-
-    
-}
-
-extend type Mutation @middleware(checks: ["auth:api"]){
     logout: LogoutResponse! @field(resolver: "LogoutMutator")
 }
 
 type Query {
 
-    VetRequests(client_id: ID @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
-    VetOffers(vet_request_id: ID @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
-    animals: [Animal!] @paginate(model: "App\\Model\\Animal")
-    sizes: [Size!] @paginate(model: "App\\Model\\Size")
+
+    
+
 
     Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
 }                                                                                                                                                                                                                                                                                                                              
 
 extend type Query @middleware(checks: ["auth:api"]){
+
     me: User @auth
+    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
+    vetOffers(vet_request_id: ID @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
+
+    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
+    driverOffers(driver_request_id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
+
+    animals: [Animal!] @paginate(model: "App\\Model\\Animal")
+    sizes: [Size!] @paginate(model: "App\\Model\\Size")
 }
 
 
