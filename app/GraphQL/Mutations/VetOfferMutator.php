@@ -20,6 +20,7 @@ class VetOfferMutator
         $vet_offer = VetOffer::find($vet_offer_id)->first();
         
         if(isset($vet_offer_id)){
+
             $vet_offer->status = "ACCEPTED";
             $invoice = new Invoice;
             $invoice->client_id = $vet_offer->vetRequest->client_id;
@@ -27,10 +28,19 @@ class VetOfferMutator
             $invoice->payment_for = "VETERINARIAN";
             $invoice->amount_paid = $vet_offer->price; // NEED to remake
             $invoice->save();
+
             return array(
-                'message' => $vet_offer,
+                'status' => 1,
+                'message' => "Success",
+                'invoice' => $invoice
             );
         }
+
+        return array(
+            'status' => 0,
+            'message' => "Failed",
+
+        );
         
 
         // $user_id = $args['user_id'];
