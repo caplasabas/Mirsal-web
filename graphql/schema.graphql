@@ -51,9 +51,6 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 type Query {
 
 
-    
-
-
     Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
 }                                                                                                                                                                                                                                                                                                                              

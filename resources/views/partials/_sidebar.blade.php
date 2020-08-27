@@ -3,7 +3,7 @@
     <div class="simplebar-content">
       <div class="brand-logo">
         <a href="#">
-          <img src="{{ asset('images/avatar/logo.jpeg')}}" class="logo-icon mt-4" alt="logo icon" width="150px">
+          <img src="{{ asset('images/logos/logo2.png')}}" class="logo-icon mt-4" alt="logo icon" width="150px">
         </a>
       </div>
       <ul class="sidebar-menu mt-4">
