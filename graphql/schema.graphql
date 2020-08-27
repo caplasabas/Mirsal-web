@@ -8,10 +8,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 type Mutation {
     login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
     register(input: RegisterInput @spread): UserResponse! @field(resolver: "RegisterMutator")
-}
 
-extend type Mutation @middleware(checks: ["auth:api"]){
-    
     #VETERINARIAN
     createVetRequest(input: CreateVetRequestInput @spread): VetRequest! @create(model: "App\\Model\\VetRequest")
     updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest! @update(model: "App\\Model\\VetRequest")
@@ -45,6 +42,15 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
     #Address
     createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
+
+
+    #FUNCTIONS
+    acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse @field(resolver: "VetOfferMutator@acceptVetOffer")
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]){
+    
+
     logout: LogoutResponse! @field(resolver: "LogoutMutator")
 }
 
@@ -53,19 +59,23 @@ type Query {
 
     Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
+
+    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
+    vetOffers(vet_request_id: ID @eq, vet_id: ID @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
+
+    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
+    driverOffers(driver_request_id: ID @eq, driver_id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
+
+    products(seller_id: ID @eq, is_vip: Int @eq): [Product!]! @paginate(model: "App\\Model\\Product")
+
+    animals: [Animal!] @paginate(model: "App\\Model\\Animal")
+    sizes: [Size!] @paginate(model: "App\\Model\\Size")
 }                                                                                                                                                                                                                                                                                                                              
 
 extend type Query @middleware(checks: ["auth:api"]){
 
     me: User @auth
-    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
-    vetOffers(vet_request_id: ID @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
 
-    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
-    driverOffers(driver_request_id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
-
-    animals: [Animal!] @paginate(model: "App\\Model\\Animal")
-    sizes: [Size!] @paginate(model: "App\\Model\\Size")
 }
 
 
@@ -80,6 +90,10 @@ type User {
 }
 
 # Inputs
+
+input acceptVetOfferInput {
+    vet_offer_id: ID!
+}
 
 input LoginInput {
     phone: String! @rules(apply: ["required", "min:10"])
@@ -367,6 +381,7 @@ type Invoice {
     amount_paid: String
     reference_id: String
     payment_gateway: String
+    created_at: String
 }
 
 type Product {
@@ -406,6 +421,12 @@ type Duration {
     id: ID
     name: String
     name_ar: String
+}
+
+type AcceptVetOfferResponse {
+    status: Int
+    message: String
+    invoice: Invoice
 }
 
 #Enums

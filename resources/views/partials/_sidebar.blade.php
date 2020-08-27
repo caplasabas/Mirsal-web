@@ -8,8 +8,12 @@
       </div>
       <ul class="sidebar-menu mt-4">
         <li class="sidebar-header">{{ __('lang.menu') }}</li>
+        <li> <a href="#">{{ __('lang.veterinaries') }}</a> </li>
+        <li> <a href="#">{{ __('lang.deliveries') }}</a> </li>
         <li> <a href="#">{{ __('lang.products') }}</a> </li>
-        
+        <li> <a href="#">{{ __('lang.products') }}</a> </li>
+        <li> <a href="#">{{ __('lang.products') }}</a> </li>
+        <li> <a href="#">{{ __('lang.products') }}</a> </li>
       </ul>
     </div>
   </div>

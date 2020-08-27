@@ -17,3 +17,10 @@ Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('language/{locale}', 'HomeController@language')->name('language');
+
+
+Route::middleware(['auth','csrf'])->group(function () {
+    
+    
+    
+});
