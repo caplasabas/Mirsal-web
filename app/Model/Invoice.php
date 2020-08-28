@@ -15,6 +15,7 @@ class Invoice extends Model
         'reference_id',
         'amount_paid',
         'payment_gateway',
+        'payment_status',
     ]; 
 
     public function client()

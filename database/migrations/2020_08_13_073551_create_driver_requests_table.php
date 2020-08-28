@@ -18,6 +18,7 @@ class CreateDriverRequestsTable extends Migration
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('users')->onCascade('delete');
             $table->enum('type', ['SHARE','PRIVATE'])->default('SHARE');
+            $table->enum('status', ['PENDING','SKIPPED','ACCEPTED','COMPLETED'])->default('PENDING');
             $table->bigInteger('animal_id')->unsigned()->nullable();
             $table->foreign('animal_id')->references('id')->on('animals')->onCascade('delete');
             $table->bigInteger('size_id')->unsigned()->nullable();
