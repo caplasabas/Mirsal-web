@@ -21,6 +21,10 @@ Route::get('language/{locale}', 'HomeController@language')->name('language');
 
 Route::middleware(['auth','csrf'])->group(function () {
     
-    
-    
+    Route::namespace('Dashboard\Admin')->prefix('admins')->name('admins.')->group(function()
+    {
+        Route::resource('vet-requests','VetRequestController');
+        Route::resource('vet-offers','VetOfferController');
+    });
+
 });

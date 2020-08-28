@@ -8,7 +8,17 @@
       </div>
       <ul class="sidebar-menu mt-4">
         <li class="sidebar-header">{{ __('lang.menu') }}</li>
-        <li> <a href="#">{{ __('lang.veterinaries') }}</a> </li>
+        <li>
+          <a href="javaScript:void();">
+           <span>{{ __('lang.veterinary') }}</span>
+            <i class="fa fa-angle-left float-left"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li><a href="{{ route('admins.vet-requests.index') }}">{{ __('lang.veterinary_requests') }}</a></li>
+            <li><a href="{{ route('admins.vet-offers.index') }}">{{ __('lang.veterinary_offers') }}</a></li>
+          </ul>
+        </li>
+
         <li> <a href="#">{{ __('lang.deliveries') }}</a> </li>
         <li> <a href="#">{{ __('lang.products') }}</a> </li>
         <li> <a href="#">{{ __('lang.products') }}</a> </li>
