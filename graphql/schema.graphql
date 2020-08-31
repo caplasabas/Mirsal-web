@@ -372,7 +372,7 @@ type VetRequest {
 
 type VetOffer {
     id: ID
-    veterenarian: User
+    veterinarian: User
     vet_request: VetRequest @belongsTo(relation: "vetRequest")
     price: String
     status: String
