@@ -27,6 +27,7 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('vet-offers','VetOfferController');
         Route::resource('driver-requests','DriverRequestController');
         Route::resource('driver-offers','DriverOfferController');
+        Route::resource('time-slots','TimeSlotController');
         Route::resource('home','HomeController');
     });
 

@@ -235,8 +235,11 @@ return [
     'veterinary_offers' => "Veterinary Offers",
     'animal' => "Animal",
     'animals' => "Animals",
-    'delivery_requests' => "Delivery Request",
+    'delivery_requests' => "Delivery Requests",
     'delivery_offers' => "Delivery Offers",
+    'delivery_offers' => "Delivery Offers",
+    'time_slots'=> "Time Slots",
+    'time_slot'=> "Time Slot",
 
 
     "email_sent" => "Email Sent",

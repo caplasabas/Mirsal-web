@@ -92,6 +92,8 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")
     sizes: [Size!] @paginate(model: "App\\Model\\Size")
+    timeSlots: [TimeSlot!] @paginate(model: "App\\Model\\TimeSlot")
+
 }
 
 
@@ -185,6 +187,8 @@ input CreateVetRequestInput {
     size_id: ID!
     description: String!
     address: CreateAddressOperations @nest
+    prefered_date: Date
+    prefered_time: String
 }
 
 input UpdateVetRequestInput {
@@ -195,6 +199,8 @@ input UpdateVetRequestInput {
     size_id: ID
     description: String
     address: CreateAddressOperations @nest
+    prefered_date: Date
+    prefered_time: String
 }
 
 input CreateVetOfferInput {
@@ -238,6 +244,8 @@ input CreateDriverRequestInput {
     quantity: String!
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
+    prefered_date: Date
+    prefered_time: String
 }
 
 input UpdateDriverRequestInput {
@@ -249,6 +257,8 @@ input UpdateDriverRequestInput {
     description: String
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
+    prefered_date: Date
+    prefered_time: String
 }
 
 input CreateDriverOfferInput {
@@ -355,6 +365,8 @@ type VetRequest {
     size: Size
     description: String
     address: Address @belongsTo(relation: "address")
+    prefered_date: Date
+    prefered_time: String
     created_at: String
 }
 
@@ -379,6 +391,8 @@ type DriverRequest {
     description: String
     address_to: Address @belongsTo(relation: "addressTo")
     address_from: Address @belongsTo(relation: "addressFrom")
+    prefered_date: Date
+    prefered_time: String
     created_at: String
 }
 
@@ -456,6 +470,12 @@ type AcceptVetOfferResponse {
     status: Int
     message: String
     invoice: Invoice
+}
+
+type TimeSlot {
+    id: ID
+    name: String
+    name_ar: String
 }
 
 #Enums

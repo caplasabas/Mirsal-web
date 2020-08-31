@@ -17,6 +17,8 @@ class VetRequest extends Model
         'description',
         'address_id',
         'vet_offer_id',
+        'prefered_date',
+        'prefered_time',
     ]; 
 
     public function client()
