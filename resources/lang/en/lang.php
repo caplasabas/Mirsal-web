@@ -223,6 +223,22 @@ return [
     'delivery_boy' => "Delivery Boy",
     'quality' => "Quality",
 
+    #NEW
+    'veterinary' => "Veterinary",
+    'veterinaries' => "Veterinaries",
+    'request' => "Request",
+    'requests' => "Requests",
+    'offer' => "Offer",
+    'offers' => "Offers",
+    'deliveries' => "Deliveries",
+    'veterinary_requests' => "Veterinary Request",
+    'veterinary_offers' => "Veterinary Offers",
+    'animal' => "Animal",
+    'animals' => "Animals",
+    'delivery_requests' => "Delivery Request",
+    'delivery_offers' => "Delivery Offers",
+
+
     "email_sent" => "Email Sent",
     "replied" => "replied",
     "name" => "Name",

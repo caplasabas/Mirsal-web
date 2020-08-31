@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.veterinary_requests') }} 
+                {{ __('lang.delivery_requests') }} 
 
                 </div>
                 <div class="card-body">
@@ -22,11 +22,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['vetRequests'] as $index => $vetRequest)
+                        @foreach($data['driverRequests'] as $index => $driverRequest)
                             <tr>
                             <td>{{ $index }}</td>
-                            <td>{{ $vetRequest->animal->name}}</td>
-                            <td>{{ $vetRequest->description}}</td>
+                            <td>{{ $driverRequest->animal->name}}</td>
+                            <td>{{ $driverRequest->description}}</td>
                             <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach

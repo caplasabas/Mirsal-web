@@ -14,16 +14,33 @@
             <i class="fa fa-angle-left float-left"></i>
           </a>
           <ul class="sidebar-submenu">
-            <li><a href="{{ route('admins.vet-requests.index') }}">{{ __('lang.veterinary_requests') }}</a></li>
-            <li><a href="{{ route('admins.vet-offers.index') }}">{{ __('lang.veterinary_offers') }}</a></li>
+            <li><a href="{{ route('admins.vet-requests.index') }}">{{ __('lang.requests') }}</a></li>
+            <li><a href="{{ route('admins.vet-offers.index') }}">{{ __('lang.offers') }}</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="javaScript:void();">
+           <span>{{ __('lang.delivery') }}</span>
+            <i class="fa fa-angle-left float-left"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li><a href="{{ route('admins.driver-requests.index') }}">{{ __('lang.requests') }}</a></li>
+            <li><a href="{{ route('admins.driver-offers.index') }}">{{ __('lang.offers') }}</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="javaScript:void();">
+           <span>{{ __('lang.products') }}</span>
+            <i class="fa fa-angle-left float-left"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li><a href="{{ route('admins.home.index') }}">{{ __('lang.products') }}</a></li>
+            <li><a href="{{ route('admins.home.index') }}">{{ __('lang.offers') }}</a></li>
           </ul>
         </li>
 
-        <li> <a href="#">{{ __('lang.deliveries') }}</a> </li>
-        <li> <a href="#">{{ __('lang.products') }}</a> </li>
-        <li> <a href="#">{{ __('lang.products') }}</a> </li>
-        <li> <a href="#">{{ __('lang.products') }}</a> </li>
-        <li> <a href="#">{{ __('lang.products') }}</a> </li>
+
+        <li> <a href="#">{{ __('lang.general_settings') }}</a> </li>
       </ul>
     </div>
   </div>

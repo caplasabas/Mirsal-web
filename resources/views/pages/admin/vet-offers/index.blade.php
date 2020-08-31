@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.veterinary_requests') }} 
+                {{ __('lang.veterinary_offers') }} 
 
                 </div>
                 <div class="card-body">
@@ -15,18 +15,17 @@
                         <thead class="thead-info">
                         <tr>
                             <th scope="col">#</th>
-                            <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
-                            <th scope="col">{{ __('lang.animal') }}</th>
-                            <th scope="col">{{ __('lang.description') }}</th>
+                            <th scope="col">{{ __('lang.veterinary') }}</th>
+                            <th scope="col">{{ __('lang.status') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['vetRequests'] as $index => $vetRequest)
+                        @foreach($data['vetOffers'] as $index => $vetOffer )
                             <tr>
                             <td>{{ $index }}</td>
-                            <td>{{ $vetRequest->animal->name}}</td>
-                            <td>{{ $vetRequest->description}}</td>
+                            <td>{{ $vetOffer->veterinarian->name}}</td>
+                            <td>{{ $vetOffer->status}}</td>
                             <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach

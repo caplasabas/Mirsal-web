@@ -17,7 +17,7 @@ class VetOffer extends Model
         'payment_status',
     ]; 
 
-    public function veterenarian()
+    public function veterinarian()
     {
         return $this->belongsTo('App\User','vet_id');
     }

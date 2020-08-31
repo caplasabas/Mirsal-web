@@ -3320,15 +3320,15 @@ table.grid td {
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #E1EAFF;
-  border-color: #E1EAFF
+  background-color: #11cdef;
+  border-color: #11cdef;
 }
 .page-item.disabled .page-link {
-  color: #000000;
+  color: #1e2335;
   pointer-events: none;
   cursor: auto;
   background-color: #ffffff;
-  border-color: #000000
+  border-color: #1e2335
 }
 .pagination-lg .page-link {
   padding: .75rem 1.5rem;

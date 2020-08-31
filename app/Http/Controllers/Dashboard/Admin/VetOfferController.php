@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\VetOffer;
 
 class VetOfferController extends Controller
 {
@@ -14,7 +15,10 @@ class VetOfferController extends Controller
      */
     public function index()
     {
-        //
+        $vetOffers = VetOffer::all();
+        $data['vetOffers'] = $vetOffers;
+
+        return view('pages.admin.vet-offers.index')->with(compact('data'));
     }
 
     /**

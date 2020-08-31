@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\DriverOffer;
 
-class VetRequestController extends Controller
+class DriverOfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $driverOffers = DriverOffer::all();
+        $data['driverOffers'] = $driverOffers;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.driver-offers.index')->with(compact('data'));
     }
 
     /**
