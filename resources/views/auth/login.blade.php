@@ -10,7 +10,7 @@
           <div class="card-content p-2">
 
               <div class="text-center">
-                  <img src="{{ asset('images/avatar/logo.jpeg') }}" alt="logo icon" width="150px">
+                  <img src="{{ asset('images/logos/logo.png')}}" alt="logo icon" width="150px">
               </div>
 
               <div class="card-title text-uppercase text-center py-3">{{ __('lang.signin') }}</div>
@@ -57,14 +57,14 @@
                           <!-- <a href="#">{{ __('lang.reset_password') }}</a> -->
                       </div>
                       <div class="form-group col-6">
-                          <div class="icheck-material-primary">
+                          <div class="icheck-material-info">
                               <input type="checkbox" name="rememberMe" value="" id="user-checkbox" checked="" />
                               <label for="user-checkbox">{{ __('lang.remember_me') }}</label>
                           </div>
                       </div>
 
                   </div>
-                  <input type="submit" value="{{ __('lang.submit') }}" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" />
+                  <input type="submit" value="{{ __('lang.submit') }}" class="btn btn-info shadow-info btn-block waves-effect waves-light" />
               </form>
 
           </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminSettingsTable extends Migration
+class CreateConversationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateAdminSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_settings', function (Blueprint $table) {
+        Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_ar');
-            $table->integer("tax_perc")->default(0);
-            $table->integer("admin_commission_perc")->default(0);
-            $table->integer("first_payment_perc")->default(0);
+            $table->string('conv_id')->nullable();
+            $table->bigInteger('creator_id')->unsigned()->nullable();
+            $table->foreign('creator_id')->references('id')->on('users')->onCascade('delete');
+            $table->bigInteger('receiver_id')->unsigned()->nullable();
+            $table->foreign('receiver_id')->references('id')->on('users')->onCascade('delete');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -33,6 +33,6 @@ class CreateAdminSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_settings');
+        Schema::dropIfExists('conversations');
     }
 }

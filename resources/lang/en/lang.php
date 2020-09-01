@@ -240,6 +240,8 @@ return [
     'delivery_offers' => "Delivery Offers",
     'time_slots'=> "Time Slots",
     'time_slot'=> "Time Slot",
+    'first_payment'=> "First Payment %",
+    'admin_commission'=> "Admin Commission %",
 
 
     "email_sent" => "Email Sent",

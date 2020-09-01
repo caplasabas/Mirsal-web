@@ -41,7 +41,7 @@
 
 
         <li> <a href="{{ route('admins.time-slots.index') }}">{{ __('lang.time_slots') }}</a> </li>
-        <li> <a href="#">{{ __('lang.general_settings') }}</a> </li>
+        <li> <a href="{{ route('admins.admin-settings.index') }}">{{ __('lang.general_settings') }}</a> </li>
       </ul>
     </div>
   </div>
