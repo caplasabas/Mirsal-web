@@ -103,6 +103,8 @@ type User {
     email: String!
     phone: String!
     role: Roles!
+    vet_status: VetStatuses
+    user_file: UserFile @hasOne(relation: "userFile")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -125,6 +127,7 @@ input RegisterInput {
     phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
     password: String! @rules(apply: ["required", "confirmed", "min:8"])
     password_confirmation: String!
+    user_file: Upload
     avatar: Upload
 }
 
@@ -478,6 +481,12 @@ type TimeSlot {
     name_ar: String
 }
 
+type UserFile {
+    id: ID
+    name: String
+    path: String
+}
+
 #Enums
 
 enum Roles {
@@ -556,4 +565,10 @@ enum DriverRequestStatuses {
 enum InvoiceStatuses {
     PENDING
     PAID
+}
+
+enum VetStatuses {
+    PENDING
+    ACCEPTED
+    REJECTED
 }

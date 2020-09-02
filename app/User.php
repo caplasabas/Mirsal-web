@@ -16,7 +16,8 @@ class User extends Authenticatable
         'email',
         'password',
         'address_id',
-        'avatar'
+        'avatar',
+        'vet_status',
     ]; 
 
     protected $hidden = [
@@ -26,6 +27,11 @@ class User extends Authenticatable
     public function devices()
     {
         return $this->hasMany('App\Model\Device');
+    }
+
+    public function userFile()
+    {
+        return $this->hasOne('App\Model\UserFile');
     }
 
     public function interests()

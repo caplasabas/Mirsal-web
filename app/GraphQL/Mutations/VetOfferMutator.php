@@ -16,7 +16,7 @@ class VetOfferMutator
     public function acceptVetOffer($root, array $args)
     {
         $vet_offer_id = $args['vet_offer_id'];
-
+        $admin_setting = AdminSetting::first();
         $vet_offer = VetOffer::find($vet_offer_id)->first();
         
         if(isset($vet_offer_id)){

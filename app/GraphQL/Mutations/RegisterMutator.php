@@ -8,6 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Support\Str;
 
 use App\User;
+use App\Model\UserFile;
 
 class RegisterMutator
 {
@@ -32,6 +33,31 @@ class RegisterMutator
         $user->email = $args['email'];
         $user->phone = $args['phone'];
         $user->password = bcrypt($args['password']);
+
+        if(isset($args['avatar']))
+        {
+            $file = $args['avatar'];
+            if($file)
+            {
+                $avatarName = $user->id.'_userAvatar'.time().'.'.$file->getClientOriginalExtension();
+                $file->storeAs('user_avatars',$avatarName);
+                $user->avatar = $avatarName;
+            }
+        }
+
+        if(isset($args['user_file']))
+        {
+            $file = $args['user_file'];
+            if($file)
+            {
+                $filename = $user->id.'_userFile'.time().'.'.$file->getClientOriginalExtension();
+                $file->storeAs('user_files',$filename);
+                $userFile = new UserFile();
+                $userFile->name = $filename;
+                $userFile->save();
+            }
+        }
+
         $user->api_token = $token;
         $user->save();
 
