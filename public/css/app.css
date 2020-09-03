@@ -31175,3 +31175,7 @@ text-align:left;
     background: rgba(0, 0, 0, 0.11);
 }
 
+.modal{
+  direction: rtl;
+}
+

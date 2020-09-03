@@ -18,7 +18,6 @@ class CreateInvoicesTable extends Migration
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('users')->onCascade('delete');
             $table->bigInteger('offer_id')->unsigned()->nullable();
-            $table->foreign('offer_id')->references('id')->on('vet_offers')->onCascade('delete');
             $table->enum('payment_for', ['VETERINARIAN','DRIVER','CLIENT'])->nullable();
             $table->enum('payment_status', ['PENDING','PAID'])->default('PENDING');
             $table->string("reference_id")->nullable();

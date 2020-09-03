@@ -48,7 +48,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
     #INVOICE
     createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
-    updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
+    updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @update(model: "App\\Model\\Invoice")
 
     #Address
     createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
@@ -56,6 +56,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
     #FUNCTIONS
     acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse @field(resolver: "VetOfferMutator@acceptVetOffer")
+    acceptDriverOffer(input: acceptDriverOfferInput @spread): AcceptDriverOfferResponse @field(resolver: "DriverOfferMutator@acceptDriverOffer")
 
     #User
     userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
@@ -113,6 +114,10 @@ type User {
 
 input acceptVetOfferInput {
     vet_offer_id: ID!
+}
+
+input acceptDriverOfferInput {
+    driver_offer_id: ID!
 }
 
 input LoginInput {
@@ -236,6 +241,7 @@ input UpdateInvoiceInput {
     reference_id: String
     payment_gateway: String
     amount_paid: String
+    payment_status: InvoiceStatuses
 }
 
 input CreateDriverRequestInput {
@@ -470,6 +476,12 @@ type Duration {
 }
 
 type AcceptVetOfferResponse {
+    status: Int
+    message: String
+    invoice: Invoice
+}
+
+type AcceptDriverOfferResponse {
     status: Int
     message: String
     invoice: Invoice

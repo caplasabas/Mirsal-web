@@ -29,6 +29,11 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('driver-offers','DriverOfferController');
         Route::resource('time-slots','TimeSlotController');
         Route::resource('admin-settings','AdminSettingController');
+        Route::resource('veterinarians','UserVeterinarianController');
+        Route::put('veterinarians/accept/{veterinarian}', 'UserVeterinarianController@accept')->name('veterinarians.accept');
+
+        Route::resource('drivers','UserDriverController');
+        Route::resource('clients','UserClientController');
         Route::resource('home','HomeController');
     });
 

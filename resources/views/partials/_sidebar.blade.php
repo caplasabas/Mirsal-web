@@ -38,6 +38,17 @@
             <li><a href="{{ route('admins.home.index') }}">{{ __('lang.offers') }}</a></li>
           </ul>
         </li>
+        <li>
+          <a href="javaScript:void();">
+           <span>{{ __('lang.users') }}</span>
+            <i class="fa fa-angle-left float-left"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li><a href="{{ route('admins.veterinarians.index') }}">{{ __('lang.veterinarians') }}</a></li>
+            <li><a href="{{ route('admins.drivers.index') }}">{{ __('lang.drivers') }}</a></li>
+            <li><a href="{{ route('admins.clients.index') }}">{{ __('lang.clients') }}</a></li>
+          </ul>
+        </li>
 
 
         <li> <a href="{{ route('admins.time-slots.index') }}">{{ __('lang.time_slots') }}</a> </li>

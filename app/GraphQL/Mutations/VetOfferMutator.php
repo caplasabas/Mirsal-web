@@ -16,19 +16,30 @@ class VetOfferMutator
     public function acceptVetOffer($root, array $args)
     {
         $vet_offer_id = $args['vet_offer_id'];
-        $admin_setting = AdminSetting::first();
+        $admin_setting = AdminSetting::all()->first();
         $vet_offer = VetOffer::find($vet_offer_id)->first();
+        $vet_request = VetRequest::find($vet_offer->vet_request_id)->first();
         
         if(isset($vet_offer_id)){
 
             $vet_offer->status = "ACCEPTED";
-            $invoice = new Invoice;
-            $invoice->client_id = $vet_offer->vetRequest->client_id;
-            $invoice->offer_id = $vet_offer_id;
-            $invoice->payment_for = "VETERINARIAN";
-            $invoice->amount_paid = $vet_offer->price; // NEED to remake
-            $invoice->save();
+            $vet_request->status = "ACCEPTED";
+            $invoice = Invoice::where('offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get()->first();
+            if(!isset($invoice)){
+                $invoice = new Invoice;
+                $invoice->client_id = $vet_offer->vetRequest->client_id;
+                $invoice->offer_id = $vet_offer_id;
+                $invoice->payment_for = "VETERINARIAN";
+                
+                //Amount calculation
+                $invoice->amount_paid = $vet_offer->price; 
+                $invoice->amount_paid += ($vet_offer->price * ($admin_setting->tax_perc/100));
+                
+                $invoice->save();
+            }
 
+            $vet_offer->save();
+            $vet_request->save();
             return array(
                 'status' => 1,
                 'message' => "Success",

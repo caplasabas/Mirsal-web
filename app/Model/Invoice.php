@@ -27,4 +27,9 @@ class Invoice extends Model
     {
         return $this->belongsTo('App\Model\VetOffer','vet_offer_id');
     }
+
+    public function getAmountPaidAttribute($value)
+    {
+        return number_format($value, 2);
+    }
 }
