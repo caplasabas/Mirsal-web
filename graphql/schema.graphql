@@ -65,7 +65,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 type Query {
 
-    Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
+
+    allProducts(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
 
 }                                                                                                                                                                                                                                                                                                                              
 
@@ -76,24 +77,27 @@ extend type Query @middleware(checks: ["auth:api"]){
     getUsers(role: Roles @eq): [User!]! @paginate(model: "App\\User")
     getUser(id: ID @eq): User! @paginate(model: "App\\User")
 
-    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq, status: VetRequestStatuses @eq): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
+    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq, status: VetRequestStatuses @eq, excludeClientIds: [ID!] @notIn(key: "client_id") ,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")
-    vetOffers(vet_request_id: ID @eq, vet_id: ID @eq, status: VetOfferStatuses @eq): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
+    vetOffers(vet_request_id: ID @eq, vet_id: ID @eq, status: VetOfferStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")
 
-    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq, status: DriverRequestStatuses @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
+    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq, status: DriverRequestStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
     driverRequest(id: ID @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
-    driverOffers(driver_request_id: ID @eq, driver_id: ID @eq, status: DriverOfferStatuses): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
+    driverOffers(driver_request_id: ID @eq, driver_id: ID @eq, status: DriverOfferStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
     driverOffer(id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
 
-    products(seller_id: ID @eq, is_vip: Int @eq): [Product!]! @paginate(model: "App\\Model\\Product")
-    products(id: ID @eq): [Product!]! @find(model: "App\\Model\\Product")
-    clientOffers(seller_id: ID @eq, is_vip: Int @eq): [ClientOffer!]! @paginate(model: "App\\Model\\Product")
-    clientOffers(id: ID @eq,): ClientOffer! @paginate(model: "App\\Model\\Product")
+    products(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
+    product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
+    clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\Product")
+    clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\Product")
+
+    Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")
     sizes: [Size!] @paginate(model: "App\\Model\\Size")
     timeSlots: [TimeSlot!] @paginate(model: "App\\Model\\TimeSlot")
+    durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
 
 }
 
@@ -197,6 +201,9 @@ input CreateVetRequestInput {
     address: CreateAddressOperations @nest
     prefered_date: Date
     prefered_time: String
+
+    created_at: String
+    updated_at: String
 }
 
 input UpdateVetRequestInput {
@@ -367,7 +374,7 @@ type Address {
 type VetRequest {
     id: ID
     client: User
-    vet_offers: [VetOffer!]
+    vet_offers: [VetOffer!] @hasMany(relation: "vetOffers")
     type: VetRequestTypes
     status: VetRequestStatuses
     animal: Animal
@@ -384,14 +391,14 @@ type VetOffer {
     veterinarian: User
     vet_request: VetRequest @belongsTo(relation: "vetRequest")
     price: String
-    status: String
+    status: VetOfferStatuses
     created_at: String
 }
 
 type DriverRequest {
     id: ID
     client: User
-    driver_offers: [DriverOffer!]
+    driver_offers: [DriverOffer!] @hasMany(relation: "driverOffers")
     type: DriverRequestTypes
     status: DriverRequestStatuses
     animal: Animal
@@ -467,6 +474,9 @@ type ClientOffer {
 type ImageFile {
     id: ID
     image_name: String
+    path: String
+    created_at: String
+    updated_at: String
 }
 
 type Duration {
