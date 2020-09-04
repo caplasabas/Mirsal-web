@@ -33,7 +33,8 @@ class RegisterMutator
         $user->email = $args['email'];
         $user->phone = $args['phone'];
         $user->password = bcrypt($args['password']);
-
+        $user->api_token = $token;
+        $user->save();
         if(isset($args['avatar']))
         {
             $file = $args['avatar'];
@@ -53,13 +54,13 @@ class RegisterMutator
                 $filename = $user->id.'_userFile'.time().'.'.$file->getClientOriginalExtension();
                 $file->storeAs('user_files',$filename);
                 $userFile = new UserFile();
+                $userFile->user_id = $user->id;
                 $userFile->name = $filename;
                 $userFile->save();
             }
         }
 
-        $user->api_token = $token;
-        $user->save();
+        
 
         return [
             'user' => $user,

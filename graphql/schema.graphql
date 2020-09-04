@@ -9,7 +9,16 @@ scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload
 
 type Mutation {
     login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
-    register(input: RegisterInput @spread): UserResponse! @field(resolver: "RegisterMutator")
+    register(
+    role: Roles!
+    name: String! @rules(apply: ["required", "string"])
+    email: String! @rules(apply: ["required", "email", "unique:users,email"])
+    phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
+    password: String! @rules(apply: ["required", "confirmed", "min:8"])
+    password_confirmation: String!
+    user_file: Upload
+    avatar: Upload
+    ): UserResponse! @field(resolver: "RegisterMutator")
 
     
 }
