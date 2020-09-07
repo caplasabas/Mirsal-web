@@ -266,7 +266,7 @@ input CreateDriverRequestInput {
     animal_id: ID!
     size_id: ID!
     description: String!
-    quantity: String!
+    quantity: Int!
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
     prefered_date: Date
@@ -412,7 +412,7 @@ type DriverRequest {
     status: DriverRequestStatuses
     animal: Animal
     size: Size
-    quantity: String
+    quantity: Int
     description: String
     address_to: Address @belongsTo(relation: "addressTo")
     address_from: Address @belongsTo(relation: "addressFrom")
