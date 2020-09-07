@@ -329,5 +329,7 @@ return [
     'type'=>"Type",
     'prefered_date'=>"Date",
     'prefered_time'=>"Time",
+    'veterinary_accepted_offer'=>"Accepted Offer",
+    'payment_details' => "Payment Details",
 
 ];

@@ -52,9 +52,9 @@ class VetRequestController extends Controller
     {
         $vetRequest = VetRequest::find($id);
         $data = array();
-        $vetReques = $vetRequest;
+        $vetRequest = $vetRequest;
 
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        return view('pages.admin.vet-requests.show')->with(compact("vetRequest"));
     }
 
     /**

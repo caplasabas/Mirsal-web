@@ -26,4 +26,9 @@ class VetOffer extends Model
     {
         return $this->belongsTo('App\Model\VetRequest');
     }
+
+    public function getPriceAttribute($value)
+    {
+        return number_format($value, 2);
+    }
 }

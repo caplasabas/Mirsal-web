@@ -48,6 +48,6 @@ class VetRequest extends Model
 
     public function vetOfferAccepted()
     {
-        return $this->belongsTo('App\Model\VetOffer','vet_offer_id');
+        return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id');
     }
 }
