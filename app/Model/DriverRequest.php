@@ -45,7 +45,7 @@ class DriverRequest extends Model
 
     public function driverOfferAccepted()
     {
-        return $this->belongsTo('App\Model\DriverOffer','driver_offer_id');
+        return $this->belongsTo('App\Model\DriverOffer','accepted_driver_offer_id');
     }
 
     public function addressFrom()

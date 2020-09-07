@@ -19,4 +19,10 @@ class Address extends Model
         'vet_offer_id',
     ];
 
+
+    public function getCompleteAddressAttribute()
+    {
+        return $this->house_number.", ".$this->street.", ".$this->city.", ".$this->postal_code;
+    }
+
 }

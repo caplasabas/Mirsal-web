@@ -50,7 +50,11 @@ class DriverRequestController extends Controller
      */
     public function show($id)
     {
-        //
+        $driverRequest = DriverRequest::find($id);
+        $data = array();
+        $driverRequest = $driverRequest;
+
+        return view('pages.admin.driver-requests.show')->with(compact("driverRequest"));
     }
 
     /**

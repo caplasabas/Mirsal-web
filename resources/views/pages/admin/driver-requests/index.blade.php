@@ -27,7 +27,9 @@
                             <td>{{ $index }}</td>
                             <td>{{ $driverRequest->animal->name}}</td>
                             <td>{{ $driverRequest->description}}</td>
-                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
+                            <td> 
+                            <a class="btn btn-info" href="{{ route('admins.driver-requests.show', $driverRequest->id ) }}" >{{ __('lang.view') }}</a>
+                            <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach
                         </tbody>
