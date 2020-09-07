@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\Car;
 
-class VetRequestController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $cars = Car::all();
+        $data['cars'] = $cars;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.cars.index')->with(compact('data'));
     }
 
     /**
@@ -39,7 +39,15 @@ class VetRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $car = new Car;
+
+        $car->name = "";
+        $car->name_ar = $request->name_ar;
+        
+        $car->save();
+        
+        // $sizes = size::all(); 
+        return redirect()->route('admins.cars.index');
     }
 
     /**
@@ -50,11 +58,7 @@ class VetRequestController extends Controller
      */
     public function show($id)
     {
-        $vetRequest = VetRequest::find($id);
-        $data = array();
-        $vetReques = $vetRequest;
-
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        //
     }
 
     /**
@@ -77,7 +81,16 @@ class VetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $car = Car::find($id);
+        
+        
+        $car->name = "";
+        $car->name_ar = $request->name_ar;
+
+        $car->save();
+        
+        // $cars = car::all(); 
+        return redirect()->route('admins.cars.index');
     }
 
     /**
@@ -88,6 +101,9 @@ class VetRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $car = Car::find($id);
+        $car->delete();
+
+        return redirect()->route('admins.cars.index');
     }
 }

@@ -31,7 +31,9 @@
                             <td>{{ $veterinarian->vet_status}}</td>
                             <td> 
                                 <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
+                            @if($veterinarian->vet_status == "PENDING")
                             <button class="btn btn-success  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.accept') }}</button>
+                            @endif
                             </td>
                             </tr>
 

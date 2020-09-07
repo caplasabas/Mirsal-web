@@ -6,8 +6,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.time_slots') }} 
-                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-time-slot"><i aria-hidden="true" class="fa fa-plus"></i></button>
+                {{ __('lang.sizes') }} 
+                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-size"><i aria-hidden="true" class="fa fa-plus"></i></button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-black">
@@ -21,11 +21,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['timeSlots'] as $index => $timeSlot)
+                        @foreach($data['sizes'] as $index => $size)
                             <tr>
-                            <td>{{ $timeSlot->id }}</td>
-                            <td>{{ $timeSlot->name_ar}}</td>
-                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-time-slot-{{$timeSlot->id}}">{{ __('lang.edit') }}</button></td>
+                            <td>{{ $size->id }}</td>
+                            <td>{{ $size->name_ar}}</td>
+                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-size-{{$size->id}}">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -37,28 +37,27 @@
     </div>
 </div>
 
+@foreach ($data['sizes'] as $size)
 
-@foreach ($data['timeSlots'] as $timeSlot)
-
-<div class="modal fade" id="edit-time-slot-{{$timeSlot->id}}" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="edit-size-{{$size->id}}" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
     <div class="modal-content border-warning">
-        <form action="{{ route('admins.time-slots.update', $timeSlot->id ) }}" method="POST" enctype="multipart/form-data" >
+        <form action="{{ route('admins.sizes.update', $size->id ) }}" method="POST" enctype="multipart/form-data" >
         {{ method_field('PUT') }}
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         <div class="modal-header bg-warning">
-        <h5 class="modal-title text-white">{{ __('lang.edit_time_slot') }}</h5>
+        <h5 class="modal-title text-white">{{ __('lang.edit_size') }}</h5>
 
         </div>
         <div class="modal-body">
             <!-- <div class="form-group">
                 <label for="input-add-1">{{ __('lang.name') }} {{ __('lang.en') }}</label>
-                <input type="text" class="form-control" id="input-add-1" placeholder="Enter timeSlot Name EN" name="name" value="{{ $timeSlot->name}}">
+                <input type="text" class="form-control" id="input-add-1" placeholder="Enter size Name EN" name="name" value="{{ $size->name}}">
 
             </div> -->
             <div class="form-group">
                 <label for="input-add-2">{{ __('lang.name') }}</label>
-                <input type="text" class="form-control" id="input-add-2" placeholder="Enter timeSlot Name AR" name="name_ar" value="{{ $timeSlot->name_ar}}">
+                <input type="text" class="form-control" id="input-add-2" placeholder="Enter size Name AR" name="name_ar" value="{{ $size->name_ar}}">
 
             </div>
 
@@ -74,19 +73,19 @@
 
 @endforeach
 
-<div class="modal fade" id="create-time-slot" aria-hidden="true" style="display: none;" >
+<div class="modal fade" id="create-size" aria-hidden="true" style="display: none;" >
     <div class="modal-dialog">
     <div class="modal-content border-success">
-        <form action="{{ route('admins.time-slots.store') }}" method="POST" enctype="multipart/form-data" >
+        <form action="{{ route('admins.sizes.store') }}" method="POST" enctype="multipart/form-data" >
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         <div class="modal-header bg-success">
-        <h5 class="modal-title text-white">{{ __('lang.create_time_slot') }}</h5>
+        <h5 class="modal-title text-white">{{ __('lang.create_size') }}</h5>
 
         </div>
         <div class="modal-body">
             <!-- <div class="form-group">
                 <label for="input-1">{{ __('lang.name') }} {{ __('lang.en') }}</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-1" placeholder="Enter timeSlot Name EN" name="name" value="">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-1" placeholder="Enter size Name EN" name="name" value="">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -112,6 +111,5 @@
     </div>
     </div>
 </div>
-
 
 @endsection

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\Duration;
 
-class VetRequestController extends Controller
+class DurationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $durations = Duration::all();
+        $data['durations'] = $durations;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.durations.index')->with(compact('data'));
     }
 
     /**
@@ -39,7 +39,15 @@ class VetRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $duration = new Duration;
+
+        $duration->name = "";
+        $duration->name_ar = $request->name_ar;
+        
+        $duration->save();
+        
+        // $durations = duration::all(); 
+        return redirect()->route('admins.durations.index');
     }
 
     /**
@@ -50,11 +58,7 @@ class VetRequestController extends Controller
      */
     public function show($id)
     {
-        $vetRequest = VetRequest::find($id);
-        $data = array();
-        $vetReques = $vetRequest;
-
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        //
     }
 
     /**
@@ -77,7 +81,15 @@ class VetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $duration = Duration::find($id);
+        
+        $duration->name = "";
+        $duration->name_ar = $request->name_ar;
+
+        $duration->save();
+        
+        // $durations = duration::all(); 
+        return redirect()->route('admins.durations.index');
     }
 
     /**
@@ -88,6 +100,9 @@ class VetRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $duration = Duration::find($id);
+        $duration->delete();
+
+        return redirect()->route('admins.durations.index');
     }
 }

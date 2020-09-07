@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\Invoice;
 
-class VetRequestController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $invoices = Invoice::all();
+        $data['invoices'] = $invoices;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.invoices.index')->with(compact('data'));
     }
 
     /**
@@ -50,11 +50,7 @@ class VetRequestController extends Controller
      */
     public function show($id)
     {
-        $vetRequest = VetRequest::find($id);
-        $data = array();
-        $vetReques = $vetRequest;
-
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        //
     }
 
     /**

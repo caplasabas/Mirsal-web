@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\Animal;
 
-class VetRequestController extends Controller
+class AnimalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $animals = Animal::all();
+        $data['animals'] = $animals;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.animals.index')->with(compact('data'));
     }
 
     /**
@@ -39,7 +39,15 @@ class VetRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $animal = new Animal;
+
+        $animal->name = "";
+        $animal->name_ar = $request->name_ar;
+        
+        $animal->save();
+        
+        // $animals = animal::all(); 
+        return redirect()->route('admins.animals.index');
     }
 
     /**
@@ -50,11 +58,7 @@ class VetRequestController extends Controller
      */
     public function show($id)
     {
-        $vetRequest = VetRequest::find($id);
-        $data = array();
-        $vetReques = $vetRequest;
-
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        //
     }
 
     /**
@@ -77,7 +81,16 @@ class VetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $animal = Animal::find($id);
+        
+        
+        $animal->name = "";
+        $animal->name_ar = $request->name_ar;
+
+        $animal->save();
+        
+        // $animals = animal::all(); 
+        return redirect()->route('admins.animals.index');
     }
 
     /**
@@ -88,6 +101,9 @@ class VetRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $animal = Animal::find($id);
+        $animal->delete();
+
+        return redirect()->route('admins.animals.index');
     }
 }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\VetRequest;
+use App\Model\Size;
 
-class VetRequestController extends Controller
+class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class VetRequestController extends Controller
      */
     public function index()
     {
-        $vetRequests = VetRequest::all();
-        $data['vetRequests'] = $vetRequests;
+        $sizes = Size::all();
+        $data['sizes'] = $sizes;
 
-        return view('pages.admin.vet-requests.index')->with(compact('data'));
+        return view('pages.admin.sizes.index')->with(compact('data'));
     }
 
     /**
@@ -39,7 +39,15 @@ class VetRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $size = new Size;
+
+        $size->name = "";
+        $size->name_ar = $request->name_ar;
+        
+        $size->save();
+        
+        // $sizes = size::all(); 
+        return redirect()->route('admins.sizes.index');
     }
 
     /**
@@ -50,11 +58,7 @@ class VetRequestController extends Controller
      */
     public function show($id)
     {
-        $vetRequest = VetRequest::find($id);
-        $data = array();
-        $vetReques = $vetRequest;
-
-        return view('pages.admin.vet-requests.show')->with(compact("vetReques"));
+        //
     }
 
     /**
@@ -77,7 +81,16 @@ class VetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $size = Size::find($id);
+        
+        
+        $size->name = "";
+        $size->name_ar = $request->name_ar;
+
+        $size->save();
+        
+        // $sizes = size::all(); 
+        return redirect()->route('admins.sizes.index');
     }
 
     /**
@@ -88,6 +101,9 @@ class VetRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $size = Size::find($id);
+        $size->delete();
+
+        return redirect()->route('admins.sizes.index');
     }
 }

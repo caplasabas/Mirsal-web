@@ -39,7 +39,15 @@ class TimeSlotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $timeSlot = new TimeSlot;
+
+        $timeSlot->name = "";
+        $timeSlot->name_ar = $request->name_ar;
+        
+        $timeSlot->save();
+        
+        // $timeSlots = timeSlot::all(); 
+        return redirect()->route('admins.time-slots.index');
     }
 
     /**
@@ -73,7 +81,16 @@ class TimeSlotController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $timeSlot = TimeSlot::find($id);
+        
+        
+        $timeSlot->name = "";
+        $timeSlot->name_ar = $request->name_ar;
+
+        $timeSlot->save();
+        
+        // $timeSlots = timeSlot::all(); 
+        return redirect()->route('admins.time-slots.index');
     }
 
     /**
@@ -84,6 +101,9 @@ class TimeSlotController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $timeSlot = TimeSlot::find($id);
+        $timeSlot->delete();
+
+        return redirect()->route('admins.time-slots.index');
     }
 }

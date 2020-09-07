@@ -6,8 +6,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.time_slots') }} 
-                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-time-slot"><i aria-hidden="true" class="fa fa-plus"></i></button>
+                {{ __('lang.invoices') }} 
+                <!-- <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-invoice"><i aria-hidden="true" class="fa fa-plus"></i></button> -->
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-black">
@@ -17,15 +17,23 @@
                             <th scope="col">#</th>
                             <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
                             <th scope="col">{{ __('lang.name') }}</th>
+                            <th scope="col">{{ __('lang.payment_for') }}</th>
+                            <th scope="col">{{ __('lang.payment_status') }}</th>
+                            <th scope="col">{{ __('lang.amount_paid') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['timeSlots'] as $index => $timeSlot)
+                        @foreach($data['invoices'] as $index => $invoice)
                             <tr>
-                            <td>{{ $timeSlot->id }}</td>
-                            <td>{{ $timeSlot->name_ar}}</td>
-                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-time-slot-{{$timeSlot->id}}">{{ __('lang.edit') }}</button></td>
+                            <td>{{ $invoice->id }}</td>
+                            <td>{{ $invoice->client->name}}</td>
+                            <td>{{ $invoice->payment_for}}</td>
+                            <td>{{ $invoice->payment_status}}</td>
+                            <td>{{ $invoice->amount_paid}}</td>
+                            <td> 
+                            <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-invoice-{{$invoice->id}}">{{ __('lang.edit') }}</button> -->
+                            </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -37,28 +45,27 @@
     </div>
 </div>
 
+@foreach ($data['invoices'] as $invoice)
 
-@foreach ($data['timeSlots'] as $timeSlot)
-
-<div class="modal fade" id="edit-time-slot-{{$timeSlot->id}}" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="edit-invoice-{{$invoice->id}}" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
     <div class="modal-content border-warning">
-        <form action="{{ route('admins.time-slots.update', $timeSlot->id ) }}" method="POST" enctype="multipart/form-data" >
+        <form action="{{ route('admins.invoices.update', $invoice->id ) }}" method="POST" enctype="multipart/form-data" >
         {{ method_field('PUT') }}
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         <div class="modal-header bg-warning">
-        <h5 class="modal-title text-white">{{ __('lang.edit_time_slot') }}</h5>
+        <h5 class="modal-title text-white">{{ __('lang.edit_invoice') }}</h5>
 
         </div>
         <div class="modal-body">
             <!-- <div class="form-group">
                 <label for="input-add-1">{{ __('lang.name') }} {{ __('lang.en') }}</label>
-                <input type="text" class="form-control" id="input-add-1" placeholder="Enter timeSlot Name EN" name="name" value="{{ $timeSlot->name}}">
+                <input type="text" class="form-control" id="input-add-1" placeholder="Enter invoice Name EN" name="name" value="{{ $invoice->name}}">
 
             </div> -->
             <div class="form-group">
                 <label for="input-add-2">{{ __('lang.name') }}</label>
-                <input type="text" class="form-control" id="input-add-2" placeholder="Enter timeSlot Name AR" name="name_ar" value="{{ $timeSlot->name_ar}}">
+                <input type="text" class="form-control" id="input-add-2" placeholder="Enter invoice Name AR" name="name_ar" value="{{ $invoice->name_ar}}">
 
             </div>
 
@@ -74,19 +81,19 @@
 
 @endforeach
 
-<div class="modal fade" id="create-time-slot" aria-hidden="true" style="display: none;" >
+<div class="modal fade" id="create-invoice" aria-hidden="true" style="display: none;" >
     <div class="modal-dialog">
     <div class="modal-content border-success">
-        <form action="{{ route('admins.time-slots.store') }}" method="POST" enctype="multipart/form-data" >
+        <form action="{{ route('admins.invoices.store') }}" method="POST" enctype="multipart/form-data" >
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         <div class="modal-header bg-success">
-        <h5 class="modal-title text-white">{{ __('lang.create_time_slot') }}</h5>
+        <h5 class="modal-title text-white">{{ __('lang.create_invoice') }}</h5>
 
         </div>
         <div class="modal-body">
             <!-- <div class="form-group">
                 <label for="input-1">{{ __('lang.name') }} {{ __('lang.en') }}</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-1" placeholder="Enter timeSlot Name EN" name="name" value="">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="input-1" placeholder="Enter invoice Name EN" name="name" value="">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -112,6 +119,5 @@
     </div>
     </div>
 </div>
-
 
 @endsection
