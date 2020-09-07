@@ -70,6 +70,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     #User
     userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
     updateUser(input: UpdateUserInput @spread): User @update(model: "App\\User")
+    otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
+
 }
 
 type Query {
@@ -96,7 +98,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     driverOffers(driver_request_id: ID @eq, driver_id: ID @eq, status: DriverOfferStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
     driverOffer(id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
 
-    products(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
+    products(seller_id: ID @eq, is_vip: Int @eq, status: ProductStatus @eq, type: ProductType @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\Product")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\Product")
@@ -122,6 +124,12 @@ type User {
     created_at: DateTime!
     updated_at: DateTime!
 }
+
+type OtpVerifyResponse {
+    status: Int!
+    message: String
+}
+
 
 # Inputs
 
