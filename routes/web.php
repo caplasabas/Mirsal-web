@@ -33,6 +33,7 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('durations','DurationController');
         Route::resource('cars','CarController');
         Route::resource('invoices','InvoiceController');
+        Route::resource('products','ProductController');
         Route::resource('admin-settings','AdminSettingController');
         Route::resource('veterinarians','UserVeterinarianController');
         Route::put('veterinarians/accept/{veterinarian}', 'UserVeterinarianController@accept')->name('veterinarians.accept');

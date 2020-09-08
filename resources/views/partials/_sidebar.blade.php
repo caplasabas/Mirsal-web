@@ -28,16 +28,7 @@
             <li><a href="{{ route('admins.driver-offers.index') }}">{{ __('lang.offers') }}</a></li>
           </ul>
         </li>
-        <li>
-          <a href="javaScript:void();">
-           <span>{{ __('lang.products') }}</span>
-            <i class="fa fa-angle-left float-left"></i>
-          </a>
-          <ul class="sidebar-submenu">
-            <li><a href="{{ route('admins.home.index') }}">{{ __('lang.products') }}</a></li>
-            <li><a href="{{ route('admins.home.index') }}">{{ __('lang.offers') }}</a></li>
-          </ul>
-        </li>
+        <li> <a href="{{ route('admins.products.index') }}">{{ __('lang.products') }}</a> </li>
         <li>
           <a href="javaScript:void();">
            <span>{{ __('lang.users') }}</span>
