@@ -23,7 +23,8 @@ class Product extends Model
         'contact_phone',
         'contact_email',
         'iban',
-        'accepted_client_offer_id'
+        'accepted_client_offer_id',
+        'image_id',
     ];  
 
     public function seller()
@@ -54,5 +55,10 @@ class Product extends Model
     public function driverRequest()
     {
         return $this->belongsTo('App\Model\DriverRequest');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo('App\Model\ImageFile');
     }
 }

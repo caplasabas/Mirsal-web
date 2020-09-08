@@ -332,6 +332,7 @@ input CreateProductInput {
     contact_email: String
     iban: String
     accepted_client_offer_id: ID
+    image_id: ID
 }
 
 input UpdateProductInput {
@@ -349,6 +350,7 @@ input UpdateProductInput {
     contact_email: String
     iban: String
     accepted_client_offer_id: ID
+    image_id: ID
 }
 
 input CreateClientOfferInput {
@@ -494,6 +496,7 @@ type Product {
     contact_email: String
     iban: String
     accepted_client_offer: ClientOffer @belongsTo(relation: "acceptedClientOffer")
+    image: ImageFile @belongsTo(relation: "image")
 }
 
 type ClientOffer {
