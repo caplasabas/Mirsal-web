@@ -19,6 +19,7 @@ class VetRequest extends Model
         'vet_offer_id',
         'prefered_date',
         'prefered_time',
+        'image_id',
     ]; 
 
     public function client()
@@ -49,5 +50,10 @@ class VetRequest extends Model
     public function vetOfferAccepted()
     {
         return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo('App\Model\ImageFile');
     }
 }

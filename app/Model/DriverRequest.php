@@ -21,6 +21,7 @@ class DriverRequest extends Model
         'address_from_id',
         'prefered_date',
         'prefered_time',
+        'image_id',
     ]; 
 
     public function client()
@@ -56,5 +57,10 @@ class DriverRequest extends Model
     public function addressTo()
     {
         return $this->belongsTo('App\Model\Address','address_to_id' ,'id');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo('App\Model\ImageFile');
     }
 }

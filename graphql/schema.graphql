@@ -67,6 +67,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse @field(resolver: "VetOfferMutator@acceptVetOffer")
     acceptDriverOffer(input: acceptDriverOfferInput @spread): AcceptDriverOfferResponse @field(resolver: "DriverOfferMutator@acceptDriverOffer")
 
+    imageUpload(image: Upload): ImageUploadResponse @field(resolver: "ImageUpload@imageUpload")
+
     #User
     userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
     updateUser(input: UpdateUserInput @spread): User @update(model: "App\\User")
@@ -210,6 +212,10 @@ input UpdateAddressInput {
     loc_long: String
 }
 
+input ImageOperations {
+    connect: ID
+}
+
 input CreateVetRequestInput {
     client_id: ID
     type: VetRequestTypes
@@ -219,7 +225,7 @@ input CreateVetRequestInput {
     address: CreateAddressOperations @nest
     prefered_date: Date
     prefered_time: String
-
+    image_id: ID
     created_at: String
     updated_at: String
 }
@@ -232,6 +238,7 @@ input UpdateVetRequestInput {
     size_id: ID
     description: String
     address: CreateAddressOperations @nest
+    image: ImageOperations @nest
     prefered_date: Date
     prefered_time: String
 }
@@ -280,6 +287,7 @@ input CreateDriverRequestInput {
     address_to: CreateAddressToOperations @nest
     prefered_date: Date
     prefered_time: String
+    image_id: ID
 }
 
 input UpdateDriverRequestInput {
@@ -402,6 +410,7 @@ type VetRequest {
     prefered_date: Date
     prefered_time: String
     created_at: String
+    image: ImageFile @belongsTo(relation: "image")
 }
 
 type VetOffer {
@@ -428,6 +437,7 @@ type DriverRequest {
     prefered_date: Date
     prefered_time: String
     created_at: String
+    image: ImageFile @belongsTo(relation: "image")
 }
 
 type DriverOffer {
@@ -501,6 +511,12 @@ type ImageFile {
     path: String
     created_at: String
     updated_at: String
+}
+
+type ImageUploadResponse {
+    status: Int!
+    message: String
+    imageFile: ImageFile
 }
 
 type Duration {

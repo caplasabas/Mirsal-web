@@ -17,6 +17,6 @@ class UserFile extends Model
 
     public function getPathAttribute()
     {
-        return asset("storage/user_files/".$this->name);
+        return asset("user_files/".$this->name);
     }
 }
