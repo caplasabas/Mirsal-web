@@ -20,6 +20,8 @@ type Mutation {
     avatar: Upload
     ): UserResponse! @field(resolver: "RegisterMutator")
 
+    otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
+
     
 }
 
@@ -72,13 +74,13 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     #User
     userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
     updateUser(input: UpdateUserInput @spread): User @update(model: "App\\User")
-    otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
+    
 
 }
 
 type Query {
 
-
+    
     allProducts(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
 
 }                                                                                                                                                                                                                                                                                                                              
