@@ -12,7 +12,7 @@ type Mutation {
     register(
     role: Roles!
     name: String! @rules(apply: ["required", "string"])
-    email: String! @rules(apply: ["required", "email", "unique:users,email"])
+    # email: String @rules(apply: ["email", "unique:users,email"])
     phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
     password: String! @rules(apply: ["required", "confirmed", "min:8"])
     password_confirmation: String!
@@ -38,6 +38,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     createVetOffer(input: CreateVetOfferInput @spread): VetOffer! @create(model: "App\\Model\\VetOffer")
     updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
+    upsertVetOffer(input: UpdateVetOfferInput @spread): VetOffer @upsert(model: "App\\Model\\VetOffer")
 
     #DRIVER
     createDriverRequest(input: CreateDriverRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
@@ -47,6 +48,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     createDriverOffer(input: CreateDriverOfferInput @spread): DriverOffer! @create(model: "App\\Model\\DriverOffer")
     updateDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @update(model: "App\\Model\\DriverOffer")
     deleteDriverOffer(id: ID!): DriverOffer! @delete(model: "App\\Model\\DriverOffer")
+    upsertDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @upsert(model: "App\\Model\\DriverOffer")
+
 
     #CLIENT
     createProduct(input: CreateProductInput @spread): Product @create(model: "App\\Model\\Product")
@@ -126,6 +129,7 @@ type User {
     role: Roles!
     vet_status: VetStatuses
     user_file: UserFile @hasOne(relation: "userFile")
+    avatar: String!
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -230,6 +234,7 @@ input CreateVetRequestInput {
     image_id: ID
     created_at: String
     updated_at: String
+    vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
 }
 
 input UpdateVetRequestInput {
@@ -245,6 +250,7 @@ input UpdateVetRequestInput {
     prefered_time: String
 }
 
+
 input CreateVetOfferInput {
     vet_id: ID
     vet_request_id: ID
@@ -253,12 +259,13 @@ input CreateVetOfferInput {
 }
 
 input UpdateVetOfferInput {
-    id: ID!
+    id: ID
     vet_id: ID
     vet_request_id: ID
     price: String
     status: VetOfferStatuses
 }
+
 
 input CreateInvoiceInput {
     client_id: ID!
@@ -313,7 +320,7 @@ input CreateDriverOfferInput {
 }
 
 input UpdateDriverOfferInput {
-    id: ID!
+    id: ID
     driver_id: ID
     driver_request_id: ID
     price: String
@@ -552,6 +559,14 @@ type UserFile {
     id: ID
     name: String
     path: String
+}
+
+type AdminSetting{
+    name: String
+    name_ar: String
+    tax_perc: Int
+    admin_commission_perc: Int
+    first_payment_perc: Int
 }
 
 #Enums

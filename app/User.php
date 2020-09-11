@@ -39,6 +39,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Model\Interest', 'user_interests', 'user_id', 'interest_id');
     }
 
+    public function getAvatarAttribute()
+    {
+        return asset("animal_images/".$this->avatar);
+    }
 
 
 }
