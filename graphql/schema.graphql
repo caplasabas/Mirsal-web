@@ -129,7 +129,7 @@ type User {
     role: Roles!
     vet_status: VetStatuses
     user_file: UserFile @hasOne(relation: "userFile")
-    avatar: String!
+    avatar: String
     created_at: DateTime!
     updated_at: DateTime!
 }
