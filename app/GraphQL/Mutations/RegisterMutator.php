@@ -62,7 +62,7 @@ class RegisterMutator
         }
 
         
-        event(new WhenUserLogin($user));
+        event(new OnRegister($user));
         return [
             'user' => $user,
             'token' => $token
