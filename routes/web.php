@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Events\OnRegister;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,10 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('home','HomeController');
     });
 
+});
+
+Route::get('test', function(){
+    $order = \App\User::find(28);
+    $user = $order->user;
+    event(new OnRegister($user));
 });
