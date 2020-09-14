@@ -12,7 +12,7 @@ type Mutation {
     register(
     role: Roles!
     name: String! @rules(apply: ["required", "string"])
-    # email: String @rules(apply: ["email", "unique:users,email"])
+    email: String @rules(apply: ["email", "unique:users,email"])
     phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
     password: String! @rules(apply: ["required", "confirmed", "min:8"])
     password_confirmation: String!
@@ -124,7 +124,7 @@ extend type Query @middleware(checks: ["auth:api"]){
 type User {
     id: ID!
     name: String!
-    email: String!
+    email: String
     phone: String!
     role: Roles!
     vet_status: VetStatuses
@@ -496,6 +496,7 @@ type Product {
     address: Address @belongsTo(relation: "address")
     status: ProductStatus
     type: ProductType
+    quantity: Int
     is_vip: Int
     description: String
     duration: Duration @belongsTo(relation: "duration")
