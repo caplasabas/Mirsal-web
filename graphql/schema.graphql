@@ -291,7 +291,6 @@ input CreateDriverRequestInput {
     animal_id: ID!
     size_id: ID!
     description: String!
-    quantity: Int!
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
     prefered_date: Date
@@ -342,6 +341,7 @@ input CreateProductInput {
     iban: String
     accepted_client_offer_id: ID
     image_id: ID
+    quantity: Int!
 }
 
 input UpdateProductInput {
