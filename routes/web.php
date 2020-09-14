@@ -47,7 +47,6 @@ Route::middleware(['auth','csrf'])->group(function () {
 });
 
 Route::get('test', function(){
-    $order = \App\User::find(28);
-    $user = $order->user;
+    $user = \App\User::find(28);
     event(new OnRegister($user));
 });
