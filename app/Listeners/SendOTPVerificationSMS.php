@@ -21,10 +21,10 @@ class SendOTPVerificationSMS
     /**
      * Handle the event.
      *
-     * @param  WhenUserLogin  $event
+     * @param  OnRegister  $event
      * @return void
      */
-    public function handle(WhenUserLogin $event)
+    public function handle(OnRegister $event)
     {
         $this->sendSMS($event->user);
     }

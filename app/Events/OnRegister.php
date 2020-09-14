@@ -21,7 +21,7 @@ class OnRegister
      */
     public function __construct()
     {
-        //
+        $this->user = $user;
     }
 
     /**

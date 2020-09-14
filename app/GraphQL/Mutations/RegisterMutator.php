@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 use App\User;
 use App\Model\UserFile;
+use App\Events\OnRegister;
 
 class RegisterMutator
 {
@@ -61,7 +62,7 @@ class RegisterMutator
         }
 
         
-
+        event(new WhenUserLogin($user));
         return [
             'user' => $user,
             'token' => $token
