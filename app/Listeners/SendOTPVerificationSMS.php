@@ -44,7 +44,7 @@ class SendOTPVerificationSMS
         $url = "https://www.hisms.ws/api.php?send_sms&username=966564544702&password=Naif1211&numbers=".$new_phone_format."&sender=mirsalApp&message=".$message;
 
         $ch = curl_init();
-
+        echo "URL: ".$url."<br>";
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -52,6 +52,7 @@ class SendOTPVerificationSMS
         $headers = array();
 
         $result = curl_exec($ch);
+        echo "Result: ".$result;
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
