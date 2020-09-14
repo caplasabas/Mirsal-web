@@ -36,7 +36,7 @@ class SendOTPVerificationSMS
         $otp_code = mt_rand(1000, 9999);
         $user->otp_code = $otp_code;
         $user->save();
-        $message = "كود التفعيل الخاص بكم في الريف : ".$otp_code."";
+        $message = "كود التفعيل الخاص بكم في مرسال : ".$otp_code."";
         $message = urlencode($message);
         $trimmed_phone = $str1 = substr($phone, 1); 
         $new_phone_format = "966".$trimmed_phone;
