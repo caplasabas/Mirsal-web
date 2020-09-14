@@ -168,11 +168,11 @@ input RegisterInput {
 
 input UpdateUserInput {
     id: ID!
-    name: String! @rules(apply: ["string"])
-    email: String! @rules(apply: ["email", "unique:users,email"])
-    phone: String! @rules(apply:  ["min:10", "unique:users,phone"])
-    password: String! @rules(apply: ["confirmed", "min:8"])
-    password_confirmation: String!
+    name: String @rules(apply: ["string"])
+    email: String @rules(apply: ["email", "unique:users,email"])
+    phone: String @rules(apply:  ["min:10", "unique:users,phone"])
+    password: String @rules(apply: ["confirmed", "min:8"])
+    password_confirmation: String
     avatar: Upload
 }
 
