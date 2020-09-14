@@ -25,6 +25,7 @@ class Product extends Model
         'iban',
         'accepted_client_offer_id',
         'image_id',
+        'quantity',
     ];  
 
     public function seller()
