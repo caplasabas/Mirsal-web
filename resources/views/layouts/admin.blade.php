@@ -8,6 +8,8 @@
 
     @yield('css')
 
+    @stack('head')
+
 </head>
 
 <body >

@@ -47,6 +47,16 @@ Route::middleware(['auth','csrf'])->group(function () {
 });
 
 Route::get('test', function(){
-    $user = \App\User::find(28);
-    event(new OnRegister($user));
+    // $user = \App\User::find(28);
+    // event(new OnRegister($user));
+    $data=array();
+    $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
+    $data['response'] = $response;
+    return view('pages.test')->with(compact('data'));
+});
+
+Route::get('returnUrl', function(){
+    // $user = \App\User::find(28);
+    // event(new OnRegister($user));
+    return view('pages.returnUrl');
 });
