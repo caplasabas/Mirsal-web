@@ -44,6 +44,7 @@ class RegisterMutator
                 $avatarName = $user->id.'_userAvatar'.time().'.'.$file->getClientOriginalExtension();
                 $file->storeAs('user_avatars',$avatarName);
                 $user->avatar = $avatarName;
+                $user->save();
             }
         }
 
