@@ -44,5 +44,11 @@ class User extends Authenticatable
         return asset("animal_images/".$this->avatar);
     }
 
+    public function getPhoneFormattedAttribute(){
+        $trimmed_phone = substr($this->phone, 1); 
+        $new_phone_format = "+966".$trimmed_phone;
+        return $new_phone_format;
+    }
+
 
 }

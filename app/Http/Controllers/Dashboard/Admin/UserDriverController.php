@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 
 class UserDriverController extends Controller
@@ -31,15 +32,42 @@ class UserDriverController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $driver = new User;
+        $driver->role = "DRIVER";
+
+        $rules = array();
+        if($driver->email != $request->email){
+            $driver->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($driver->phone != $request->phone){
+            $driver->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $driver->password = bcrypt($request->password);
+
+        $driver->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        $driver->save();
+        
+        if(isset($request->avatar)){
+            $avatarName = $driver->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $driver->avatar = $avatarName;
+            $driver->save();
+        }
+
+        return redirect()->route('admins.drivers.index');
     }
 
     /**
@@ -73,7 +101,38 @@ class UserDriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $driver = User::find($id);
+
+        $rules = array();
+        if($driver->email != $request->email){
+            $driver->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($driver->phone != $request->phone){
+            $driver->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $driver->password = bcrypt($request->password);
+
+        $driver->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        if(isset($request->avatar)){
+            $avatarName = $driver->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $driver->avatar = $avatarName;
+        }
+
+        $driver->save();
+
+        return redirect()->route('admins.drivers.index');
     }
 
     /**
@@ -84,6 +143,9 @@ class UserDriverController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $driver = User::find($id);
+        $driver->delete();
+
+        return redirect()->route('admins.drivers.index');
     }
 }

@@ -311,6 +311,9 @@ return [
     'clients' => "Clients",
     'client' => "Client",
     'accept_vet_text' => "You want to accept this Veterinarian?",
+    'delete_vet_text' => "You want to delete this Veterinarian?",
+    'delete_driver_text' => "You want to delete this Driver?",
+    'delete_client_text' => "You want to delete this Client?",
     'accept' => "Accept",
     'cars' => "Cars",
     'car' => "Car",
@@ -340,5 +343,17 @@ return [
     'payment_details' => "Payment Details",
     'to' => "To",
     'from' => "From",
+    'edit_veterinarian' => "Edit Veterinarian",
+    'create_veterinarian' => "Add Veterinarian",
+    'input_email' => "email@example.com",
+    'input_phone' => "0504123241",
+    'input_name' => "John Doe",
+    'create_client' => "Add Client",
+    'edit_client' => "Edit Client",
+    'skipped' => "Skipped",
+    'visit' => "Visit",
+    'consultation' => "Consultation",
+    
+
 
 ];

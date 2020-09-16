@@ -126,6 +126,7 @@ type User {
     name: String!
     email: String
     phone: String!
+    phone_formatted: String
     role: Roles!
     vet_status: VetStatuses
     user_file: UserFile @hasOne(relation: "userFile")
@@ -291,6 +292,7 @@ input CreateDriverRequestInput {
     type: DriverRequestTypes
     animal_id: ID!
     size_id: ID!
+    quantity: Int
     description: String!
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
@@ -305,6 +307,7 @@ input UpdateDriverRequestInput {
     type: DriverRequestTypes
     animal_id: ID
     size_id: ID
+    quantity: Int
     description: String
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest

@@ -41,7 +41,6 @@ Route::middleware(['auth','csrf'])->group(function () {
 
         Route::resource('drivers','UserDriverController');
         Route::resource('clients','UserClientController');
-        Route::resource('home','HomeController');
     });
 
 });

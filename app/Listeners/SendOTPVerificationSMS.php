@@ -38,7 +38,7 @@ class SendOTPVerificationSMS
         $user->save();
         $message = "كود التفعيل الخاص بكم في مرسال : ".$otp_code."";
         $message = urlencode($message);
-        $trimmed_phone = $str1 = substr($phone, 1); 
+        $trimmed_phone = substr($phone, 1); 
         $new_phone_format = "966".$trimmed_phone;
 
         $url = "https://www.hisms.ws/api.php?send_sms&username=966564544702&password=Naif1211&numbers=".$new_phone_format."&sender=mirsal&message=".$message;

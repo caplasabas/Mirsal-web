@@ -6,8 +6,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.veterinary_requests') }} 
+                <div class="row">
+                    <div class="col-lg-6">{{ __('lang.veterinary_requests') }} </div>
+                    
+                    <div class="col-lg-6 text-left"> 
 
+                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#edit-vet-request">{{ __('lang.edit') }}</button>
+
+                    <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#cancel-order">{{ __('lang.cancel') }}</button>
+
+                    <button type="button" class="btn btn-success btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#assign-order">{{ __('lang.assign') }}</button>
+                    </div>
+                </div>
+                
                 </div>
                 <div class="card-body bg-primary">
                     <div class="contatiner">
@@ -190,3 +201,45 @@
     </div>
 </div>
 @endsection
+
+
+<div class="modal fade" id="edit-vet-request" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-warning">
+        <form action="{{ route('admins.vet-requests.update', $vetRequest->id ) }}" method="POST" enctype="multipart/form-data" >
+        {{ method_field('PUT') }}
+        <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+        <div class="modal-header bg-warning">
+        <h5 class="modal-title text-white">{{ __('lang.edit_veterinarian') }}</h5>
+
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.type') }}</label>
+                <select class="form-control" name="type" id="input-1">
+                    <option value="CONSULTATION" @if ($vetRequest->type == "CONSULTATION") selected @endif >{{ __('lang.consultation') }}</option>
+                    <option value="VISIT" @if ($vetRequest->type == "VISIT") selected @endif >{{ __('lang.visit') }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.status') }}</label>
+                <select class="form-control" name="status" id="input-1">
+                    <option value="PENDING" @if ($vetRequest->status == "PENDING") selected @endif >{{ __('lang.pending') }}</option>
+                    <option value="SKIPPED" @if ($vetRequest->status == "SKIPPED") selected @endif >{{ __('lang.skipped') }}</option>
+                    <option value="ACCEPTED" @if ($vetRequest->status == "ACCEPTED") selected @endif >{{ __('lang.accepted') }}</option>
+                    <option value="COMPLETED" @if ($vetRequest->status == "COMPLETED") selected @endif >{{ __('lang.completed') }}</option>
+                </select>
+            </div>
+           
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>

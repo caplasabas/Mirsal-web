@@ -77,7 +77,11 @@ class VetRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vetRequest = VetRequest::find($id);
+        $vetRequest->save();
+
+        return redirect()->route('admins.vet-requests.show',  $id );
+
     }
 
     /**

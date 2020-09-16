@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 
 class UserVeterinarianController extends Controller
@@ -39,7 +40,40 @@ class UserVeterinarianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vet = new User;
+        $vet->role = "VETERINARIAN";
+
+        $rules = array();
+        if($vet->email != $request->email){
+            $vet->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($vet->phone != $request->phone){
+            $vet->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $vet->password = bcrypt($request->password);
+
+        $vet->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        $vet->save();
+        
+        if(isset($request->avatar)){
+            $avatarName = $vet->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $vet->avatar = $avatarName;
+            $vet->save();
+        }
+
+        return redirect()->route('admins.veterinarians.index');
     }
 
     /**
@@ -73,7 +107,38 @@ class UserVeterinarianController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $vet = User::find($id);
 
+        $rules = array();
+        if($vet->email != $request->email){
+            $vet->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($vet->phone != $request->phone){
+            $vet->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $vet->password = bcrypt($request->password);
+
+        $vet->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        if(isset($request->avatar)){
+            $avatarName = $vet->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $vet->avatar = $avatarName;
+        }
+
+        $vet->save();
+
+        return redirect()->route('admins.veterinarians.index');
     }
 
     /**
@@ -84,7 +149,10 @@ class UserVeterinarianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vet = User::find($id);
+        $vet->delete();
+
+        return redirect()->route('admins.veterinarians.index');
     }
 
     public function accept($id)

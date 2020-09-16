@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 
 class UserClientController extends Controller
@@ -15,7 +16,7 @@ class UserClientController extends Controller
      */
     public function index()
     {
-        $clients = User::whereIn("role", ["CLIENT", "VETERINARIAN", "DRIVER"])->get();
+        $clients = User::whereIn("role", ["CLIENT"])->get();
         $data['clients'] = $clients;
 
         return view('pages.admin.clients.index')->with(compact('data'));
@@ -26,20 +27,42 @@ class UserClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $client = new User;
+        $client->role = "CLIENT";
+
+        $rules = array();
+        if($client->email != $request->email){
+            $client->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($client->phone != $request->phone){
+            $client->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $client->password = bcrypt($request->password);
+
+        $client->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        $client->save();
+        
+        if(isset($request->avatar)){
+            $avatarName = $client->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $client->avatar = $avatarName;
+            $client->save();
+        }
+
+        return redirect()->route('admins.clients.index');
     }
 
     /**
@@ -73,7 +96,38 @@ class UserClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = User::find($id);
+
+        $rules = array();
+        if($client->email != $request->email){
+            $client->email = $request->email;
+            $rules['email'] = 'unique:users|max:255';
+        }
+
+        if($client->phone != $request->phone){
+            $client->phone = $request->phone;
+            $rules['phone'] = 'unique:users|max:10';
+        }
+        
+        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+
+
+        if(!empty($request->password))
+            $client->password = bcrypt($request->password);
+
+        $client->name = $request->name;
+
+        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+
+        if(isset($request->avatar)){
+            $avatarName = $client->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars',$avatarName);
+            $client->avatar = $avatarName;
+        }
+
+        $client->save();
+
+        return redirect()->route('admins.clients.index');
     }
 
     /**
@@ -84,6 +138,9 @@ class UserClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = User::find($id);
+        $client->delete();
+
+        return redirect()->route('admins.clients.index');
     }
 }
