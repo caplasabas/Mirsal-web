@@ -353,6 +353,8 @@ return [
     'skipped' => "Skipped",
     'visit' => "Visit",
     'consultation' => "Consultation",
+    'date'=>"Date",
+    'time'=>"Time",
     
 
 

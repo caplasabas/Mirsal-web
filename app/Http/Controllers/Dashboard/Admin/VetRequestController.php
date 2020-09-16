@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\VetRequest;
+use App\Model\Animal;
+use App\Model\Size;
+use App\Model\TimeSlot;
 
 class VetRequestController extends Controller
 {
@@ -52,9 +55,17 @@ class VetRequestController extends Controller
     {
         $vetRequest = VetRequest::find($id);
         $data = array();
-        $vetRequest = $vetRequest;
 
-        return view('pages.admin.vet-requests.show')->with(compact("vetRequest"));
+        
+        $sizes = Size::all();
+        $animals = Animal::all();
+        $timeslots = TimeSlot::all();
+        $data['vetRequest'] = $vetRequest;
+        $data['sizes'] = $sizes;
+        $data['animals'] = $animals;
+        $data['timeslots'] = $timeslots;
+
+        return view('pages.admin.vet-requests.show')->with(compact("data"));
     }
 
     /**
