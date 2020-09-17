@@ -8,6 +8,6 @@ class ImageFile extends Model
 {
     public function getPathAttribute()
     {
-        return asset("animal_images/".$this->image_name);
+        return asset("storage/animal_images/".$this->image_name);
     }
 }
