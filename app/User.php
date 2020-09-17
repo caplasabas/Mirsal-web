@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return asset("animal_images/".$value);
+        return asset("storage/user_avatars/".$value);
     }
 
     public function getPhoneFormattedAttribute(){

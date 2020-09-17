@@ -72,8 +72,10 @@ class UserClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        $client = User::find($id);
+        $data['client'] = $client;
+        return view('pages.admin.clients.show')->with(compact('data'));
     }
 
     /**
@@ -127,7 +129,7 @@ class UserClientController extends Controller
 
         $client->save();
 
-        return redirect()->route('admins.clients.index');
+        return redirect()->route('admins.clients.show',  $id );
     }
 
     /**

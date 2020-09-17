@@ -78,7 +78,9 @@ class UserDriverController extends Controller
      */
     public function show($id)
     {
-        //
+        $driver = User::find($id);
+        $data['driver'] = $driver;
+        return view('pages.admin.drivers.show')->with(compact('data'));
     }
 
     /**
@@ -132,7 +134,7 @@ class UserDriverController extends Controller
 
         $driver->save();
 
-        return redirect()->route('admins.drivers.index');
+        return redirect()->route('admins.drivers.show',  $id );
     }
 
     /**

@@ -35,11 +35,7 @@
                             <td>{{ $veterinarian->vet_status}}</td>
                             <td> 
                                 <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
-                            @if($veterinarian->vet_status == "PENDING")
-                            <button class="btn btn-success  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.accept') }}</button>
-                            @endif
-                            <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button>
-                            <button class="btn btn-danger  m-1" data-toggle="modal" data-target="#delete-vet-{{ $veterinarian->id }}">{{ __('lang.delete') }}</button>
+                            <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
                             </td>
                             </tr>
 

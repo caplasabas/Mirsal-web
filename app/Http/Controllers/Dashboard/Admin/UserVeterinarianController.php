@@ -84,7 +84,9 @@ class UserVeterinarianController extends Controller
      */
     public function show($id)
     {
-        //
+        $veterinarian = User::find($id);
+        $data['veterinarian'] = $veterinarian;
+        return view('pages.admin.veterinarians.show')->with(compact('data'));
     }
 
     /**
@@ -138,7 +140,7 @@ class UserVeterinarianController extends Controller
 
         $vet->save();
 
-        return redirect()->route('admins.veterinarians.index');
+        return redirect()->route('admins.veterinarians.show',  $id );
     }
 
     /**

@@ -356,6 +356,8 @@ return [
     'date'=>"Date",
     'time'=>"Time",
     
+    'information'=>"information",
+    'show'=>"show",
 
 
 ];
