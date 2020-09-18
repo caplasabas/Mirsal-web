@@ -48,15 +48,20 @@ class Product extends Model
         return $this->belongsTo('App\Model\ImageFile');
     }
 
-    public function acceptedClientOffer()
+    public function clientOffers()
     {
-        return $this->belongsTo('App\Model\ClientOffer', 'accepted_client_offer_id');
+        return $this->hasMany('App\Model\ClientOffer');
     }
 
-    public function driverRequest()
-    {
-        return $this->belongsTo('App\Model\DriverRequest');
-    }
+    // public function acceptedClientOffer()
+    // {
+    //     return $this->belongsTo('App\Model\ClientOffer', 'accepted_client_offer_id');
+    // }
+
+    // public function driverRequest()
+    // {
+    //     return $this->belongsTo('App\Model\DriverRequest');
+    // }
 
     public function image()
     {

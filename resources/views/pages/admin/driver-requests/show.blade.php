@@ -6,107 +6,148 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.delivery_requests') }} 
+                
+                <div class="row">
+                    <div class="col-lg-6">{{ __('lang.delivery_requests') }}  </div>
+                    
+                    <div class="col-lg-6 text-left"> 
 
+                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#edit-driver-request">{{ __('lang.edit') }}</button>
+
+                    </div>
+                </div>
                 </div>
                 <div class="card-body bg-primary">
                     <div class="contatiner">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-header text-uppercase text-info">
+                                        {{ __('lang.image') }} 
+                                    </div>
+                                    <div class="card-body">
+                                        @if(isset($data['driverRequest']->image))
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                    <img class="img-thumbnail" src="{{ $data['driverRequest']->image->path}}" alt="Default" height="200px" width="230px">
+                                            </div>
+
+                                        </div>
+                                        @else
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                {{ __('lang.nothing_found') }} 
+                                            </div>
+
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="card">
                                 <div class="card-header text-uppercase text-info">
                                     {{ __('lang.delivery_request_info') }} 
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.client') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->client->name}}</strong>  
+                                                <strong>{{ $data['driverRequest']->client->name}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.type') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->type}}</strong>  
+                                                <strong>{{ $data['driverRequest']->type}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->status}}</strong>  
+                                                <strong>{{ $data['driverRequest']->status}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.animal') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->animal->name_ar}}</strong>  
+                                                <strong>{{ $data['driverRequest']->animal->name_ar}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.size') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->size->name_ar}}</strong>  
+                                                <strong>{{ $data['driverRequest']->size->name_ar}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.quantity') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->quantity}}</strong>  
+                                                <strong>{{ $data['driverRequest']->quantity}}</strong>  
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class='row'>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.from') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->addressFrom->CompleteAddress}}</strong>  
+                                                <strong>{{ $data['driverRequest']->addressFrom->CompleteAddress}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.to') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->addressTo->CompleteAddress}}</strong>  
+                                                <strong>{{ $data['driverRequest']->addressTo->CompleteAddress}}</strong>  
+                                                </div>
+                                                <div class="col-5 text-strong">
+                                                    {{ __('lang.prefered_date') }} :
+                                                </div>
+                                                <div class="col-7">
+                                                <strong>{{ $data['driverRequest']->prefered_date}}</strong>  
+                                                </div>
+                                                <div class="col-5 text-strong">
+                                                    {{ __('lang.prefered_time') }} :
+                                                </div>
+                                                <div class="col-7">
+                                                <strong>{{ $data['driverRequest']->prefered_time}}</strong>  
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                @if(isset($driverRequest->driverOfferAccepted))
+                            <div class="col-lg-5">
+                                
                                 <div class="card">
                                 <div class="card-header text-uppercase text-info">
                                     {{ __('lang.delivery_accepted_offer') }} 
                                 </div>
                                 <div class="card-body">
+                                    @if(isset($data['driverRequest']->driverOfferAccepted))
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="row">
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.veterinarian') }} :
+                                                    {{ __('lang.driver') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $driverRequest->driverOfferAccepted->driver->name}}</strong>  
+                                                <strong>{{ $data['driverRequest']->driverOfferAccepted->driver->name}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>{{ $driverRequest->driverOfferAccepted->status}}</strong>  
+                                                    <strong>{{ $data['driverRequest']->driverOfferAccepted->status}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.price') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>SA {{ $driverRequest->driverOfferAccepted->price}}</strong>  
+                                                    <strong>SA {{ $data['driverRequest']->driverOfferAccepted->price}}</strong>  
                                                 </div>
 
                                             </div>
@@ -116,9 +157,18 @@
 
                                         </div>
                                     </div>
+                                    @else
+
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                {{ __('lang.nothing_found') }} 
+                                            </div>
+                                        </div>
+
+                                    @endIf
                                 </div>
                                 </div>
-                                @endIf
+                                
                             </div>
                         </div>
                         <div class="row">
@@ -139,7 +189,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($driverRequest->driverOffers as $index => $driverOffer )
+                                            @foreach($data['driverRequest']->driverOffers as $index => $driverOffer )
                                                 <tr>
                                                 <td>{{ $index }}</td>
                                                 <td>{{ $driverOffer->driver->name}}</td>
@@ -153,7 +203,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if(isset($driverRequest->driverOfferAccepted))
+                        @if(isset($data['driverRequest']->driverOfferAccepted))
                         <div class="row">
                             <div class="col-6">
                             </div>
@@ -170,15 +220,15 @@
 
                                                 <tr>
                                                 <td>{{ __('lang.price') }} </td>
-                                                <td>{{ $driverRequest->driverOfferAccepted->price}}</td>
+                                                <td>{{ $data['driverRequest']->driverOfferAccepted->price}}</td>
                                                 </tr>
                                                 <tr>
                                                 <td>{{ __('lang.tax') }} </td>
-                                                <td>{{ $driverRequest->driverOfferAccepted->tax_price}}</td>
+                                                <td>{{ $data['driverRequest']->driverOfferAccepted->tax_price}}</td>
                                                 </tr>
                                                 <tr>
                                                 <td><strong>{{ __('lang.total') }} </strong></td>
-                                                <td><strong>{{ $driverRequest->driverOfferAccepted->total}}</strong></td>
+                                                <td><strong>{{ $data['driverRequest']->driverOfferAccepted->total}}</strong></td>
                                                 </tr>
 
                                             </tbody>
@@ -193,6 +243,78 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-driver-request" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-warning">
+        <form action="{{ route('admins.driver-requests.update', $data['driverRequest']->id ) }}" method="POST" enctype="multipart/form-data" >
+        {{ method_field('PUT') }}
+        <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+        <div class="modal-header bg-warning">
+        <h5 class="modal-title text-white">{{ __('lang.edit_driver') }}</h5>
+
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.type') }}</label>
+                <select class="form-control" name="type" id="input-1">
+                    <option value="SHARE" @if ($data['driverRequest']->type == "SHARE") selected @endif >{{ __('lang.share') }}</option>
+                    <option value="PRIVATE" @if ($data['driverRequest']->type == "PRIVATE") selected @endif >{{ __('lang.private') }}</option>
+                </select>
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="input-1">{{ __('lang.status') }}</label>
+                <select class="form-control" name="status" id="input-1">
+                    <option value="PENDING" @if ($data['driverRequest']->status == "PENDING") selected @endif >{{ __('lang.pending') }}</option>
+                    <option value="SKIPPED" @if ($data['driverRequest']->status == "SKIPPED") selected @endif >{{ __('lang.skipped') }}</option>
+                    <option value="ACCEPTED" @if ($data['driverRequest']->status == "ACCEPTED") selected @endif >{{ __('lang.accepted') }}</option>
+                    <option value="COMPLETED" @if ($data['driverRequest']->status == "COMPLETED") selected @endif >{{ __('lang.completed') }}</option>
+                </select>
+            </div> -->
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.size') }}</label>
+                <select class="form-control" name="animal_id" id="input-1">
+                @foreach($data['animals'] as $index => $animal )
+                    <option value="{{ $animal->id }}" @if ($animal->id == $data['driverRequest']->animal->id) selected @endif >{{ $animal->name_ar }}</option>
+                @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.size') }}</label>
+                <select class="form-control" name="size_id" id="input-1">
+                @foreach($data['sizes'] as $index => $size )
+                    <option value="{{ $size->id }}" @if ($size->id == $data['driverRequest']->size->id) selected @endif >{{ $size->name_ar }}</option>
+                @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-add-5">{{ __('lang.date') }}</label>
+                <input type="date" class="form-control" name="prefered_date" value="{{$data['driverRequest']->prefered_date}}">
+            </div>
+
+            <div class="form-group">
+                <label for="input-add-5">{{ __('lang.time') }}</label>
+                <select class="form-control" name="prefered_time" id="input-1">
+                @foreach($data['timeslots'] as $index => $timeslot )
+                    <option value="{{ $timeslot->name_ar  }}" @if ($timeslot->name_ar == $data['driverRequest']->prefered_time) selected @endif >{{ $timeslot->name_ar }}</option>
+                @endforeach
+                </select>
+            </div>
+           
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
+        </div>
+        </form>
+    </div>
     </div>
 </div>
 @endsection

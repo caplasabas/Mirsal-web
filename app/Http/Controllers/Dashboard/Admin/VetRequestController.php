@@ -89,10 +89,15 @@ class VetRequestController extends Controller
     public function update(Request $request, $id)
     {
         $vetRequest = VetRequest::find($id);
+        $vetRequest->type = $request->type;
+        $vetRequest->animal_id = $request->animal_id;
+        $vetRequest->size_id = $request->size_id;
+        $vetRequest->prefered_date = $request->prefered_date;
+        $vetRequest->prefered_time = $request->prefered_time;
+
         $vetRequest->save();
 
         return redirect()->route('admins.vet-requests.show',  $id );
-
     }
 
     /**

@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.delivery_offers') }} 
+                {{ __('lang.driver_offers') }} 
 
                 </div>
                 <div class="card-body">
@@ -16,16 +16,18 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">{{ __('lang.driver') }}</th>
-                            <th scope="col">{{ __('lang.status') }}</th>
+                            <th scope="col">{{ __('lang.price') }}</th>
+                            <th scope="col">{{ __('lang.client') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data['driverOffers'] as $index => $driverOffer )
                             <tr>
-                            <td>{{ $index }}</td>
+                            <td>{{ $driverOffer->id }}</td>
                             <td>{{ $driverOffer->driver->name}}</td>
-                            <td>{{ $driverOffer->status}}</td>
+                            <td>{{ $driverOffer->price}}</td>
+                            <td>{{ $driverOffer->driverRequest->client->name}}</td>
                             <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach

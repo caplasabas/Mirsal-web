@@ -6,120 +6,174 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.veterinary_requests') }} 
+                <div class="row">
+                    <div class="col-lg-6">{{ __('lang.product') }} </div>
+                    
+                    <div class="col-lg-6 text-left"> 
 
+                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#edit-product">{{ __('lang.edit') }}</button>
+
+                    </div>
+                </div>
+                
                 </div>
                 <div class="card-body bg-primary">
                     <div class="contatiner">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="card">
                                 <div class="card-header text-uppercase text-info">
-                                    {{ __('lang.veterinary_request_info') }} 
+                                    {{ __('lang.image') }} 
+                                </div>
+                                <div class="card-body">
+                                    @if(isset($data['product']->image))
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                    <img class="img-thumbnail" src="{{ $data['product']->image->path}}" alt="Default" height="200px" width="230px">
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                {{ __('lang.nothing_found') }} 
+                                            </div>
+
+                                        </div>
+                                        @endif
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card">
+                                <div class="card-header text-uppercase text-info">
+                                    {{ __('lang.product_info') }} 
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="row">
-                                                <div class="col-5 text-strong">
-                                                    {{ __('lang.client') }} :
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.title') }} :
                                                 </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->client->name}}</strong>  
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->title}}</strong>  
                                                 </div>
-                                                <div class="col-5 text-strong">
+                                                <div class="col-3 text-strong">
                                                     {{ __('lang.type') }} :
                                                 </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->type}}</strong>  
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->type}}</strong>  
                                                 </div>
-                                                <div class="col-5 text-strong">
+                                                <div class="col-3 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->status}}</strong>  
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->status}}</strong>  
                                                 </div>
-                                                <div class="col-5 text-strong">
-                                                    {{ __('lang.animal') }} :
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.seller') }} :
                                                 </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->animal->name_ar}}</strong>  
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->seller->name}}</strong>  
                                                 </div>
-                                                <div class="col-5 text-strong">
-                                                    {{ __('lang.size') }} :
+                                                
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.is_vip') }} :
                                                 </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->size->name_ar}}</strong>  
+                                                <div class="col-9">
+                                                <strong>@if($data['product']->is_vip) {{ __('lang.yes') }} @else {{ __('lang.no') }} @endif</strong>  
                                                 </div>
+                                                @if($data['product']->is_vip)
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.vip_status') }} :
+                                                </div>
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->vip_status }}</strong>  
+                                                </div>
+                                                @endif
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.age') }} :
+                                                </div>
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->duration->name}}</strong>  
+                                                </div>
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.contact_phone') }} :
+                                                </div>
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->contact_phone}}</strong>  
+                                                </div>
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.contact_email') }} :
+                                                </div>
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->contact_email}}</strong>  
+                                                </div>
+                                                <div class="col-3 text-strong">
+                                                    {{ __('lang.iban') }} :
+                                                </div>
+                                                <div class="col-9">
+                                                <strong>{{ $data['product']->iban}}</strong>  
+                                                </div>
+
+                                                
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
-                                            <div class='row'>
-                                                <div class="col-5 text-strong">
-                                                    {{ __('lang.prefered_date') }} :
-                                                </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->prefered_date}}</strong>  
-                                                </div>
-                                                <div class="col-5 text-strong">
-                                                    {{ __('lang.prefered_time') }} :
-                                                </div>
-                                                <div class="col-7">
-                                                <strong>{{ $vetRequest->prefered_time}}</strong>  
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                @if(isset($vetRequest->vetOfferAccepted))
+                            </div>   
+                            <div class="col-lg-4">
                                 <div class="card">
                                 <div class="card-header text-uppercase text-info">
-                                    {{ __('lang.veterinary_accepted_offer') }} 
+                                    {{ __('lang.contact_info') }} 
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.veterinarian') }} :
+                                                    {{ __('lang.seller') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $vetRequest->vetOfferAccepted->veterinarian->name}}</strong>  
+                                                <strong>{{ $data['product']->seller->name}}</strong>  
+                                                </div>
+                                    
+                                                <div class="col-5 text-strong">
+                                                    {{ __('lang.contact_phone') }} :
+                                                </div>
+                                                <div class="col-7">
+                                                <strong>{{ $data['product']->contact_phone}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.status') }} :
+                                                    {{ __('lang.contact_email') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>{{ $vetRequest->vetOfferAccepted->status}}</strong>  
+                                                <strong>{{ $data['product']->contact_email}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.price') }} :
+                                                    {{ __('lang.iban') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>SA {{ $vetRequest->vetOfferAccepted->price}}</strong>  
+                                                <strong>{{ $data['product']->iban}}</strong>  
                                                 </div>
 
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
 
-                                        </div>
                                     </div>
                                 </div>
                                 </div>
-                                @endIf
-                            </div>
+                            </div>          
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header text-uppercase text-info">
-                                    {{ __('lang.veterinary_offers') }} 
+                                    {{ __('lang.client_offers') }} 
 
                                     </div>
                                     <div class="card-body">
@@ -128,16 +182,16 @@
                                             <thead class="thead-info">
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">{{ __('lang.veterinary') }}</th>
+                                                <th scope="col">{{ __('lang.client') }}</th>
                                                 <th scope="col">{{ __('lang.status') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($vetRequest->vetOffers as $index => $vetOffer )
+                                            @foreach($data['product']->clientOffers as $index => $clientOffer )
                                                 <tr>
                                                 <td>{{ $index }}</td>
-                                                <td>{{ $vetOffer->veterinarian->name}}</td>
-                                                <td>{{ $vetOffer->status}}</td>
+                                                <td>{{ $clientOffer->client->name}}</td>
+                                                <td>{{ $clientOffer->status}}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -147,7 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if(isset($vetRequest->vetOfferAccepted))
+                        @if(isset($data['product']->clientOfferAccepted))
                         <div class="row">
                             <div class="col-6">
                             </div>
@@ -164,15 +218,15 @@
 
                                                 <tr>
                                                 <td>{{ __('lang.price') }} </td>
-                                                <td>{{ $vetRequest->vetOfferAccepted->price}}</td>
+                                                <td>{{ $data['product']->clientOfferAccepted->price}}</td>
                                                 </tr>
                                                 <tr>
                                                 <td>{{ __('lang.tax') }} </td>
-                                                <td>{{ $vetRequest->vetOfferAccepted->tax_price}}</td>
+                                                <td>{{ $data['product']->clientOfferAccepted->tax_price}}</td>
                                                 </tr>
                                                 <tr>
                                                 <td><strong>{{ __('lang.total') }} </strong></td>
-                                                <td><strong>{{ $vetRequest->vetOfferAccepted->total}}</strong></td>
+                                                <td><strong>{{ $data['product']->clientOfferAccepted->total}}</strong></td>
                                                 </tr>
 
                                             </tbody>
@@ -190,3 +244,37 @@
     </div>
 </div>
 @endsection
+
+
+<div class="modal fade" id="edit-product" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-warning">
+        <form action="{{ route('admins.products.update', $data['product']->id ) }}" method="POST" enctype="multipart/form-data" >
+        {{ method_field('PUT') }}
+        <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+        <div class="modal-header bg-warning">
+        <h5 class="modal-title text-white">{{ __('lang.edit_client') }}</h5>
+
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.type') }}</label>
+                <select class="form-control" name="type" id="input-1">
+                    <option value="CONSULTATION" @if ($data['product']->type == "CONSULTATION") selected @endif >{{ __('lang.consultation') }}</option>
+                    <option value="VISIT" @if ($data['product']->type == "VISIT") selected @endif >{{ __('lang.visit') }}</option>
+                </select>
+            </div>
+
+
+           
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Product;
+use App\Model\Animal;
+use App\Model\Size;
+use App\Model\TimeSlot;
 
 class ProductController extends Controller
 {
@@ -50,11 +53,18 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $products = Products::find($id);
+        $product = Product::find($id);
         $data = array();
-        $products = $products;
 
-        return view('pages.admin.vet-requests.show')->with(compact("products"));
+        $sizes = Size::all();
+        $animals = Animal::all();
+        $timeslots = TimeSlot::all();
+        $data['product'] = $product;
+        $data['sizes'] = $sizes;
+        $data['animals'] = $animals;
+        $data['timeslots'] = $timeslots;
+
+        return view('pages.admin.products.show')->with(compact("data"));
     }
 
     /**

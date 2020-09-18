@@ -105,7 +105,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     driverOffers(driver_request_id: ID @eq, driver_id: ID @eq, status: DriverOfferStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
     driverOffer(id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
 
-    products(seller_id: ID @eq, is_vip: Int @eq, status: ProductStatus @eq, type: ProductType @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
+    products(seller_id: ID @eq, is_vip: Int @eq, status: ProductStatus @eq, vip_status: VipStatuses @eq, type: ProductType @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\Product")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\Product")
@@ -502,6 +502,7 @@ type Product {
     type: ProductType
     quantity: Int
     is_vip: Int
+    vip_status: VipStatuses
     description: String
     duration: Duration @belongsTo(relation: "duration")
     price: String
@@ -603,6 +604,12 @@ enum VetOfferStatuses{
 enum ProductStatus{
     PENDING
     SOLD
+    COMPLETED
+}
+
+enum VipStatuses{
+    PENDING
+    ACCEPTED
     COMPLETED
 }
 

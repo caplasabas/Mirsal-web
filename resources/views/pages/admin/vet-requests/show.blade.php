@@ -13,9 +13,6 @@
 
                     <button type="button" class="btn btn-warning btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#edit-vet-request">{{ __('lang.edit') }}</button>
 
-                    <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#cancel-order">{{ __('lang.cancel') }}</button>
-
-                    <button type="button" class="btn btn-success btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#assign-order">{{ __('lang.assign') }}</button>
                     </div>
                 </div>
                 
@@ -23,14 +20,38 @@
                 <div class="card-body bg-primary">
                     <div class="contatiner">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
+                                <div class="card">
+                                <div class="card-header text-uppercase text-info">
+                                    {{ __('lang.image') }} 
+                                </div>
+                                <div class="card-body">
+                                    @if(isset($data['vetRequest']->image))
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                                <img class="img-thumbnail" src="{{ $data['vetRequest']->image->path}}" alt="Default" height="200px" width="230px">
+                                        </div>
+
+                                    </div>
+                                    @else
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            {{ __('lang.nothing_found') }} 
+                                        </div>
+
+                                    </div>
+                                    @endif
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="card">
                                 <div class="card-header text-uppercase text-info">
                                     {{ __('lang.veterinary_request_info') }} 
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.client') }} :
@@ -62,11 +83,7 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->size->name_ar}}</strong>  
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="col-lg-6">
-                                            <div class='row'>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.prefered_date') }} :
                                                 </div>
@@ -79,20 +96,23 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->prefered_time}}</strong>  
                                                 </div>
+
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                
+                            <div class="col-lg-5">
                                 <div class="card">
                                     <div class="card-header text-uppercase text-info">
                                         {{ __('lang.veterinary_accepted_offer') }} 
                                     </div>
-                                    @if(isset($data['vetRequest']->vetOfferAccepted))
+                                   
                                     <div class="card-body">
+                                        @if(isset($data['vetRequest']->vetOfferAccepted))
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="row">
@@ -122,11 +142,21 @@
 
                                             </div>
                                         </div>
+                                        @else
+
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                {{ __('lang.nothing_found') }} 
+                                            </div>
+                                        </div>
+
+                                        @endIf
                                     </div>
-                                    @endIf
+                                    
                                 </div>
                                 
                             </div>
+                            
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -254,12 +284,12 @@
 
             <div class="form-group">
                 <label for="input-add-5">{{ __('lang.date') }}</label>
-                <input type="date"  class="form-control">
+                <input type="date" class="form-control" name="prefered_date" value="{{$data['vetRequest']->prefered_date}}">
             </div>
 
             <div class="form-group">
                 <label for="input-add-5">{{ __('lang.time') }}</label>
-                <select class="form-control" name="size_id" id="input-1">
+                <select class="form-control" name="prefered_time" id="input-1">
                 @foreach($data['timeslots'] as $index => $timeslot )
                     <option value="{{ $timeslot->name_ar  }}" @if ($timeslot->name_ar == $data['vetRequest']->prefered_time) selected @endif >{{ $timeslot->name_ar }}</option>
                 @endforeach

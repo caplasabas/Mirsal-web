@@ -15,17 +15,19 @@
                         <thead class="thead-info">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">{{ __('lang.veterinary') }}</th>
-                            <th scope="col">{{ __('lang.status') }}</th>
+                            <th scope="col">{{ __('lang.veterinarian') }}</th>
+                            <th scope="col">{{ __('lang.price') }}</th>
+                            <th scope="col">{{ __('lang.client') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data['vetOffers'] as $index => $vetOffer )
                             <tr>
-                            <td>{{ $index }}</td>
+                            <td>{{ $vetOffer->id }}</td>
                             <td>{{ $vetOffer->veterinarian->name}}</td>
-                            <td>{{ $vetOffer->status}}</td>
+                            <td>{{ $vetOffer->price}}</td>
+                            <td>{{ $vetOffer->vetRequest->client->name}}</td>
                             <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach

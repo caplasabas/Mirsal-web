@@ -174,7 +174,7 @@ return [
     'social_media_accounts' => "Social Media Accounts",
     'social_media_account' => "Social Media Account",
     'expiry'=>"expiry",
-    'iban'=>"iban",
+    'iban'=>"IBAN",
     'cvv'=>"cvv",
     'account_number'=>"Account Number",
     'username'=>"Username",
@@ -358,6 +358,16 @@ return [
     
     'information'=>"information",
     'show'=>"show",
-
+    'nothing_found' => "Nothing found.",
+    'share' => "Share",
+    'product_info' => "Product Information",
+    'seller' => "Seller",
+    'is_vip' => "Is VIP",
+    'age' => "Age/Duration",
+    'contact_info' => "Contact Information",
+    'contact_phone' => "Contact Phone",
+    'contact_email' => "Contact Email",
+    'client_offer' => "Clien Offer",
+    'client_offers' => "Clien Offers",
 
 ];

@@ -16,7 +16,9 @@
                         <tr>
                             <th scope="col">#</th>
                             <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                            <th scope="col">{{ __('lang.title') }}</th>
                             <th scope="col">{{ __('lang.description') }}</th>
+                            <th scope="col">{{ __('lang.price') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
@@ -24,10 +26,11 @@
                         @foreach($data['products'] as $index => $product)
                             <tr>
                             <td>{{ $index }}</td>
+                            <td>{{ $product->title}}</td>
                             <td>{{ $product->description}}</td>
+                            <td>{{ $product->price}}</td>
                             <td> 
-                            <a class="btn btn-info" href="{{ route('admins.vet-requests.show', $product->id ) }}" >{{ __('lang.view') }}</a>
-                            <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button>
+                            <a class="btn btn-info" href="{{ route('admins.products.show', $product->id ) }}" >{{ __('lang.view') }}</a>
                             </td>
                             </tr>
                         @endforeach

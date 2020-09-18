@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\DriverRequest;
 
+use App\Model\Animal;
+use App\Model\Size;
+use App\Model\TimeSlot;
+
 class DriverRequestController extends Controller
 {
     /**
@@ -54,7 +58,17 @@ class DriverRequestController extends Controller
         $data = array();
         $driverRequest = $driverRequest;
 
-        return view('pages.admin.driver-requests.show')->with(compact("driverRequest"));
+
+        
+        $sizes = Size::all();
+        $animals = Animal::all();
+        $timeslots = TimeSlot::all();
+        $data['driverRequest'] = $driverRequest;
+        $data['sizes'] = $sizes;
+        $data['animals'] = $animals;
+        $data['timeslots'] = $timeslots;
+
+        return view('pages.admin.driver-requests.show')->with(compact("data"));
     }
 
     /**
@@ -77,7 +91,16 @@ class DriverRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $driverRequest = DriverRequest::find($id);
+        $driverRequest->type = $request->type;
+        $driverRequest->animal_id = $request->animal_id;
+        $driverRequest->size_id = $request->size_id;
+        $driverRequest->prefered_date = $request->prefered_date;
+        $driverRequest->prefered_time = $request->prefered_time;
+
+        $driverRequest->save();
+
+        return redirect()->route('admins.driver-requests.show',  $id );
     }
 
     /**
