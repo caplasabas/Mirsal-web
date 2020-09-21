@@ -363,11 +363,20 @@ return [
     'product_info' => "Product Information",
     'seller' => "Seller",
     'is_vip' => "Is VIP",
+    'vip_status' => "VIP status",
     'age' => "Age/Duration",
     'contact_info' => "Contact Information",
     'contact_phone' => "Contact Phone",
     'contact_email' => "Contact Email",
     'client_offer' => "Clien Offer",
     'client_offers' => "Clien Offers",
+    'accept_product_text' => "You want to accept this Product?",
+
+    'delete_animal_text' => "You want to delete this Animal?",
+    'delete_size_text' => "You want to delete this Size?",
+    'delete_car_text' => "You want to delete this Car?",
+    'delete_duration_text' => "You want to delete this Duration?",
+    'delete_time_slot_text' => "You want to delete this Timeslot?",
+    'buyer'=> "Buyer"
 
 ];

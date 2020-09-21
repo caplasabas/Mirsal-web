@@ -25,7 +25,10 @@
                             <tr>
                             <td>{{ $duration->id }}</td>
                             <td>{{ $duration->name_ar}}</td>
-                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-duration-{{$duration->id}}">{{ __('lang.edit') }}</button></td>
+                            <td> 
+                            <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-duration-{{$duration->id}}">{{ __('lang.edit') }}</button>
+                            <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#delete-duration-{{ $duration->id }}">{{ __('lang.delete') }}</button>
+                            </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -66,6 +69,29 @@
             <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
             <button type="submit" class="btn btn-warning"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
         </div>
+        </form>
+    </div>
+    </div>
+</div>
+<div class="modal fade" id="delete-duration-{{ $duration->id }}" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-danger">
+        <form action="{{ route('admins.durations.destroy', $duration->id) }}" method="POST" enctype="multipart/form-data" >
+            {{ method_field('DELETE') }}
+            <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+            <div class="modal-header bg-danger text-white">
+
+            {{ $duration->name_ar }}
+            </div>
+            <div class="modal-body">
+            <div class="form-group">
+            {{ __('lang.delete_duration_text') }}
+            </div>
+            </div>
+            <div class="modal-footer ">
+            <button type="button" class="btn btn-inverse-danger" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-danger"><i class="fa fa-check-square-o"></i> {{ __('lang.delete') }} </button>
+            </div>
         </form>
     </div>
     </div>

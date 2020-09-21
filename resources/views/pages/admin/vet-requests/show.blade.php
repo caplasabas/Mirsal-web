@@ -25,7 +25,7 @@
                                 <div class="card-header text-uppercase text-info">
                                     {{ __('lang.image') }} 
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body img-centered">
                                     @if(isset($data['vetRequest']->image))
                                     <div class="row">
                                         <div class="col-lg-12">

@@ -25,7 +25,7 @@
                                     <div class="card-header text-uppercase text-info">
                                         {{ __('lang.image') }} 
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body img-centered">
                                         @if(isset($data['driverRequest']->image))
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -266,17 +266,8 @@
                 </select>
             </div>
 
-            <!-- <div class="form-group">
-                <label for="input-1">{{ __('lang.status') }}</label>
-                <select class="form-control" name="status" id="input-1">
-                    <option value="PENDING" @if ($data['driverRequest']->status == "PENDING") selected @endif >{{ __('lang.pending') }}</option>
-                    <option value="SKIPPED" @if ($data['driverRequest']->status == "SKIPPED") selected @endif >{{ __('lang.skipped') }}</option>
-                    <option value="ACCEPTED" @if ($data['driverRequest']->status == "ACCEPTED") selected @endif >{{ __('lang.accepted') }}</option>
-                    <option value="COMPLETED" @if ($data['driverRequest']->status == "COMPLETED") selected @endif >{{ __('lang.completed') }}</option>
-                </select>
-            </div> -->
             <div class="form-group">
-                <label for="input-1">{{ __('lang.size') }}</label>
+                <label for="input-1">{{ __('lang.animal') }}</label>
                 <select class="form-control" name="animal_id" id="input-1">
                 @foreach($data['animals'] as $index => $animal )
                     <option value="{{ $animal->id }}" @if ($animal->id == $data['driverRequest']->animal->id) selected @endif >{{ $animal->name_ar }}</option>
@@ -291,6 +282,11 @@
                     <option value="{{ $size->id }}" @if ($size->id == $data['driverRequest']->size->id) selected @endif >{{ $size->name_ar }}</option>
                 @endforeach
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-add-2">{{ __('lang.quantity') }}</label>
+                <input type="text" class="form-control" id="input-add-2" placeholder="Enter quantity" name="quantity" value="{{ $data['driverRequest']->quantity}}">
             </div>
 
             <div class="form-group">

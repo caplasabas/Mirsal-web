@@ -12,7 +12,9 @@
                     <div class="col-lg-6 text-left"> 
 
                     <button type="button" class="btn btn-warning btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#edit-product">{{ __('lang.edit') }}</button>
-
+                    @if($data['product']->is_vip && $data['product']->vip_status == "PENDING")
+                    <button type="button" class="btn btn-success btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#accept-product">{{ __('lang.accept') }}</button>
+                    @endif
                     </div>
                 </div>
                 
@@ -25,7 +27,7 @@
                                 <div class="card-header text-uppercase text-info">
                                     {{ __('lang.image') }} 
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body img-centered">
                                     @if(isset($data['product']->image))
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -52,68 +54,50 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="row">
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.title') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->title}}</strong>  
                                                 </div>
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.type') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->type}}</strong>  
                                                 </div>
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->status}}</strong>  
                                                 </div>
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.seller') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->seller->name}}</strong>  
                                                 </div>
                                                 
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.is_vip') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>@if($data['product']->is_vip) {{ __('lang.yes') }} @else {{ __('lang.no') }} @endif</strong>  
                                                 </div>
                                                 @if($data['product']->is_vip)
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.vip_status') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->vip_status }}</strong>  
                                                 </div>
                                                 @endif
-                                                <div class="col-3 text-strong">
+                                                <div class="col-4 text-strong">
                                                     {{ __('lang.age') }} :
                                                 </div>
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                 <strong>{{ $data['product']->duration->name}}</strong>  
-                                                </div>
-                                                <div class="col-3 text-strong">
-                                                    {{ __('lang.contact_phone') }} :
-                                                </div>
-                                                <div class="col-9">
-                                                <strong>{{ $data['product']->contact_phone}}</strong>  
-                                                </div>
-                                                <div class="col-3 text-strong">
-                                                    {{ __('lang.contact_email') }} :
-                                                </div>
-                                                <div class="col-9">
-                                                <strong>{{ $data['product']->contact_email}}</strong>  
-                                                </div>
-                                                <div class="col-3 text-strong">
-                                                    {{ __('lang.iban') }} :
-                                                </div>
-                                                <div class="col-9">
-                                                <strong>{{ $data['product']->iban}}</strong>  
                                                 </div>
 
                                                 
@@ -190,7 +174,7 @@
                                             @foreach($data['product']->clientOffers as $index => $clientOffer )
                                                 <tr>
                                                 <td>{{ $index }}</td>
-                                                <td>{{ $clientOffer->client->name}}</td>
+                                                <td>{{ $clientOffer->buyer->name}}</td>
                                                 <td>{{ $clientOffer->status}}</td>
                                                 </tr>
                                             @endforeach
@@ -278,3 +262,30 @@
     </div>
     </div>
 </div>
+
+@if($data['product']->status == "PENDING")
+  
+<div class="modal fade" id="accept-product" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-success">
+        <form action="{{ route('admins.products.accept', $data['product']->id) }}" method="POST" enctype="multipart/form-data" >
+            {{ method_field('PUT') }}
+            <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+            <div class="modal-header bg-success text-white">
+            {{ $data['product']->title }}
+            </div>
+            <div class="modal-body">
+            <div class="form-group">
+            {{ __('lang.accept_product_text') }}
+            </div>
+            </div>
+            <div class="modal-footer ">
+            <button type="button" class="btn btn-inverse-success" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+
+@endif

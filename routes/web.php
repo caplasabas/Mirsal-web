@@ -35,6 +35,10 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('cars','CarController');
         Route::resource('invoices','InvoiceController');
         Route::resource('products','ProductController');
+        Route::put('products/accept/{product}', 'ProductController@accept')->name('products.accept');
+
+        Route::resource('client-offers','ClientOfferController');
+
         Route::resource('admin-settings','AdminSettingController');
         Route::resource('veterinarians','UserVeterinarianController');
         Route::put('veterinarians/accept/{veterinarian}', 'UserVeterinarianController@accept')->name('veterinarians.accept');

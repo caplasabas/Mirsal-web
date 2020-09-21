@@ -30,7 +30,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-3"><img class="rounded-circle" src="{{$data['client']->avatar}}" alt="" height="100px" width="100px"></div>
+                                <div class="col-lg-3" ><img class="rounded-circle" src="{{$data['client']->avatar}}" alt="" height="100px" width="100px"></div>
                                 <div class="col-lg-8">
                                     <div class="row">
                                      <div class="col-4 text-strong">

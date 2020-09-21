@@ -603,6 +603,7 @@ enum VetOfferStatuses{
 
 enum ProductStatus{
     PENDING
+    ACCEPTED
     SOLD
     COMPLETED
 }

@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\DriverRequest;
+use App\Model\ClientOffer;
 
-use App\Model\Animal;
-use App\Model\Size;
-use App\Model\TimeSlot;
-
-class DriverRequestController extends Controller
+class ClientOfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +15,10 @@ class DriverRequestController extends Controller
      */
     public function index()
     {
-        $driverRequests = DriverRequest::all();
-        $data['driverRequests'] = $driverRequests;
+        $clientOffers = ClientOffer::all();
+        $data['clientOffers'] = $clientOffers;
 
-        return view('pages.admin.driver-requests.index')->with(compact('data'));
+        return view('pages.admin.client-offers.index')->with(compact('data'));
     }
 
     /**
@@ -54,21 +50,7 @@ class DriverRequestController extends Controller
      */
     public function show($id)
     {
-        $driverRequest = DriverRequest::find($id);
-        $data = array();
-        $driverRequest = $driverRequest;
-
-
-        
-        $sizes = Size::all();
-        $animals = Animal::all();
-        $timeslots = TimeSlot::all();
-        $data['driverRequest'] = $driverRequest;
-        $data['sizes'] = $sizes;
-        $data['animals'] = $animals;
-        $data['timeslots'] = $timeslots;
-
-        return view('pages.admin.driver-requests.show')->with(compact("data"));
+        //
     }
 
     /**
@@ -91,17 +73,7 @@ class DriverRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $driverRequest = DriverRequest::find($id);
-        $driverRequest->type = $request->type;
-        $driverRequest->animal_id = $request->animal_id;
-        $driverRequest->size_id = $request->size_id;
-        $driverRequest->quantity = $request->quantity;
-        $driverRequest->prefered_date = $request->prefered_date;
-        $driverRequest->prefered_time = $request->prefered_time;
-
-        $driverRequest->save();
-
-        return redirect()->route('admins.driver-requests.show',  $id );
+        //
     }
 
     /**
@@ -114,4 +86,6 @@ class DriverRequestController extends Controller
     {
         //
     }
+
+
 }

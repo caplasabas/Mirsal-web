@@ -27,4 +27,9 @@ class ClientOffer extends Model
     {
         return $this->belongsTo('App\Model\Product');
     }
+
+    public function getOfferedPriceAttribute($value)
+    {
+        return number_format($value, 2);
+    }
 }

@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.veterinary_requests') }} 
+                {{ __('lang.client_offers') }} 
 
                 </div>
                 <div class="card-body">
@@ -15,23 +15,22 @@
                         <thead class="thead-info">
                         <tr>
                             <th scope="col">#</th>
-                            <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
-                            <th scope="col">{{ __('lang.client') }}</th>
-                            <th scope="col">{{ __('lang.animal') }}</th>
-                            <th scope="col">{{ __('lang.description') }}</th>
+                            <th scope="col">{{ __('lang.buyer') }}</th>
+                            <th scope="col">{{ __('lang.product') }}</th>
+                            <th scope="col">{{ __('lang.price') }}</th>
+                            <th scope="col">{{ __('lang.seller') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['vetRequests'] as $index => $vetRequest)
+                        @foreach($data['clientOffers'] as $index => $clientOffer )
                             <tr>
-                            <td>{{ $index }}</td>
-                            <td>{{ $vetRequest->client->name }}</td>
-                            <td>{{ $vetRequest->animal->name }}</td>
-                            <td>{{ $vetRequest->description }}</td>
-                            <td> 
-                            <a class="btn btn-info" href="{{ route('admins.vet-requests.show', $vetRequest->id ) }}" >{{ __('lang.view') }}</a>
-                            </td>
+                            <td>{{ $clientOffer->id }}</td>
+                            <td>{{ $clientOffer->buyer->name}}</td>
+                            <td>{{ $clientOffer->product->title}}</td>
+                            <td>{{ $clientOffer->offered_price}}</td>
+                            <td>{{ $clientOffer->product->seller->name}}</td>
+                            <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -100,4 +100,13 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function accept($id)
+    {
+        $product = Product::find($id);
+        $product->vip_status = "ACCEPTED";
+        $product->save();
+
+        return redirect()->route('admins.products.show',  $id );
+    }
 }
