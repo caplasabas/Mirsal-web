@@ -17,6 +17,7 @@ type Mutation {
     password: String! @rules(apply: ["required", "confirmed", "min:8"])
     password_confirmation: String!
     user_file: Upload
+    car_plate_number: String
     avatar: Upload
     ): UserResponse! @field(resolver: "RegisterMutator")
 
@@ -107,8 +108,8 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     products(seller_id: ID @eq, is_vip: Int @eq, status: ProductStatus @eq, vip_status: VipStatuses @eq, type: ProductType @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
-    clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\Product")
-    clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\Product")
+    clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
+    clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
 
     Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
 
@@ -131,6 +132,7 @@ type User {
     vet_status: VetStatuses
     user_file: UserFile @hasOne(relation: "userFile")
     avatar: String
+    car_plate_number: String
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -512,6 +514,7 @@ type Product {
     iban: String
     accepted_client_offer: ClientOffer @belongsTo(relation: "acceptedClientOffer")
     image: ImageFile @belongsTo(relation: "image")
+    created_at: String
 }
 
 type ClientOffer {

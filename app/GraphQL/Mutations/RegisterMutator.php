@@ -35,6 +35,12 @@ class RegisterMutator
         $user->phone = $args['phone'];
         $user->password = bcrypt($args['password']);
         $user->api_token = $token;
+        if(isset($args['car_plate_number']))
+        {
+            $user->car_plate_number = $args['car_plate_number'];
+        }
+        
+
         $user->save();
         if(isset($args['avatar']))
         {

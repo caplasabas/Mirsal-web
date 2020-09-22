@@ -18,6 +18,7 @@ class User extends Authenticatable
         'address_id',
         'avatar',
         'vet_status',
+        'car_plate_number',
     ]; 
 
     protected $hidden = [

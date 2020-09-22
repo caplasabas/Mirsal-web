@@ -32,4 +32,6 @@ class ClientOffer extends Model
     {
         return number_format($value, 2);
     }
+
+
 }

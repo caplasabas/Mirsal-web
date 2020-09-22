@@ -15,7 +15,7 @@ class Product extends Model
         'address_id',
         'status',
         'type',
-        'is_vipe',
+        'is_vip',
         'description',
         'duration_id',
         'price',
