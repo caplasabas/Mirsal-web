@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Events\OnRegister;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('language/{locale}', 'HomeController@language')->name('language');
 
+Route::resource('hyper-payment','HyperPayPaymentController');
 
 Route::middleware(['auth','csrf'])->group(function () {
     
@@ -55,11 +57,15 @@ Route::get('test', function(){
     $data=array();
     $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
     $data['response'] = $response;
+    // var_dump($data); exit;
     return view('pages.test')->with(compact('data'));
 });
 
-Route::get('returnUrl', function(){
+Route::get('returnUrl', function(Request $request){
     // $user = \App\User::find(28);
     // event(new OnRegister($user));
-    return view('pages.returnUrl');
+    // echo $request->payment_reference;exit;
+    $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
+    
+    return view('pages.returnUrl')->with(compact('response'));
 });

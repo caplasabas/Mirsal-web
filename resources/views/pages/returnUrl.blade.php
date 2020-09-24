@@ -2,6 +2,8 @@
 
 @section('content')
 <div>
-test
+    <pre>
+    {{ var_dump($response) }}
+    </pre>
 </div>
 @endsection
