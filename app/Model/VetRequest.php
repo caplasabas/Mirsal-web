@@ -56,4 +56,9 @@ class VetRequest extends Model
     {
         return $this->belongsTo('App\Model\ImageFile');
     }
+
+    public function vetTimeSlot()
+    {
+        return $this->belongsTo('App\Model\VetTimeSlot');
+    }
 }

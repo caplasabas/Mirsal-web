@@ -50,6 +50,11 @@ class User extends Authenticatable
         $new_phone_format = "+966".$trimmed_phone;
         return $new_phone_format;
     }
+    
+    public function vetTimeSlots()
+    {
+        return $this->hasMany('App\Model\VetTimeSlot','vet_id');
+    }
 
 
 

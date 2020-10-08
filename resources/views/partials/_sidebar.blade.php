@@ -57,8 +57,7 @@
         <li> <a href="{{ route('admins.sizes.index') }}">{{ __('lang.sizes') }}</a> </li>
         <li> <a href="{{ route('admins.durations.index') }}">{{ __('lang.durations') }}</a> </li>
         <li> <a href="{{ route('admins.cars.index') }}">{{ __('lang.cars') }}</a> </li>
-
-        <li> <a href="{{ route('admins.time-slots.index') }}">{{ __('lang.time_slots') }}</a> </li>
+        
         <li> <a href="{{ route('admins.admin-settings.index') }}">{{ __('lang.general_settings') }}</a> </li>
       </ul>
     </div>

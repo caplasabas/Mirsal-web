@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\DateArFomatter;
 
 class VetTimeSlot extends Model
 {
@@ -18,5 +19,11 @@ class VetTimeSlot extends Model
         'duration',
         'price',
     ]; 
+
+    public function getAvailableDateArAttribute()
+    {
+        $date = $this->available_date;
+        return DateArFomatter::dateARFormat($date);
+    }
 
 }

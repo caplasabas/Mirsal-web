@@ -66,6 +66,45 @@
                 </div>
                 
             </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header text-uppercase text-info">
+                        {{ __('lang.time_slots') }} 
+                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-time-slot"><i aria-hidden="true" class="fa fa-plus"></i></button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive text-black">
+                            <table class="datatable table">
+                                <thead class="thead-info">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                                    <th scope="col">{{ __('lang.date') }}</th>
+                                    <th scope="col">{{ __('lang.from') }}</th>
+                                    <th scope="col">{{ __('lang.to') }}</th>
+                                    <!-- <th scope="col">{{ __('lang.action') }}</th> -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($data['veterinarian']->vetTimeSlots as $index => $timeSlot)
+                                    <tr>
+                                    <td>{{ $timeSlot->id }}</td>
+                                    <td>{{ $timeSlot->available_date_ar}}</td>
+                                    <td>{{ $timeSlot->from}}</td>
+                                    <td>{{ $timeSlot->to}}</td>
+                                    <!-- <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-time-slot-{{$timeSlot->id}}">{{ __('lang.edit') }}</button>
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#delete-time-slot-{{ $timeSlot->id }}">{{ __('lang.delete') }}</button> -->
+                                    </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 
             </div>
         </div>

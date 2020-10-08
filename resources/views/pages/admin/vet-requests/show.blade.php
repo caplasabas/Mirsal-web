@@ -83,19 +83,20 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->size->name_ar}}</strong>  
                                                 </div>
-
+                                                @if(isset($data['vetRequest']->vetTimeSlot))
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.prefered_date') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['vetRequest']->prefered_date}}</strong>  
+                                                <strong>{{ $data['vetRequest']->vetTimeSlot->available_date_ar}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.prefered_time') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['vetRequest']->prefered_time}}</strong>  
+                                                <strong>{{ __('lang.from') }} {{ $data['vetRequest']->vetTimeSlot->from}} {{ __('lang.to') }} {{ $data['vetRequest']->vetTimeSlot->from}}</strong>  
                                                 </div>
+                                                @endif
 
                                             </div>
                                         </div>

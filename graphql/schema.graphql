@@ -107,7 +107,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     vetOffers(vet_request_id: ID @eq, vet_id: ID @eq, status: VetOfferStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")
 
-    vetTimeSlots(vet_id: ID @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
+    vetTimeSlots(vet_id: ID @eq, type: VetRequestTypes @eq, available_date: Date @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
     vetTimeSlot(id: ID @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
 
     driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq, status: DriverRequestStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
@@ -615,6 +615,7 @@ type VetTimeSlot{
     vet_id: ID
     type: VetRequestTypes
     available_date: Date
+    available_date_ar: String
     to: String
     from: String
     duration: String
