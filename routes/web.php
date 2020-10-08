@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Events\OnRegister;
 use Illuminate\Http\Request;
+use App\Model\VetRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,21 +52,25 @@ Route::middleware(['auth','csrf'])->group(function () {
 
 });
 
-Route::get('test', function(){
-    // $user = \App\User::find(28);
-    // event(new OnRegister($user));
-    $data=array();
-    $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
-    $data['response'] = $response;
-    // var_dump($data); exit;
-    return view('pages.test')->with(compact('data'));
-});
+// Route::get('test', function(){
+//     $vetRequests = VetRequest::leftJoin('VetOffer', '.id', '=', 'posts.user_id')->get();
+//     $
+// });
+// Route::get('test', function(){
+//     // $user = \App\User::find(28);
+//     // event(new OnRegister($user));
+//     $data=array();
+//     $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
+//     $data['response'] = $response;
+//     // var_dump($data); exit;
+//     return view('pages.test')->with(compact('data'));
+// });
 
-Route::get('returnUrl', function(Request $request){
-    // $user = \App\User::find(28);
-    // event(new OnRegister($user));
-    // echo $request->payment_reference;exit;
-    $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
+// Route::get('returnUrl', function(Request $request){
+//     // $user = \App\User::find(28);
+//     // event(new OnRegister($user));
+//     // echo $request->payment_reference;exit;
+//     $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
     
-    return view('pages.returnUrl')->with(compact('response'));
-});
+//     return view('pages.returnUrl')->with(compact('response'));
+// });

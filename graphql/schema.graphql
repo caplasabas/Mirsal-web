@@ -68,6 +68,11 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     #Address
     createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
 
+    #VetTimeSlot
+    createVetTimeSlot(input: CreateVetTimeSlotInput @spread): VetTimeSlot! @create(model: "App\\Model\\VetTimeSlot")
+    updateVetTimeSlot(input: UpdateVetTimeSlotInput @spread): VetTimeSlot! @update(model: "App\\Model\\VetTimeSlot")
+    deleteVetTimeSlot(id: ID!): VetTimeSlot! @delete(model: "App\\Model\\VetTimeSlot")
+
 
     #FUNCTIONS
     acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse @field(resolver: "VetOfferMutator@acceptVetOffer")
@@ -96,10 +101,14 @@ extend type Query @middleware(checks: ["auth:api"]){
     getUsers(role: Roles @eq): [User!]! @paginate(model: "App\\User")
     getUser(id: ID @eq): User! @paginate(model: "App\\User")
 
-    vetRequests(client_id: ID @eq, type: VetRequestTypes @eq, status: VetRequestStatuses @eq, excludeClientIds: [ID!] @notIn(key: "client_id") ,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
+
+    vetRequests(client_id: ID @eq,hasVetOffers: _ @whereHasConditions(columns: ["vet_id"]) , type: VetRequestTypes @eq, status: VetRequestStatuses @eq, excludeClientIds: [ID!] @notIn(key: "client_id") ,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")
     vetOffers(vet_request_id: ID @eq, vet_id: ID @eq, status: VetOfferStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(model: "App\\Model\\VetOffer")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")
+
+    vetTimeSlots(vet_id: ID @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
+    vetTimeSlot(id: ID @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
 
     driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq, status: DriverRequestStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
     driverRequest(id: ID @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
@@ -116,6 +125,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")
     sizes: [Size!] @paginate(model: "App\\Model\\Size")
     timeSlots: [TimeSlot!] @paginate(model: "App\\Model\\TimeSlot")
+    
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
     cars: [Car!]! @paginate(model: "App\\Model\\Car")
 
@@ -387,6 +397,27 @@ input UpdateClientOfferInput {
     note: String
 }
 
+input CreateVetTimeSlotInput{
+    vet_id: ID
+    type: VetRequestTypes
+    available_date: Date
+    to: String
+    from: String
+    duration: String
+    price: String
+}
+
+input UpdateVetTimeSlotInput{
+    id: ID
+    vet_id: ID
+    type: VetRequestTypes
+    available_date: Date
+    to: String
+    from: String
+    duration: String
+    price: String
+}
+
 
 # Responses
 
@@ -432,6 +463,7 @@ type VetRequest {
 
 type VetOffer {
     id: ID
+    vet_id: ID
     veterinarian: User
     vet_request: VetRequest @belongsTo(relation: "vetRequest")
     price: String
@@ -576,6 +608,19 @@ type AdminSetting{
     tax_perc: Int
     admin_commission_perc: Int
     first_payment_perc: Int
+}
+
+type VetTimeSlot{
+    id: ID
+    vet_id: ID
+    type: VetRequestTypes
+    available_date: Date
+    to: String
+    from: String
+    duration: String
+    price: String
+    created_at: String
+    updated_at: String
 }
 
 #Enums

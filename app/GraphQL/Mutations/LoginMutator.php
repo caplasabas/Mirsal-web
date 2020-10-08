@@ -24,8 +24,13 @@ class LoginMutator
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
+        $userData = array(
+            'phone' => $args['phone'],
+            'password' => $args['password']
+        );
+        $logged = Auth::attempt($userData);
 
-        if(Auth::attempt(['phone' => $args['phone'], 'password' => $args['password']])){
+        if($logged){
 
             $token = Str::random(60).uniqid();
 
