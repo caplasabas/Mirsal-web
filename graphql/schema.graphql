@@ -101,6 +101,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     getUsers(role: Roles @eq): [User!]! @paginate(model: "App\\User")
     getUser(id: ID @eq): User! @paginate(model: "App\\User")
 
+    vetRequestsCustom(vet_id: ID): [VetRequest!] @paginate(builder: "App\\VetRequestCustom@excludes")
 
     vetRequests(client_id: ID @eq,hasVetOffers: _ @whereHasConditions(columns: ["vet_id"]) , type: VetRequestTypes @eq, status: VetRequestStatuses @eq, excludeClientIds: [ID!] @notIn(key: "client_id") ,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")

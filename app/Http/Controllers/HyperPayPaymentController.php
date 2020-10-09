@@ -109,7 +109,7 @@ class HyperPayPaymentController extends Controller
             );
 
             $invoice = Invoice::find($inv_id);
-            $invoice->reference_id = $request->payment_reference;
+            $invoice->reference_id = $response['id'];
             $invoice->payment_gateway = "HyperPay";
             $invoice->payment_status = "PAID";
             $invoice->save();
