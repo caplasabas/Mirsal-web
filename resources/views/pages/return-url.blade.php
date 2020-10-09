@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.payment')
 
 @section('content')
 <div>

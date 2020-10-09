@@ -22,6 +22,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('language/{locale}', 'HomeController@language')->name('language');
 
 Route::resource('hyper-payment','HyperPayPaymentController');
+Route::get('pay-invoice', 'HyperPayPaymentController@payInvoice')->name('products.pa-invoice');
+Route::get('return-url', 'HyperPayPaymentController@returnUrl')->name('products.return-url');
 
 Route::middleware(['auth','csrf'])->group(function () {
     
@@ -52,18 +54,15 @@ Route::middleware(['auth','csrf'])->group(function () {
 
 });
 
-// Route::get('test', function(){
-//     $vetRequests = VetRequest::leftJoin('VetOffer', '.id', '=', 'posts.user_id')->get();
-//     $
-// });
-// Route::get('test', function(){
+
+// Route::get('pay-invoice', function(){
 //     // $user = \App\User::find(28);
 //     // event(new OnRegister($user));
 //     $data=array();
 //     $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
 //     $data['response'] = $response;
 //     // var_dump($data); exit;
-//     return view('pages.test')->with(compact('data'));
+//     return view('pages.pay-invoice')->with(compact('data'));
 // });
 
 // Route::get('returnUrl', function(Request $request){
