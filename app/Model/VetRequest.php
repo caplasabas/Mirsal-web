@@ -20,6 +20,7 @@ class VetRequest extends Model
         'prefered_date',
         'prefered_time',
         'image_id',
+        'vet_time_slot_id',
     ]; 
 
     public function client()

@@ -247,12 +247,11 @@ input CreateVetRequestInput {
     size_id: ID!
     description: String!
     address: CreateAddressOperations @nest
-    prefered_date: Date
-    prefered_time: String
     image_id: ID
     created_at: String
     updated_at: String
     vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
+    vet_time_slot_id: ID!
 }
 
 input UpdateVetRequestInput {
@@ -264,8 +263,8 @@ input UpdateVetRequestInput {
     description: String
     address: CreateAddressOperations @nest
     image: ImageOperations @nest
-    prefered_date: Date
-    prefered_time: String
+    vet_time_slot_id: ID!
+
 }
 
 
@@ -359,7 +358,6 @@ input CreateProductInput {
     contact_phone: String
     contact_email: String
     iban: String
-    accepted_client_offer_id: ID
     image_id: ID
     quantity: Int!
 }
@@ -378,7 +376,6 @@ input UpdateProductInput {
     contact_phone: String
     contact_email: String
     iban: String
-    accepted_client_offer_id: ID
     image_id: ID
 }
 
@@ -553,7 +550,6 @@ type Product {
     contact_phone: String
     contact_email: String
     iban: String
-    accepted_client_offer: ClientOffer @belongsTo(relation: "acceptedClientOffer")
     image: ImageFile @belongsTo(relation: "image")
     created_at: String
 }
