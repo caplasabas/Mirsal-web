@@ -251,7 +251,7 @@ input CreateVetRequestInput {
     created_at: String
     updated_at: String
     vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
-    vet_time_slot_id: ID!
+    vet_time_slot_id: ID
 }
 
 input UpdateVetRequestInput {
@@ -263,8 +263,7 @@ input UpdateVetRequestInput {
     description: String
     address: CreateAddressOperations @nest
     image: ImageOperations @nest
-    vet_time_slot_id: ID!
-
+    vet_time_slot_id: ID
 }
 
 
