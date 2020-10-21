@@ -252,6 +252,7 @@ input CreateVetRequestInput {
     updated_at: String
     vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
     vet_time_slot_id: ID
+    image_uri: String
 }
 
 input UpdateVetRequestInput {
@@ -264,6 +265,7 @@ input UpdateVetRequestInput {
     address: CreateAddressOperations @nest
     image: ImageOperations @nest
     vet_time_slot_id: ID
+    image_uri: String
 }
 
 
@@ -313,6 +315,8 @@ input CreateDriverRequestInput {
     prefered_date: Date
     prefered_time: String
     image_id: ID
+    image_uri: String
+
 }
 
 input UpdateDriverRequestInput {
@@ -327,6 +331,8 @@ input UpdateDriverRequestInput {
     address_to: CreateAddressToOperations @nest
     prefered_date: Date
     prefered_time: String
+    image_uri: String
+
 }
 
 input CreateDriverOfferInput {
@@ -358,6 +364,7 @@ input CreateProductInput {
     contact_email: String
     iban: String
     image_id: ID
+    image_uri: String
     quantity: Int!
 }
 
@@ -376,6 +383,8 @@ input UpdateProductInput {
     contact_email: String
     iban: String
     image_id: ID
+    image_uri: String
+
 }
 
 input CreateClientOfferInput {
@@ -464,6 +473,7 @@ type VetRequest {
     prefered_time: String
     created_at: String
     image: ImageFile @belongsTo(relation: "image")
+    image_uri: String
 }
 
 type VetOffer {
@@ -492,6 +502,7 @@ type DriverRequest {
     prefered_time: String
     created_at: String
     image: ImageFile @belongsTo(relation: "image")
+    image_uri: String
 }
 
 type DriverOffer {
@@ -550,6 +561,7 @@ type Product {
     contact_email: String
     iban: String
     image: ImageFile @belongsTo(relation: "image")
+    image_uri: String
     created_at: String
 }
 

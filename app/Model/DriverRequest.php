@@ -22,6 +22,7 @@ class DriverRequest extends Model
         'prefered_date',
         'prefered_time',
         'image_id',
+        'image_uri',
     ]; 
 
     public function client()
