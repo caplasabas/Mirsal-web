@@ -24,8 +24,8 @@ class DriverOfferMutator
 
             $driver_offer->status = "ACCEPTED";
             $driver_request->status = "ACCEPTED";
-            $invoice = Invoice::where('driver_offer_id', $driver_offer_id)->where('payment_for','DRIVER')->get();
-            if($invoice->isEmpty()){
+            $existingInvoice = Invoice::where('driver_offer_id', $driver_offer_id)->where('payment_for','DRIVER')->get();
+            if($existingInvoice->isEmpty()){
                 $invoice = new Invoice;
                 $invoice->client_id = $driver_offer->DriverRequest->client_id;
                 $invoice->driver_offer_id = $driver_offer_id;
@@ -52,7 +52,7 @@ class DriverOfferMutator
                 return array(
                     'status' => 1,
                     'message' => "Success",
-                    'invoice' => $invoice->first()
+                    'invoice' => $existingInvoice->first()
                 );
             }
         }
