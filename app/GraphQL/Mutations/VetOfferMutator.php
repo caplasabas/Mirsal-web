@@ -24,7 +24,7 @@ class VetOfferMutator
 
             $vet_offer->status = "ACCEPTED";
             $vet_request->status = "ACCEPTED";
-            $invoice = Invoice::where('offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get()->first();
+            $invoice = Invoice::where('vet_offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get()->first();
             if(!isset($invoice)){
                 $invoice = new Invoice;
                 $invoice->client_id = $vet_offer->vetRequest->client_id;
@@ -37,6 +37,7 @@ class VetOfferMutator
                 $invoice->amount_paid += ($vet_offer->price * ($admin_setting->tax_perc/100));
                 
                 $invoice->save();
+                $invoice = Invoice::find($invoice->id)->get();
             }
 
             $vet_offer->save();
