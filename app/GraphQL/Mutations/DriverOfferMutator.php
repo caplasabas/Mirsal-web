@@ -28,7 +28,8 @@ class DriverOfferMutator
             if(!isset($invoice)){
                 $invoice = new Invoice;
                 $invoice->client_id = $driver_offer->DriverRequest->client_id;
-                $invoice->offer_id = $driver_offer_id;
+                $invoice->driver_offer_id = $driver_offer_id;
+                // $invoice->offer_id = $driver_offer_id;
                 $invoice->payment_for = "Driver";
                 
                 //Amount calculation FIRST PAYMENT

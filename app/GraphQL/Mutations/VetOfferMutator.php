@@ -28,7 +28,8 @@ class VetOfferMutator
             if(!isset($invoice)){
                 $invoice = new Invoice;
                 $invoice->client_id = $vet_offer->vetRequest->client_id;
-                $invoice->offer_id = $vet_offer_id;
+                $invoice->vet_offer_id = $vet_offer_id;
+                // $invoice->offer_id = $vet_offer_id;
                 $invoice->payment_for = "VETERINARIAN";
                 
                 //Amount calculation
