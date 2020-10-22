@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Events\OnRegister;
 use Illuminate\Http\Request;
 use App\Model\VetRequest;
-use App\GraphQL\CustomQueries\VetRequestByInvoice;
+use App\GraphQL\Mutations\VetOfferMutator;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,14 +56,16 @@ Route::middleware(['auth','csrf'])->group(function () {
 });
 
 
-// Route::get('pay-invoice', function(){
+// Route::get('test', function(){
 //     // $user = \App\User::find(28);
+//     $vetOfferMutator = new VetOfferMutator;
+//     echo "<pre>";
+//     var_dump($vetOfferMutator::acceptVetOffer(null, array("vet_offer_id"=>6) ));
+//     echo "</pre>";
+
+//     exit;
 //     // event(new OnRegister($user));
-//     $data=array();
-//     $response = \App\Helpers\HyperPayCopyAndPay::request("42.20");
-//     $data['response'] = $response;
-//     // var_dump($data); exit;
-//     return view('pages.pay-invoice')->with(compact('data'));
+
 // });
 
 // Route::get('returnUrl', function(Request $request){

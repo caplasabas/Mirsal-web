@@ -38,7 +38,7 @@ class DriverOfferMutator
 
                 
                 $invoice->save();
-                $invoice = Invoice::find($invoice->id)->get();
+                $invoice = Invoice::find($invoice->id);
                 $driver_offer->save();
                 $driver_request->save();
                 return array(
@@ -47,13 +47,14 @@ class DriverOfferMutator
                     'invoice' => $invoice 
                 );
 
-            }
+            } else {
 
-            return array(
-                'status' => 1,
-                'message' => "Success",
-                'invoice' => $invoice->first()
-            );
+                return array(
+                    'status' => 1,
+                    'message' => "Success",
+                    'invoice' => $invoice->first()
+                );
+            }
         }
 
         return array(
