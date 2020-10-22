@@ -24,8 +24,8 @@ class VetOfferMutator
 
             $vet_offer->status = "ACCEPTED";
             $vet_request->status = "ACCEPTED";
-            $invoice = Invoice::where('vet_offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get()->first();
-            if(!isset($invoice)){
+            $invoice = Invoice::where('vet_offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get();
+            if($invoice->isEmpty()){
                 $invoice = new Invoice;
                 $invoice->client_id = $vet_offer->vetRequest->client_id;
                 $invoice->vet_offer_id = $vet_offer_id;
@@ -38,14 +38,19 @@ class VetOfferMutator
                 
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id)->get();
+                $vet_offer->save();
+                $vet_request->save();
+                return array(
+                    'status' => 1,
+                    'message' => "Success",
+                    'invoice' => $invoice
+                );
             }
 
-            $vet_offer->save();
-            $vet_request->save();
             return array(
                 'status' => 1,
                 'message' => "Success",
-                'invoice' => $invoice
+                'invoice' => $invoice->first()
             );
         }
 
