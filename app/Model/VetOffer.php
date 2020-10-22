@@ -21,10 +21,15 @@ class VetOffer extends Model
     {
         return $this->belongsTo('App\User','vet_id');
     }
+
+    public function invoice()
+    {
+        return $this->hasOne('App\Model\Invoice');
+    }
     
     public function vetRequest()
     {
-        return $this->belongsTo('App\Model\VetRequest');
+        return $this->belongsTo('App\Model\VetRequest','vet_request_id');
     }
 
     public function getPriceAttribute($value)

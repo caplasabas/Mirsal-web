@@ -104,7 +104,9 @@ extend type Query @middleware(checks: ["auth:api"]){
     getUsers(role: Roles @eq): [User!]! @paginate(model: "App\\User")
     getUser(id: ID @eq): User! @paginate(model: "App\\User")
 
-    vetRequestsCustom(vet_id: ID): [VetRequest!] @paginate(builder: "App\\VetRequestCustom@excludes")
+    vetRequestsByVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestCustom@excludes")
+    vetOffersByInvoice(vet_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice")
+    vetOffersByClient(client_id: ID!, status: VetRequestStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByClient@byClient")
 
     vetRequests(client_id: ID @eq,hasVetOffers: _ @whereHasConditions(columns: ["vet_id"]) , type: VetRequestTypes @eq, status: VetRequestStatuses @eq, excludeClientIds: [ID!] @notIn(key: "client_id") ,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\VetRequest")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")
@@ -124,7 +126,9 @@ extend type Query @middleware(checks: ["auth:api"]){
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
 
-    Invoices(id: ID @eq, client_id: ID @eq, vetOffer_id: ID @eq, reference_id: String @eq): [Invoice!] @paginate(model: "App\\Model\\Invoice")
+    invoices(id: ID @eq, client_id: ID @eq, drivervetOffer_id: ID @eq,_offer_id: ID @eq,driver_offer_id: ID @eq, payment_status: InvoiceStatuses @eq, payment_for: PaymentFor @eq, reference_id: String @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Invoice")
+    invoicesByVet(vet_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
+    invoicesByDriver(driver_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byDriver")
 
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")
     sizes: [Size!] @paginate(model: "App\\Model\\Size")
@@ -481,6 +485,7 @@ type VetOffer {
     vet_id: ID
     veterinarian: User
     vet_request: VetRequest @belongsTo(relation: "vetRequest")
+    invoice: VetRequest @hasOne(relation: "invoice")
     price: String
     status: VetOfferStatuses
     created_at: String
@@ -536,6 +541,8 @@ type Invoice {
     id: ID
     client: User @belongsTo(relation: "client")
     vet_offer: VetOffer @belongsTo(relation: "vetOffer")
+    driver_offer: DriverOffer @belongsTo(relation: "driverOffer")
+    payment_for: PaymentFor
     payment_status: InvoiceStatuses
     amount_paid: String
     reference_id: String
@@ -647,6 +654,11 @@ enum Roles {
     VETERINARIAN
     DRIVER
     CLIENT
+}
+
+enum PaymentFor {
+    VETERINARIAN
+    DRIVER
 }
 
 enum SortOrder {

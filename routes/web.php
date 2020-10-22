@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Events\OnRegister;
 use Illuminate\Http\Request;
 use App\Model\VetRequest;
+use App\GraphQL\CustomQueries\VetRequestByInvoice;
 
 /*
 |--------------------------------------------------------------------------

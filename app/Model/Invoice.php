@@ -12,6 +12,7 @@ class Invoice extends Model
     protected $fillable = [
         'client_id',
         'vet_offer_id',
+        'driver_offer_id',
         'reference_id',
         'amount_paid',
         'payment_gateway',
@@ -24,8 +25,13 @@ class Invoice extends Model
     }
 
     public function vetOffer()
-    {
+    {   
         return $this->belongsTo('App\Model\VetOffer','vet_offer_id');
+    }
+
+    public function driverOffer()
+    {   
+        return $this->belongsTo('App\Model\DriverOffer','driver_offer_id');
     }
 
     public function getAmountPaidAttribute($value)
