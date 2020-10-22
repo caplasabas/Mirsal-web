@@ -17,8 +17,8 @@ class VetOfferMutator
     {
         $vet_offer_id = $args['vet_offer_id'];
         $admin_setting = AdminSetting::all()->first();
-        $vet_offer = VetOffer::find($vet_offer_id)->first();
-        $vet_request = VetRequest::find($vet_offer->vet_request_id)->first();
+        $vet_offer = VetOffer::find($vet_offer_id);
+        $vet_request = VetRequest::find($vet_offer->vet_request_id);
         
         if(isset($vet_offer_id)){
 

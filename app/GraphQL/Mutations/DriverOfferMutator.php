@@ -17,8 +17,8 @@ class DriverOfferMutator
     {
         $driver_offer_id = $args['driver_offer_id'];
         $admin_setting = AdminSetting::all()->first();
-        $driver_offer = DriverOffer::find($driver_offer_id)->first();
-        $driver_request = DriverRequest::find($driver_offer->driver_request_id)->first();
+        $driver_offer = DriverOffer::find($driver_offer_id);
+        $driver_request = DriverRequest::find($driver_offer->driver_request_id);
         
         if(isset($driver_offer_id)){
 
