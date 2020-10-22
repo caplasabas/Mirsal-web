@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Model\Invoice;
 use App\Model\VetOffer;
 use App\Model\VetRequest;
+use App\Model\DriverOffer;
+use App\Model\DriverRequest;
 
 class InvoicesByProvider
 {
