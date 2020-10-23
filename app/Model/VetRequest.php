@@ -21,6 +21,7 @@ class VetRequest extends Model
         'prefered_time',
         'image_id',
         'vet_time_slot_id',
+        'accepted_vet_offer_id',
         'image_uri',
     ]; 
 
@@ -51,7 +52,7 @@ class VetRequest extends Model
 
     public function vetOfferAccepted()
     {
-        return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id');
+        return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id','id');
     }
 
     public function image()
