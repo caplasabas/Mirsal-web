@@ -39,6 +39,22 @@ class RegisterMutator
         {
             $user->car_plate_number = $args['car_plate_number'];
         }
+        if(isset($args['latitude']))
+        {
+            $user->latitude = $args['latitude'];
+        }
+        if(isset($args['longitude']))
+        {
+            $user->longitude = $args['longitude'];
+        }
+        if(isset($args['formatted_address']))
+        {
+            $user->formatted_address = $args['formatted_address'];
+        }
+        if(isset($args['national_id_url']))
+        {
+            $user->national_id_url = $args['national_id_url'];
+        }
         
 
         $user->save();
