@@ -17,8 +17,8 @@ type Mutation {
     name: String! @rules(apply: ["required", "string"])
     email: String @rules(apply: ["email", "unique:users,email"])
     phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
-    password: String! @rules(apply: ["required", "confirmed", "min:8"])
-    password_confirmation: String!
+    password: String! @rules(apply: ["required", "confirmed", "min:8"]) 
+    password_confirmation: String! 
     user_file: Upload
     car_plate_number: String
     avatar: Upload
@@ -30,7 +30,6 @@ type Mutation {
 
     otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
 
-    
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]){
@@ -213,7 +212,7 @@ input UpdateUserInput {
     name: String @rules(apply: ["string"])
     email: String @rules(apply: ["email", "unique:users,email"])
     phone: String @rules(apply:  ["min:10", "unique:users,phone"])
-    password: String @rules(apply: ["confirmed", "min:8"])
+    password: String @rules(apply: ["confirmed", "min:8"]) @bcrypt
     password_confirmation: String
     car_plate_number: String
     avatar: Upload
