@@ -89,6 +89,11 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     #User
     userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
     updateUser(input: UpdateUserInput @spread): User @update(model: "App\\User")
+
+    #suggestion
+    createSuggestion(input: CreateSuggestionInput @spread): Suggestion! @create(model: "App\\Model\\Suggestion")
+    updateSuggestion(input: UpdateSuggestionInput @spread): Suggestion! @update(model: "App\\Model\\Suggestion")
+    deleteSuggestion(id: ID!): Suggestion! @delete(model: "App\\Model\\Suggestion")
     
 
 }
@@ -149,8 +154,9 @@ extend type Query @middleware(checks: ["auth:api"]){
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
     cars: [Car!]! @paginate(model: "App\\Model\\Car")
 
-    ratings(id: ID @eq, client_id: ID @eq, vet_id: ID @eq, driver_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Rating")
-    
+    ratings(id: ID @eq, client_id: ID @eq, vet_id: ID @eq, driver_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
+    suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
+
 }
 
 
@@ -489,6 +495,21 @@ input DateRange {
   to: Date!
 }
 
+input CreateSuggestionInput{
+    user_id: ID
+    name: String
+    phone: String
+    message: String
+}
+
+input UpdateSuggestionInput{
+    id: ID!
+    user_id: ID
+    name: String
+    phone: String
+    message: String
+}
+
 
 # Responses
 type Rating {
@@ -709,6 +730,15 @@ type VetTimeSlot{
     from: String
     duration: String
     price: String
+    created_at: String
+    updated_at: String
+}
+
+type Suggestion{
+    id: ID
+    name: String
+    phone: String
+    message: String
     created_at: String
     updated_at: String
 }
