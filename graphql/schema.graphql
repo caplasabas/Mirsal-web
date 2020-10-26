@@ -115,7 +115,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     currentConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
     previousConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient")
     currentConsultationsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet")
-    previousConsultationsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsvet")
+    previousConsultationsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet")
 
     vetRequestsByVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestCustom@excludes")
     vetOffersByInvoice(vet_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice")
