@@ -37,6 +37,11 @@ class VetOffer extends Model
         return $this->hasOne('App\Model\VetRequest','accepted_vet_offer_id');
     }
 
+    public function rating()
+    {
+        return $this->belongsTo('App\Model\Rating','rating_id');
+    }
+
     public function getPriceAttribute($value)
     {
         return number_format($value, 2);

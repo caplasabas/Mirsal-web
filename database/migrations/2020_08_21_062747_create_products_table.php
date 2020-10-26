@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('title')->nullable();
             $table->enum('type', ['ANIMAL','PRODUCT'])->default('ANIMAL');
             $table->integer('is_vip')->default(0);
-            $table->longText('description')->nullable;
+            $table->longText('description')->nullable();
             $table->bigInteger('duration_id')->unsigned()->nullable();
             $table->foreign('duration_id')->references('id')->on('durations')->onCascade('delete');
             $table->double('price', 8, 2)->default(0);

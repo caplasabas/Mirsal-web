@@ -138,7 +138,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
 
-    invoices(id: ID @eq, client_id: ID @eq, drivervetOffer_id: ID @eq,_offer_id: ID @eq,driver_offer_id: ID @eq, payment_status: InvoiceStatuses @eq, payment_for: PaymentFor @eq, reference_id: String @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Invoice")
+    invoices(id: ID @eq, client_id: ID @eq, drivervetOffer_id: ID @eq, vet_offer_id: ID @eq,driver_offer_id: ID @eq, payment_status: InvoiceStatuses @eq, payment_for: PaymentFor @eq, reference_id: String @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Invoice")
     invoicesByVet(vet_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
     invoicesByDriver(driver_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byDriver")
 
@@ -149,6 +149,8 @@ extend type Query @middleware(checks: ["auth:api"]){
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
     cars: [Car!]! @paginate(model: "App\\Model\\Car")
 
+    ratings(id: ID @eq, client_id: ID @eq, vet_id: ID @eq, driver_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Rating")
+    
 }
 
 
@@ -311,6 +313,31 @@ input UpdateVetOfferInput {
     vet_request_id: ID
     price: String
     status: VetOfferStatuses
+    rating: CreateRatingOperations @nest
+}
+
+
+input CreateRatingOperations {
+  connect: ID
+  create: CreateRatingInput @create(relation: "rating")
+  update: UpdateRatingInput @update(relation: "rating")
+}
+
+input CreateRatingInput {
+    star_rating: String
+    service_type: ServiceTypes
+    vet_id: ID
+    driver_id: ID
+    client_id: ID
+    
+}
+
+input UpdateRatingInput {
+    star_rating: String
+    service_type: ServiceTypes
+    vet_id: ID
+    driver_id: ID
+    client_id: ID
 }
 
 
@@ -377,6 +404,7 @@ input UpdateDriverOfferInput {
     driver_request_id: ID
     price: String
     status: DriverOfferStatuses
+    rating: CreateRatingOperations @nest
 }
 
 input CreateProductInput {
@@ -463,6 +491,16 @@ input DateRange {
 
 
 # Responses
+type Rating {
+    star_rating: String
+    service_type: ServiceTypes
+    vet_id: ID
+    veterinarian: User @belongsTo(relation: "veterinarian")
+    driver_id: ID
+    driver: User @belongsTo(relation: "driver")
+    client_id: ID
+    client: User @belongsTo(relation: "client")
+}
 
 type UserResponse {
     user: User!
@@ -513,7 +551,9 @@ type VetOffer {
     invoice: Invoice @hasOne(relation: "invoice")
     price: String
     status: VetOfferStatuses
+    rating: Rating
     created_at: String
+    updated_at: String
 }
 
 type DriverRequest {
@@ -541,6 +581,7 @@ type DriverOffer {
     driver_request: DriverRequest @belongsTo(relation: "driverRequest")
     price: String
     status: String
+    rating: Rating
     created_at: String
 }
 
@@ -768,4 +809,10 @@ enum VetStatuses {
     PENDING
     ACCEPTED
     REJECTED
+}
+
+enum ServiceTypes {
+    VETERINARY
+    DELIVERY
+    GENERAL_OFFER
 }

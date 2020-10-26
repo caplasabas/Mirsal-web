@@ -27,6 +27,11 @@ class DriverOffer extends Model
         return $this->belongsTo('App\Model\DriverRequest');
     }
 
+    public function rating()
+    {
+        return $this->belongsTo('App\Model\Rating','rating_id');
+    }
+
     public function getPriceAttribute($value)
     {
         return number_format($value, 2);
