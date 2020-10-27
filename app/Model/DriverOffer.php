@@ -15,6 +15,11 @@ class DriverOffer extends Model
         'price',
         'status',
         'payment_status',
+        'first_payment_price',
+        'tax_price',
+        'total',
+        'rating_id',
+
     ]; 
 
     public function driver()

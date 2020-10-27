@@ -114,6 +114,8 @@ class HyperPayPaymentController extends Controller
             $invoice->payment_status = "PAID";
             $invoice->save();
 
+            if($invoice->payment_for ==  "VETERINARIAN")
+
             return json_encode($arr_result);
         } else {
             $arr_result = array(
