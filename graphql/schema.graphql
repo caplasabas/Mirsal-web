@@ -21,7 +21,7 @@ type Mutation {
     password_confirmation: String! 
     user_file: Upload
     car_plate_number: String
-    avatar: Upload
+    avatar: String
     latitude: String
     longitude: String
     formatted_address: String 
@@ -208,7 +208,7 @@ input RegisterInput {
     password: String! @rules(apply: ["required", "confirmed", "min:8"])
     password_confirmation: String!
     user_file: Upload
-    avatar: Upload
+    avatar: String
     latitude: String
     longitude: String
     formatted_address: String 
@@ -223,7 +223,7 @@ input UpdateUserInput {
     password: String @rules(apply: ["confirmed", "min:8"]) @bcrypt
     password_confirmation: String
     car_plate_number: String
-    avatar: Upload
+    avatar: String
     latitude: String
     longitude: String
     formatted_address: String
