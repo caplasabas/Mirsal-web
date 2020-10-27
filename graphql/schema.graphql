@@ -95,6 +95,10 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     updateSuggestion(input: UpdateSuggestionInput @spread): Suggestion! @update(model: "App\\Model\\Suggestion")
     deleteSuggestion(id: ID!): Suggestion! @delete(model: "App\\Model\\Suggestion")
     
+    # #LogNotification
+    # createLogNotification(input: CreateLogNotification @spread): LogNotification! @create(model: "App\\Model\\LogNotification")
+    # updateLogNotification(input: UpdateLogNotification @spread): LogNotification! @update(model: "App\\Model\\LogNotification")
+    # deleteLogNotification(id: ID!): LogNotification! @delete(model: "App\\Model\\LogNotification")
 
 }
 
@@ -747,6 +751,17 @@ type Suggestion{
     created_at: String
     updated_at: String
 }
+
+# type LogNotification{
+#     id: ID
+#     user_id: String
+#     user_id_to_notify: String
+#     type: String
+#     message: String
+#     read: Int
+#     created_at: String
+#     updated_at: String
+# }
 
 #Enums
 

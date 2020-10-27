@@ -23,8 +23,8 @@ class VetOfferMutator
         
         if(isset($vet_offer_id)){
 
-            $vet_offer->status = "ACCEPTED";
-            $vet_request->status = "ACCEPTED";
+            // $vet_offer->status = "ACCEPTED";
+            // $vet_request->status = "ACCEPTED";
             $existingInvoice = Invoice::where('vet_offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get();
             
             if($existingInvoice->isEmpty()){
