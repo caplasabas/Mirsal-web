@@ -409,7 +409,9 @@ input UpdateDriverRequestInput {
 input CreateDriverOfferInput {
     driver_id: ID!
     driver_request_id: ID!
-    price: String!
+    first_payment_price: String
+    tax_price: String
+    total: String
     status: DriverOfferStatuses
 }
 
@@ -417,7 +419,9 @@ input UpdateDriverOfferInput {
     id: ID
     driver_id: ID
     driver_request_id: ID
-    price: String
+    first_payment_price: String
+    tax_price: String
+    total: String
     status: DriverOfferStatuses
     rating: CreateRatingOperations @nest
 }
@@ -609,7 +613,9 @@ type DriverOffer {
     id: ID
     driver: User
     driver_request: DriverRequest @belongsTo(relation: "driverRequest")
-    price: String
+    first_payment_price: String
+    tax_price: String
+    total: String
     status: String
     rating: Rating
     created_at: String
