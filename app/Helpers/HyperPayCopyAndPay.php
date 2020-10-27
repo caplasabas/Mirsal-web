@@ -10,7 +10,7 @@ class HyperPayCopyAndPay
         $amount = $price;
         $url = "https://test.oppwa.com/v1/checkouts";
         $data = "entityId=8ac7a4ca74490e2601744972410e0145" .
-                    "&amount=".$amount."" .
+                    "&amount=".number_format($amount, 2, '.', '')."" .
                     "&currency=SAR" .
                     "&paymentType=DB";
                     
