@@ -22,8 +22,8 @@ class DriverOfferMutator
         
         if(isset($driver_offer_id)){
 
-            $driver_offer->status = "ACCEPTED";
-            $driver_request->status = "ACCEPTED";
+            // $driver_offer->status = "ACCEPTED";
+            // $driver_request->status = "ACCEPTED";
             $existingInvoice = Invoice::where('driver_offer_id', $driver_offer_id)->where('payment_for','DRIVER')->get();
             if($existingInvoice->isEmpty()){
                 $invoice = new Invoice;
@@ -31,11 +31,17 @@ class DriverOfferMutator
                 $invoice->driver_offer_id = $driver_offer_id;
                 // $invoice->offer_id = $driver_offer_id;
                 $invoice->payment_for = "Driver";
-                
-                //Amount calculation FIRST PAYMENT
-                $tax_price = $driver_offer->price * ($admin_setting->tax_perc/100);
-                $invoice->amount_paid = $tax_price;
 
+                $first_payment_price =  $driver_offer->price * ($admin_setting->first_payment_perc/100);
+                $tax_price = $first_payment_price * ($admin_setting->tax_perc/100);
+                $first_payment_total = $first_payment_price + $tax_price;
+
+                $invoice->tax_price = $tax_price;
+                $invoice->tax_rate = $admin_setting->tax_perc;
+                
+                $driver_offer->tax_price = $tax_price;
+                $driver_offer->first_payment_price = $first_payment_total;
+                $invoice->amount_paid = $first_payment_total;
                 
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id);

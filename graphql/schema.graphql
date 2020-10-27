@@ -95,10 +95,10 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     updateSuggestion(input: UpdateSuggestionInput @spread): Suggestion! @update(model: "App\\Model\\Suggestion")
     deleteSuggestion(id: ID!): Suggestion! @delete(model: "App\\Model\\Suggestion")
     
-    # #LogNotification
-    # createLogNotification(input: CreateLogNotification @spread): LogNotification! @create(model: "App\\Model\\LogNotification")
-    # updateLogNotification(input: UpdateLogNotification @spread): LogNotification! @update(model: "App\\Model\\LogNotification")
-    # deleteLogNotification(id: ID!): LogNotification! @delete(model: "App\\Model\\LogNotification")
+    #LogNotification
+    createLogNotification(input: CreateLogNotification @spread): LogNotification! @create(model: "App\\Model\\LogNotification")
+    updateLogNotification(input: UpdateLogNotification @spread): LogNotification! @update(model: "App\\Model\\LogNotification")
+    deleteLogNotification(id: ID!): LogNotification! @delete(model: "App\\Model\\LogNotification")
 
 }
 
@@ -160,7 +160,7 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     ratings(id: ID @eq, client_id: ID @eq, vet_id: ID @eq, driver_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
     suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
-
+    logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\LogNotification")
 }
 
 
@@ -525,6 +525,27 @@ input UpdateSuggestionInput{
     message: String
 }
 
+input CreateLogNotification{
+    user_id: String
+    user_id_to_notify: String
+    type: String
+    message: String
+    read: Int
+    created_at: String
+    updated_at: String
+}
+
+input UpdateLogNotification{
+    id: ID
+    user_id: String
+    user_id_to_notify: String
+    type: String
+    message: String
+    read: Int
+    created_at: String
+    updated_at: String
+}
+
 
 # Responses
 type Rating {
@@ -649,6 +670,8 @@ type Invoice {
     driver_offer: DriverOffer @belongsTo(relation: "driverOffer")
     payment_for: PaymentFor
     payment_status: InvoiceStatuses
+    tax_rate: String
+    tax_price: String
     amount_paid: String
     reference_id: String
     payment_gateway: String
@@ -761,16 +784,16 @@ type Suggestion{
     updated_at: String
 }
 
-# type LogNotification{
-#     id: ID
-#     user_id: String
-#     user_id_to_notify: String
-#     type: String
-#     message: String
-#     read: Int
-#     created_at: String
-#     updated_at: String
-# }
+type LogNotification{
+    id: ID
+    user_id: String
+    user_id_to_notify: String
+    type: String
+    message: String
+    read: Int
+    created_at: String
+    updated_at: String
+}
 
 #Enums
 

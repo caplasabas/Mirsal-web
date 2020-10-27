@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Invoice;
+use App\Model\DriverOffer;
+use App\Model\VetOffer;
 use App\Helpers\HyperPayCopyAndPay;
 
 class HyperPayPaymentController extends Controller
@@ -114,7 +116,16 @@ class HyperPayPaymentController extends Controller
             $invoice->payment_status = "PAID";
             $invoice->save();
 
-            if($invoice->payment_for ==  "VETERINARIAN")
+            if($invoice->payment_for ==  "VETERINARIAN"){
+                $vet_offer = VetOffer::find($invoice->vet_offer_id);
+                $vet_offer->status = "ACCEPTED";
+                $vet_offer->save();
+            }
+            if($invoice->payment_for ==  "DRIVER"){
+                $driver_offer = DriverOffer::find($invoice->driver_offer_id);
+                $driver_offer->status = "ACCEPTED";
+                $driver_offer->save();
+            }
 
             return json_encode($arr_result);
         } else {
