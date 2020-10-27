@@ -290,6 +290,9 @@ input CreateVetRequestInput {
     vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
     vet_time_slot_id: ID
     image_uri: String
+    preferred_date: Date
+    preferred_time: String
+
 }
 
 input UpdateVetRequestInput {
@@ -303,6 +306,8 @@ input UpdateVetRequestInput {
     image: ImageOperations @nest
     vet_time_slot_id: ID
     image_uri: String
+    preferred_date: Date
+    preferred_time: String
 }
 
 
@@ -374,8 +379,8 @@ input CreateDriverRequestInput {
     description: String!
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
-    prefered_date: Date
-    prefered_time: String
+    preferred_date: Date
+    preferred_time: String
     image_id: ID
     image_uri: String
 
@@ -391,8 +396,8 @@ input UpdateDriverRequestInput {
     description: String
     address_from: CreateAddressFromOperations @nest
     address_to: CreateAddressToOperations @nest
-    prefered_date: Date
-    prefered_time: String
+    preferred_date: Date
+    preferred_time: String
     image_uri: String
 
 }
@@ -557,8 +562,8 @@ type VetRequest {
     size: Size
     description: String
     address: Address @belongsTo(relation: "address")
-    prefered_date: Date
-    prefered_time: String
+    preferred_date: Date
+    preferred_time: String
     created_at: String
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
@@ -589,8 +594,8 @@ type DriverRequest {
     description: String
     address_to: Address @belongsTo(relation: "addressTo")
     address_from: Address @belongsTo(relation: "addressFrom")
-    prefered_date: Date
-    prefered_time: String
+    preferred_date: Date
+    preferred_time: String
     created_at: String
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String

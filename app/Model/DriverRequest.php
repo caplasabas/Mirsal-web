@@ -19,8 +19,8 @@ class DriverRequest extends Model
         'driver_offer_id',
         'address_to_id',
         'address_from_id',
-        'prefered_date',
-        'prefered_time',
+        'preferred_date',
+        'preferred_time',
         'image_id',
         'image_uri',
     ]; 
