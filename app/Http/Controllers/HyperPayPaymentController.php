@@ -91,7 +91,8 @@ class HyperPayPaymentController extends Controller
         $inv_id = $request->inv_id;
         $invoice = Invoice::find($inv_id);
         $data=array();
-        $response = HyperPayCopyAndPay::request(number_format($invoice->amount_paid, 2, '.', ''));
+        $price = number_format($invoice->amount_paid, 2, '.', '');
+        $response = HyperPayCopyAndPay::request($price);
         $data['response'] = $response;
         $data['inv_id'] = $inv_id;
         // var_dump($data); exit;
