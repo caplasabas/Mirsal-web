@@ -91,9 +91,11 @@ class HyperPayPaymentController extends Controller
         $inv_id = $request->inv_id;
         $invoice = Invoice::find($inv_id);
         $data=array();
-        $response = HyperPayCopyAndPay::request($invoice->amount_paid);
+        $response = HyperPayCopyAndPay::request(str_replace(',', "", $invoice->amount_paid));
         $data['response'] = $response;
         $data['inv_id'] = $inv_id;
+        $amount = $invoice->amount_paid;
+        $data['amount_paid'] = str_replace(',', "", $invoice->amount_paid);
         // var_dump($data); exit;
         return view('pages.pay-invoice')->with(compact('data'));
     }
