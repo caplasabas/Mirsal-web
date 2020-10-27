@@ -160,7 +160,7 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     ratings(id: ID @eq, client_id: ID @eq, vet_id: ID @eq, driver_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
     suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
-    logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\LogNotification")
+    logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [LogNotification!] @paginate(model: "App\\Model\\LogNotification")
 }
 
 
@@ -787,7 +787,9 @@ type Suggestion{
 type LogNotification{
     id: ID
     user_id: String
+    user: User
     user_id_to_notify: String
+    user_to_notify: User @belongsTo(relation: "userToNotify")
     type: String
     message: String
     read: Int

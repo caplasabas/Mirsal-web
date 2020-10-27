@@ -16,4 +16,14 @@ class LogNotification extends Model
         'message',
         'read',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User','driver_id','id');
+    }
+
+    public function userToNotify()
+    {
+        return $this->belongsTo('App\User','user_id_to_notify','id');
+    }
 }
