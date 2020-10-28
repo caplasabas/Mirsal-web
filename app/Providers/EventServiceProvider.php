@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\OnRegister' => [
             'App\Listeners\SendOTPVerificationSMS',
         ],
+        'App\Events\WhenUserDoSomething' => [
+            'App\Listeners\SendExpoNotification',
+        ],
     ];
 
     /**
