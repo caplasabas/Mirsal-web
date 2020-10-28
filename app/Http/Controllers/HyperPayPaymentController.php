@@ -103,6 +103,7 @@ class HyperPayPaymentController extends Controller
     public function returnUrl(Request $request)
     {
         $inv_id = $request->inv_id;
+        $url = "mirsal://payment?invoiceId=".$inv_id;
         $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
         $result_code = $response['result']['code'];
         if($result_code == "000.000.000"){
@@ -129,7 +130,7 @@ class HyperPayPaymentController extends Controller
                 $driver_offer->save();
             }
 
-            return json_encode($arr_result);
+            return redirect()->away($url);
         } else {
             $arr_result = array(
                 "status" => 0,
@@ -145,7 +146,8 @@ class HyperPayPaymentController extends Controller
             "message" => $response['result']['description'],
         );
         // return json_encode($arr_result);
-        $url = "mirsal://payment?invoiceId=".$inv_id;
+        
+
         return redirect()->away($url);
          
     
