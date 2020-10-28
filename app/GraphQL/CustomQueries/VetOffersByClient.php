@@ -18,7 +18,7 @@ class VetOffersByClient
         $client_id = $args['client_id'];
         $status = $args['status'];
         $vetRequestIds = VetRequest::where("client_id", $client_id)->pluck('id');
-        $vetOffers = VetOffer::where("status", $status);
+        $vetOffers = VetOffer::where("status", $status)->whereIn('vet_request_id', $vetRequestIds);
         return $vetOffers;
     }
 }

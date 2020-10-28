@@ -137,7 +137,7 @@ class HyperPayPaymentController extends Controller
                 "code" => $result_code,
                 "message" => $response['result']['description'],
             );
-            return json_encode($arr_result);
+            return redirect()->away($url);
         }
 
         $arr_result = array(
