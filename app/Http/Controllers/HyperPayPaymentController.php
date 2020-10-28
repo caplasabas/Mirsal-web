@@ -108,7 +108,7 @@ class HyperPayPaymentController extends Controller
         $invoice = Invoice::find($inv_id);
         $url = "mirsal://payment?invoiceId=".$inv_id;
         $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);   
-        $vet_offer = VetOffer::find($invoice->vet_offer_id); 
+        
 
         
         $result_code = $response['result']['code'];
@@ -124,10 +124,11 @@ class HyperPayPaymentController extends Controller
             $invoice->save();
 
             if($invoice->payment_for ==  "VETERINARIAN"){
-               
+                $vet_offer = VetOffer::find($invoice->vet_offer_id); 
                 $vet_request = VetRequest::find($vet_offer->vet_request_id);
                 $vet_offer->status = "ACCEPTED";
                 $vet_request->status = "ACCEPTED";
+                $vet_request->accepted_vet_offer_id = $invoice->vet_offer_id;
                 $vet_offer->save();
                 $vet_request->save();
 
@@ -137,6 +138,7 @@ class HyperPayPaymentController extends Controller
                 $driver_request = VetRequest::find($driver_offer->driver_request_id);
                 $driver_offer->status = "ACCEPTED";
                 $driver_request->status = "ACCEPTED";
+                $driver_request->accepted_driver_offer_id = $invoice->driver_offer_id;
                 $driver_offer->save();
                 $driver_request->save();
             }
