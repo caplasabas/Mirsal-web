@@ -105,29 +105,32 @@ class HyperPayPaymentController extends Controller
     public function returnUrl(Request $request)
     {
         $inv_id = $request->inv_id;
+        $invoice = Invoice::find($inv_id);
         $url = "mirsal://payment?invoiceId=".$inv_id;
-        $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
+        $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);   
+        $vet_offer = VetOffer::find($invoice->vet_offer_id); 
+
+        
         $result_code = $response['result']['code'];
-        if($result_code == "000.000.000"){
+        if($result_code == "000.000.000" || $result_code == "000.100.110" || $result_code == "000.000.100"){
             $arr_result = array(
                 "status" => 1,
                 "code" => $result_code,
                 "message" => $response['result']['description'],
             );
-
-            $invoice = Invoice::find($inv_id);
             $invoice->reference_id = $response['id'];
             $invoice->payment_gateway = "HyperPay";
             $invoice->payment_status = "PAID";
             $invoice->save();
 
             if($invoice->payment_for ==  "VETERINARIAN"){
-                $vet_offer = VetOffer::find($invoice->vet_offer_id);
+               
                 $vet_request = VetRequest::find($vet_offer->vet_request_id);
                 $vet_offer->status = "ACCEPTED";
                 $vet_request->status = "ACCEPTED";
                 $vet_offer->save();
                 $vet_request->save();
+
             }
             if($invoice->payment_for ==  "DRIVER"){
                 $driver_offer = DriverOffer::find($invoice->driver_offer_id);
