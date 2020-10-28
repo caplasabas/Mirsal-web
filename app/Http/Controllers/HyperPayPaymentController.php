@@ -144,7 +144,7 @@ class HyperPayPaymentController extends Controller
             "code" => "",
             "message" => $response['result']['description'],
         );
-        return json_encode($arr_result);
+        // return json_encode($arr_result);
         $url = "mirsal://payment?invoiceId=".$inv_id;
         return redirect()->away($url);
          
