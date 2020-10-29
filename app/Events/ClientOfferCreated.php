@@ -10,22 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Model\LogNotification;
+use App\Model\ClientOffer;
 
-class WhenUserDoSomething
+class ClientOfferCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $logNotification;
+    public $clientOffer;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($logNotification)
+    public function __construct(ClientOffer $clientOffer)
     {
-        $this->logNotification = $logNotification;
+        $this->clientOffer = $clientOffer;
     }
 
     /**

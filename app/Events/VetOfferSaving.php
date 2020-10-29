@@ -10,22 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Model\LogNotification;
+use App\Model\VetOffer;
 
-class WhenUserDoSomething
+class VetOfferSaving
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $logNotification;
+    
+    public $vetOffer;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($logNotification)
+    public function __construct(VetOffer $vetOffer)
     {
-        $this->logNotification = $logNotification;
+        $this->vetOffer = $vetOffer;
     }
 
     /**

@@ -17,6 +17,11 @@ class VetOffer extends Model
         'payment_status',
     ]; 
 
+    protected $dispatchesEvents = [
+        'saving' => VetOfferSaving::class, 
+        'created' => VetOfferCreated::class, 
+    ];
+
     public function veterinarian()
     {
         return $this->belongsTo('App\User','vet_id')->withTrashed();;
@@ -46,4 +51,6 @@ class VetOffer extends Model
     {
         return number_format($value, 2);
     }
+
+    
 }

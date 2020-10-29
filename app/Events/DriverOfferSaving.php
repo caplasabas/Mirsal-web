@@ -10,22 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Model\LogNotification;
+use App\Model\DriverOffer;
 
-class WhenUserDoSomething
+class DriverOfferSaving
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $logNotification;
+    public $driverOffer;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($logNotification)
+    public function __construct(DriverOffer $driverOffer)
     {
-        $this->logNotification = $logNotification;
+        $this->driverOffer = $driverOffer;
     }
 
     /**

@@ -24,6 +24,25 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\WhenUserDoSomething' => [
             'App\Listeners\SendExpoNotification',
         ],
+        'App\Events\VetOfferSaving' => [
+            'App\Listeners\VetOfferSavingListener',
+        ],
+        'App\Events\VetOfferCreated' => [
+            'App\Listeners\VetOfferCreatedListener',
+        ],
+        'App\Events\DriverOfferSaving' => [
+            'App\Listeners\DriverOfferSavingListener',
+        ],
+        'App\Events\DriverOfferCreated' => [
+            'App\Listeners\DriverOfferCreatedListener',
+        ],
+        'App\Events\ClientOfferCreated' => [
+            'App\Listeners\ClientOfferCreatedListener',
+        ],
+        'App\Events\MessageCreated' => [
+            'App\Listeners\MessageCreatedListener',
+        ],
+        
     ];
 
     /**

@@ -18,6 +18,11 @@ class ClientOffer extends Model
         'note',
     ]; 
 
+    protected $dispatchesEvents = [
+        'saving' => ClientOfferSaving::class, 
+        'created' => ClientOfferCreated::class, 
+    ];
+
     public function buyer()
     {
         return $this->belongsTo('App\User','buyer_id')->withTrashed();

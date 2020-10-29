@@ -22,6 +22,11 @@ class DriverOffer extends Model
 
     ]; 
 
+    protected $dispatchesEvents = [
+        'saving' => DriverOfferSaving::class, 
+        'created' => DriverOfferCreated::class, 
+    ];
+
     public function driver()
     {
         return $this->belongsTo('App\User','driver_id','id')->withTrashed();;
