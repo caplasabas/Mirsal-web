@@ -27,7 +27,7 @@ class VetRequest extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     public function animal()

@@ -24,7 +24,7 @@ class DriverOffer extends Model
 
     public function driver()
     {
-        return $this->belongsTo('App\User','driver_id','id');
+        return $this->belongsTo('App\User','driver_id','id')->withTrashed();;
     }
     
     public function driverRequest()

@@ -96,7 +96,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     deleteSuggestion(id: ID!): Suggestion! @delete(model: "App\\Model\\Suggestion")
     
     #LogNotification
-    createLogNotification(input: CreateLogNotification @spread): LogNotification! @create(model: "App\\Model\\LogNotification")
+    createLogNotification(input: CreateLogNotification @spread): LogNotification! @field(resolver: "CreateLogNotification@createLogNotification")
     updateLogNotification(input: UpdateLogNotification @spread): LogNotification! @update(model: "App\\Model\\LogNotification")
     deleteLogNotification(id: ID!): LogNotification! @delete(model: "App\\Model\\LogNotification")
 
@@ -187,6 +187,7 @@ type User {
     longitude: String
     formatted_address: String 
     national_id_url: String
+    summary_rating: String
 }
 
 type OtpVerifyResponse{
@@ -347,18 +348,15 @@ input CreateRatingOperations {
 input CreateRatingInput {
     star_rating: String
     service_type: ServiceTypes
-    vet_id: ID
-    driver_id: ID
-    client_id: ID
-    
+    rated_by_user_id: ID
+    rated_user_id: ID
 }
 
 input UpdateRatingInput {
     star_rating: String
     service_type: ServiceTypes
-    vet_id: ID
-    driver_id: ID
-    client_id: ID
+    rated_by_user_id: ID
+    rated_user_id: ID
 }
 
 
@@ -557,12 +555,11 @@ input UpdateLogNotification{
 type Rating {
     star_rating: String
     service_type: ServiceTypes
-    vet_id: ID
-    veterinarian: User @belongsTo(relation: "veterinarian")
-    driver_id: ID
-    driver: User @belongsTo(relation: "driver")
-    client_id: ID
-    client: User @belongsTo(relation: "client")
+    rated_by_user_id: ID
+    rated_by_user: User @belongsTo(relation: "ratedBy")
+    rated_user_id: ID
+    rated_user: User @belongsTo(relation: "ratedUser")
+
 }
 
 type UserResponse {

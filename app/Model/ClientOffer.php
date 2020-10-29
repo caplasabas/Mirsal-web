@@ -20,7 +20,7 @@ class ClientOffer extends Model
 
     public function buyer()
     {
-        return $this->belongsTo('App\User','buyer_id');
+        return $this->belongsTo('App\User','buyer_id')->withTrashed();
     }
 
     public function product()

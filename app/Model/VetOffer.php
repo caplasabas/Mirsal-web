@@ -19,7 +19,7 @@ class VetOffer extends Model
 
     public function veterinarian()
     {
-        return $this->belongsTo('App\User','vet_id');
+        return $this->belongsTo('App\User','vet_id')->withTrashed();;
     }
 
     public function invoice()

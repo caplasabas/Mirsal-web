@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Model\Rating;
 
 class User extends Authenticatable
 {
@@ -59,6 +60,21 @@ class User extends Authenticatable
     public function vetTimeSlots()
     {
         return $this->hasMany('App\Model\VetTimeSlot','vet_id');
+    }
+
+    public function getSummaryRatingAttribute()
+    {
+        $summaryRating = 0;
+
+        $ratings = Rating::where("rated_user_id", $this->id);
+        if(!$ratings->get()->isEmpty()){
+            $arr_val = $ratings->pluck('star_rating')->all();
+            $count = sizeof($arr_val);
+            $sum = array_sum($arr_val);
+            $summaryRating = $sum / $count;
+        }
+
+        return $summaryRating;
     }
 
 

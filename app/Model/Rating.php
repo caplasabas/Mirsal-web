@@ -11,9 +11,8 @@ class Rating extends Model
 
     protected $fillable = [
         'star_rating',
-        'vet_id',
-        'driver_id',
-        'client_id',
+        'rated_user_id',
+        'rated_by_user_id',
         'service_type',
     ];
 
@@ -27,18 +26,14 @@ class Rating extends Model
         return $this->hasOne('App\Model\DriverOffer','driver_offer_id');
     }
 
-    public function veterinarian()
+    public function ratedUser()
     {
-        return $this->belongsTo('App\User','vet_id');
+        return $this->belongsTo('App\User','rated_user_id');
     }
 
-    public function driver()
+    public function ratedBy()
     {
-        return $this->belongsTo('App\User','driver_id');
+        return $this->belongsTo('App\User','rated_by_user_id');
     }
 
-    public function client()
-    {
-        return $this->belongsTo('App\User','clien_id');
-    }
 }

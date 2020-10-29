@@ -32,7 +32,7 @@ class SendExpoNotification
 
     }
 
-    public function sendNotification($title,$body,$exponentToken)
+    public function sendNotification($id,$bodyEnglish,$bodyArabic,$group,$filter)
     {
 
         // $exponentToken = "ExponentPushToken[".$exponentToken."]";
@@ -41,29 +41,45 @@ class SendExpoNotification
         // $exponentToken = "ExponentPushToken[35213515]";
         $postFields = "{\n  \"to\": \"".$exponentToken."\",\n  \"title\":\"".$title."\",\n  \"body\": ".$body."\n}";
         
+        $filter3 = array(
+            array("field"=>"tag","key"=>"userId","value"=>"userId_".$event->user->id,"relation"=>"=")
+        );
         // echo $postFields; exit;
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://exp.host/--/api/v2/push/send",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS =>"{\r\n\t\"to\": \"".$exponentToken."\",\r\n\t\"title\": \"".$title."\",\r\n\t\"body\": \"".$body."\"\r\n}",
-        CURLOPT_HTTPHEADER => array(
-            "Content-Type: application/json"
-        ),
+        $content = array(
+                "en" => $body,
+                "ar" => $body
+        );
+        $title = array(
+            "en" => "Payment",
+            "ar" => "دفع"
+        );
+        $hashes_array = array();
+        $fields = array(
+            'app_id' => "467061a2-9264-4738-b764-5490c488502b",
+            // 'included_segments' => array(
+            //     'All'
+            // ),
+            'headings'=> $title,
+            'contents' => $content,
+            "android_group"=>$group,
+            'filters' => $filter
+        );
+        
+        $fields = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json; charset=utf-8',
+                'Authorization: Basic YmMxYzdiNmQtOTA1NC00ZDkyLWIyYTgtNWIyNGNlODI2NWUz'
         ));
-
-        $response = curl_exec($curl);
-        if (curl_errno($curl)) {
-            echo 'Error:' . curl_error($curl);
-        }
-        curl_close($curl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        
+        $response = curl_exec($ch);
+        curl_close($ch);
         
     }
 
