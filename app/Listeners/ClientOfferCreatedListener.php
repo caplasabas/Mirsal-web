@@ -27,7 +27,7 @@ class ClientOfferCreatedListener
     public function handle(ClientOfferCreated $event)
     {
         $clientRequest = $event->clientOffer->clientRequest;
-        $filter3 = array(
+        $filter = array(
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$clientRequest->client->id,"relation"=>"=")
         );
         OneSignalHelper::notification(0,$event->clientOffer->client_id,$clientRequest->client->id,"CLIENT_OFFER_CREATED","offer",$filter);

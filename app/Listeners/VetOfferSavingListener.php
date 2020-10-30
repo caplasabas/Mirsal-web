@@ -28,6 +28,12 @@ class VetOfferSavingListener
      */
     public function handle(VetOfferSaving $event)
     {
-        // 
+        $vetRequest = $event->vetOffer->vetRequest;
+        
+        if($event->vetOffer->status == "ACCEPTED"){
+            $filter = array(array("field"=>"tag","key"=>"userId","value"=>"userId_".$vetRequest->client->id,"relation"=>"="));
+            OneSignalHelper::notification(0,$event->vetOffer->vet_id,$vetRequest->client->id,"VET_OFFER_ACCEPTED","offer",$filter);
+        }
+            
     }
 }

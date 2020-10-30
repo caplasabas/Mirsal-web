@@ -27,7 +27,7 @@ class MessageCreatedListener
     public function handle(MessageCreated $event)
     {
         $logNotification = $event->logNotification;
-        $filter3 = array(
+        $filter = array(
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$logNotification->user_id_to_notify,"relation"=>"=")
         );
         OneSignalHelper::notification(0,$logNotification->user_id,$logNotification->user_id_to_notify,"VET_OFFER_CREATED","message",$filter);

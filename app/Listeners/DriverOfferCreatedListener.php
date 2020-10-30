@@ -28,7 +28,7 @@ class DriverOfferCreatedListener
     {
         $driverRequest = $event->driverOffer->driverRequest;
 
-        $filter3 = array(
+        $filter = array(
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$driverRequest->client->id,"relation"=>"=")
         );
         OneSignalHelper::notification(0,$event->driverOffer->driver_id,$driverRequest->client->id,"DRIVER_OFFER_CREATED","offer",$filter);

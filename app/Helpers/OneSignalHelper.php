@@ -12,7 +12,7 @@ class OneSignalHelper
         //     array("field"=>"tag","key"=>"userId","value"=>"userId_".$event->user->id,"relation"=>"=")
         // );
 
-        $content = $this->selectMessage($type);
+        $content = self::selectMessage($type);
 
         $title = array(
             "en" => "Mirsal",
@@ -43,17 +43,18 @@ class OneSignalHelper
         $response = curl_exec($ch);
         curl_close($ch);
 
-        $this->logNotification($user_id, $message,$message_ar, $user_id_to_notify);
+        self::logNotification($user_id, $content['en'],$content['ar'], $type, $user_id_to_notify);
     }
     
-    public static function logNotification($user_id, $message,$message_ar, $user_id_to_notify){
+    public static function logNotification($user_id, $message,$message_ar, $type, $user_id_to_notify){
         $logNotification = new LogNotification;
         $logNotification->user_id = $user_id;
         $logNotification->user_id_to_notify = $user_id_to_notify;
         $logNotification->type = $type;
-        $logNotification->title = $title;
         $logNotification->message = $message;
+        $logNotification->read = 0;
         // $logNotification->message_ar = $message_ar;
+        
         $logNotification->save();
     }
 
@@ -68,6 +69,10 @@ class OneSignalHelper
                 $message="New Vet Offer";
                 $message_ar="New Vet Offer";
                 break;
+            case 'VET_OFFER_ACCEPTED':
+                $message="Offer Accepted";
+                $message_ar="Offer Accepted";
+                break;
             case 'DRIVER_OFFER_CREATED':
                 $message="New Driver Offer";
                 $message_ar="New Vet Offer";
@@ -76,6 +81,7 @@ class OneSignalHelper
                 $message="New Client Offer";
                 $message_ar="New Client Offer";
                 break;
+            
                 
         }
         return array(

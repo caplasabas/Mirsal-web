@@ -28,7 +28,7 @@ class VetOfferCreatedListener
     public function handle(VetOfferCreated $event)
     {
         $vetRequest = $event->vetOffer->vetRequest;
-        $filter3 = array(
+        $filter = array(
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$vetRequest->client->id,"relation"=>"=")
         );
         OneSignalHelper::notification(0,$event->vetOffer->vet_id,$vetRequest->client->id,"VET_OFFER_CREATED","offer",$filter);
