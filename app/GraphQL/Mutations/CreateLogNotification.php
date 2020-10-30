@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use App\Events\MessageCreated;
 
 use App\Model\LogNotification;
 
@@ -22,7 +23,7 @@ class CreateLogNotification
         $logNotification->type = $input['type'];
         $logNotification->save();
 
-        event(new WhenUserDoSomething($logNotification));
+        event(new MessageCreated($logNotification));
 
         return $logNotification;
 

@@ -30,7 +30,7 @@ class MessageCreatedListener
         $filter = array(
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$logNotification->user_id_to_notify,"relation"=>"=")
         );
-        OneSignalHelper::notification(0,$logNotification->user_id,$logNotification->user_id_to_notify,"VET_OFFER_CREATED","message",$filter);
+        OneSignalHelper::notification(0,$logNotification->user_id,$logNotification->user_id_to_notify,"MESSAGE","message",$filter);
         
     }
 }

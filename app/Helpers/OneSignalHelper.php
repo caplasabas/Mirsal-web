@@ -51,7 +51,7 @@ class OneSignalHelper
         $logNotification->user_id = $user_id;
         $logNotification->user_id_to_notify = $user_id_to_notify;
         $logNotification->type = $type;
-        $logNotification->message = $message;
+        $logNotification->message = $message_ar;
         $logNotification->read = 0;
         // $logNotification->message_ar = $message_ar;
         

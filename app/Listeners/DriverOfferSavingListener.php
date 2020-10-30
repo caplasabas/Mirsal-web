@@ -26,6 +26,12 @@ class DriverOfferSavingListener
      */
     public function handle(DriverOfferSaving $event)
     {
-        //
+        $driverRequest = $event->driverOffer->driverRequest;
+        
+        if($event->driverOffer->status == "ACCEPTED"){
+            $filter = array(array("field"=>"tag","key"=>"userId","value"=>"userId_".$driverRequest->client->id,"relation"=>"="));
+            OneSignalHelper::notification(0,$event->driverOffer->driver_id,$driverRequest->client->id,"VET_OFFER_ACCEPTED","offer",$filter);
+        }
+
     }
 }

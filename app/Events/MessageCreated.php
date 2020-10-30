@@ -14,18 +14,16 @@ class MessageCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
-    public $type;
-    public $order;
+    public $logNotification;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($type,$user,$order)
+    public function __construct($logNotification)
     {
-        //
+        $this->logNotification = $logNotification;
     }
 
     /**
