@@ -46,10 +46,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Model\Interest', 'user_interests', 'user_id', 'interest_id');
     }
 
-    public function getAvatarAttribute($value)
-    {
-        return asset("storage/user_avatars/".$value);
-    }
+
 
     public function getPhoneFormattedAttribute(){
         $trimmed_phone = substr($this->phone, 1); 
