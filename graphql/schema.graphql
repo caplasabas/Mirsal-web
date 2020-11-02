@@ -153,6 +153,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
+    clientOffersBySeller(seller_id: ID!, status: ProductStatus!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ClientOffersBySeller@bySeller")
 
     invoices(id: ID @eq, client_id: ID @eq, drivervetOffer_id: ID @eq, vet_offer_id: ID @eq,driver_offer_id: ID @eq, payment_status: InvoiceStatuses @eq, payment_for: PaymentFor @eq, reference_id: String @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(model: "App\\Model\\Invoice")
     invoicesByVet(vet_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
