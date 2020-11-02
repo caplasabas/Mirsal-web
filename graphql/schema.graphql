@@ -126,15 +126,10 @@ extend type Query @middleware(checks: ["auth:api"]){
     currentVisitsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
     previousVisitsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
 
-    currentPrivateDeliveryAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\PrivateRequest@currentAsClient")
-    previousPrivateDeliveryAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\PrivateRequest@previousAsClient")
-    currentPrivateDeliveryAsDriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\PrivateRequest@currentAsDriver")
-    previousPrivateDeliveryAsDriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\PrivateRequest@previousAsDriver")
-
-    currentSharedDeliveryAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ShareRequest@currentAsClient")
-    previousSharedDeliveryAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ShareRequest@previousAsClient")
-    currentSharedDeliveryAsDriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ShareRequest@currentAsDriver")
-    previousSharedDeliveryAsDriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ShareRequest@previousAsDriver")
+    currentDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsClient")
+    previousDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsClient")
+    currentDeliveryAsDriver(driver_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsDriver")
+    previousDeliveryAsDriver(driver_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsDriver")
 
     vetRequestsByVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestCustom@excludes")
     vetOffersByInvoice(vet_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice")
