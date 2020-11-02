@@ -708,6 +708,7 @@ type Product {
     image: ImageFile @belongsTo(relation: "imageFile")
     contact_phone: String
     contact_email: String
+    bank_name: String
     iban: String
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
