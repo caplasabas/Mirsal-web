@@ -34,13 +34,15 @@ class VetOfferMutator
                 $invoice->vet_offer_id = $vet_offer_id;
                 // $invoice->offer_id = $vet_offer_id;
                 $invoice->payment_for = "VETERINARIAN";
-                
+                $price = str_replace(',', "", $vet_offer->price);
                 //Amount calculation
-                $invoice->amount_paid = $vet_offer->price; 
-                $invoice->amount_paid += ($vet_offer->price * ($admin_setting->tax_perc/100));
+                $invoice->amount_paid = $price; 
+                $invoice->amount_paid += ($price * ($admin_setting->tax_perc/100));
                 
-                $invoice->tax_price = $vet_offer->price * ($admin_setting->tax_perc/100);
+                $invoice->tax_price = $price * ($admin_setting->tax_perc/100);
                 $invoice->tax_rate = $admin_setting->tax_perc;
+                $vet_offer->tax_price = $invoice->tax_price;
+                $vet_offer->total = $price + $vet_offer->tax_price;
 
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id);

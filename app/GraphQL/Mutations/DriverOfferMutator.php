@@ -31,8 +31,8 @@ class DriverOfferMutator
                 $invoice->driver_offer_id = $driver_offer_id;
                 // $invoice->offer_id = $driver_offer_id;
                 $invoice->payment_for = "Driver";
-
-                $first_payment_price =  $driver_offer->price * ($admin_setting->first_payment_perc/100);
+                $price = str_replace(',', "", $driver_offer->price);
+                $first_payment_price =  $price * ($admin_setting->first_payment_perc/100);
                 $tax_price = $first_payment_price * ($admin_setting->tax_perc/100);
                 $first_payment_total = $first_payment_price + $tax_price;
 
