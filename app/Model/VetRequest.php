@@ -20,6 +20,7 @@ class VetRequest extends Model
         'preferred_date',
         'preferred_time',
         'image_id',
+        'status',
         'vet_time_slot_id',
         'accepted_vet_offer_id',
         'image_uri',
@@ -50,9 +51,9 @@ class VetRequest extends Model
         return $this->hasMany('App\Model\VetOffer');
     }
 
-    public function vetOfferAccepted()
+    public function acceptedVetOffer()
     {
-        return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id','id');
+        return $this->belongsTo('App\Model\VetOffer','accepted_vet_offer_id');
     }
 
     public function image()

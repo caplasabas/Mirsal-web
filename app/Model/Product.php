@@ -22,6 +22,7 @@ class Product extends Model
         'image_id',
         'contact_phone',
         'contact_email',
+        'bank_name',
         'iban',
         'accepted_client_offer_id',
         'image_id',

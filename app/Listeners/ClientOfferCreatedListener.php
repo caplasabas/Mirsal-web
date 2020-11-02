@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\ClientOfferCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Helpers\OneSignalHelper;
 
 class ClientOfferCreatedListener
 {

@@ -39,6 +39,11 @@ class DriverOffer extends Model
         return $this->belongsTo('App\Model\DriverRequest');
     }
 
+    public function invoice()
+    {
+        return $this->hasOne('App\Model\Invoice');
+    }
+
     public function rating()
     {
         return $this->belongsTo('App\Model\Rating','rating_id');

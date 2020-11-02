@@ -23,6 +23,7 @@ class DriverRequest extends Model
         'preferred_time',
         'image_id',
         'image_uri',
+        'status',
     ]; 
 
     public function client()
@@ -45,7 +46,7 @@ class DriverRequest extends Model
         return $this->hasMany('App\Model\DriverOffer');
     }
 
-    public function driverOfferAccepted()
+    public function acceptedDriverOffer()
     {
         return $this->belongsTo('App\Model\DriverOffer','accepted_driver_offer_id');
     }
