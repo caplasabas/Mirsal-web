@@ -84,8 +84,23 @@ class DeliveryCustom
     public function previousAsDriver($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $driver_id = $args['driver_id'];
-        $driverOffers = DriverOffer::where("driver_id", $driver_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
+        $driverOffer = DriverOffer::where("driver_id", $driver_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
+        if($driverOffers->get()->isEmpty())
+            return $driverOffers;
+        $driverOfferIds = $driverOffers->pluck('id');
+
+        if(isset($args['type'])){
+            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where("type", $args['type'])->where("status","COMPLETED");
+        } else {
+            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where("status","COMPLETED");
+        }
         
+        if($driverRequests->get()->isEmpty())
+            return $driverRequests;
+        $driverOfferIds = $driverRequests->pluck('accepted_driver_offer_id');
+
+        $driverOffers = DriverOffer::whereIn("id", $driverOfferIds)->where("driver_id", $driver_id);
+
         return $driverOffers;
     }
 }
