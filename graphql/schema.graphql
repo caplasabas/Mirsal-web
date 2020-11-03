@@ -658,6 +658,7 @@ type DriverOffer {
     driver_request: DriverRequest @belongsTo(relation: "driverRequest")
     price: String
     first_payment_price: String
+    first_payment_perc: String
     tax_price: String
     total: String
     status: String

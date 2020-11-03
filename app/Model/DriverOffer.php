@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\DriverOfferSaving;
 use App\Events\DriverOfferCreated;
+use App\Model\AdminSetting;
 
 class DriverOffer extends Model
 {
@@ -52,5 +53,10 @@ class DriverOffer extends Model
     public function getPriceAttribute($value)
     {
         return number_format($value, 2);
+    }
+
+    public function getFirstPaymentPercAttribute()
+    {
+        return AdminSetting::first()->first_payment_perc;
     }
 }
