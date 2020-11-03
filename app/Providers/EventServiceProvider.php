@@ -39,7 +39,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ClientOfferCreated' => [
             'App\Listeners\ClientOfferCreatedListener',
         ],
-        'App\Events\ClientOfferCreated' => [
+        'App\Events\ClientOfferSaving' => [
             'App\Listeners\ClientOfferSavingListener',
         ],
         'App\Events\MessageCreated' => [

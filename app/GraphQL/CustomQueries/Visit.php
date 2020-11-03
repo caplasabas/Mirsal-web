@@ -37,7 +37,7 @@ class Visit
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
-        $vetOffers = VetOffer::whereIn("id", $vetOfferIds)->where("vet_id", $vet_id)->where("status", "COMPLETED")->pluck('id');
+        $vetOffers = VetOffer::whereIn("id", $vetOfferIds);
         return $vetOffers;
     }
 

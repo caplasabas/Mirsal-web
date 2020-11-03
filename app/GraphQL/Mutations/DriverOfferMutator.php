@@ -38,6 +38,7 @@ class DriverOfferMutator
 
                 $invoice->tax_price = $tax_price;
                 $invoice->tax_rate = $admin_setting->tax_perc;
+                $invoice->first_payment_perc = $admin_setting->first_payment_perc;
                 
                 $driver_offer->tax_price = $tax_price;
                 $driver_offer->first_payment_price = $first_payment_total;

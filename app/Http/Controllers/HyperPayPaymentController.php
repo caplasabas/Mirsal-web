@@ -135,7 +135,7 @@ class HyperPayPaymentController extends Controller
             }
             if($invoice->payment_for ==  "DRIVER"){
                 $driver_offer = DriverOffer::find($invoice->driver_offer_id);
-                $driver_request = VetRequest::find($driver_offer->driver_request_id);
+                $driver_request = DriverRequest::find($driver_offer->driver_request_id);
                 $driver_offer->status = "ACCEPTED";
                 $driver_request->status = "ACCEPTED";
                 $driver_request->accepted_driver_offer_id = $invoice->driver_offer_id;

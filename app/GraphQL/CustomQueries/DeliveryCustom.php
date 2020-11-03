@@ -48,7 +48,7 @@ class DeliveryCustom
         if($driverRequests->get()->isEmpty())
             return $driverRequests;
         $driverOfferIds = $driverRequests->pluck('accepted_driver_offer_id');
-        $driverOffers = DriverOffer::whereIn("id", $driverOfferIds)->where("driver_id", $driver_id)->where("status", "COMPLETED")->pluck('id');
+        $driverOffers = DriverOffer::whereIn("id", $driverOfferIds);
         return $driverOffers;
     }
 
