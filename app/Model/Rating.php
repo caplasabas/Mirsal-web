@@ -18,12 +18,12 @@ class Rating extends Model
 
     public function vetOffer()
     {   
-        return $this->hasOne('App\Model\VetOffer','vet_offer_id');
+        return $this->hasOne('App\Model\VetOffer');
     }
 
     public function driverOffer()
     {   
-        return $this->hasOne('App\Model\DriverOffer','driver_offer_id');
+        return $this->hasOne('App\Model\DriverOffer');
     }
 
     public function ratedUser()

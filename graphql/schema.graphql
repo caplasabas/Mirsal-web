@@ -172,7 +172,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
     cars: [Car!]! @paginate(model: "App\\Model\\Car")
 
-    ratings(id: ID @eq, rated_by_user_id: ID @eq, rated_user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(model: "App\\Model\\Rating")
+    ratings(id: ID @eq, rated_by_user_id: ID @eq, rated_user_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
     suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
     logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, read: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [LogNotification!] @paginate(model: "App\\Model\\LogNotification")
 }
@@ -573,7 +573,8 @@ type Rating {
     rated_by_user: User @belongsTo(relation: "ratedBy")
     rated_user_id: ID
     rated_user: User @belongsTo(relation: "ratedUser")
-
+    vet_offer: VetOffer @hasOne(relation: "vetOffer")
+    driver_offer: DriverOffer @hasOne(relation: "driverOffer")
 }
 
 type UserResponse {
