@@ -705,6 +705,7 @@ type Product {
     title: String
     seller: User @belongsTo(relation: "seller") 
     address: Address @belongsTo(relation: "address")
+    client_offers: [ClientOffer!] @hasMany(relation: "clientOffers")
     status: ProductStatus
     type: ProductType
     quantity: Int
