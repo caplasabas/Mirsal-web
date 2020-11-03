@@ -69,16 +69,11 @@ class Visit
     {
         $vet_id = $args['vet_id'];
         $vetOffers = VetOffer::where("vet_id", $vet_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
-        
-        return $vetOffers;
-
-        $vet_id = $args['vet_id'];
-        $vetOffers = VetOffer::where("vet_id", $vet_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
         if($vetOffers->get()->isEmpty())
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED");
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
