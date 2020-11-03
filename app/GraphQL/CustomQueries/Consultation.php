@@ -68,7 +68,7 @@ class Consultation
     public function previousAsVet($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $vet_id = $args['vet_id'];
-        $vetOffers = VetOffer::where("vet_id", $vet_id);
+        $vetOffers = VetOffer::where("vet_id", $vet_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
         
         return $vetOffers;
     }
