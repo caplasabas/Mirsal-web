@@ -69,4 +69,24 @@ class Product extends Model
     {
         return $this->belongsTo('App\Model\ImageFile');
     }
+    
+    public function getTypeArAttribute()
+    {
+        return $this->typeTranslate($this->type);
+    }
+
+    public function typeTranslate($type)
+    {   
+        $value = "";
+        switch ($type) {
+            case 'ANIMAL':
+                $value = "حيوان";
+                break;
+            case 'PRODUCT':
+                $value = "مسلتزمات الحيوانات";
+                break;
+        }
+
+        return $value;
+    }
 }

@@ -711,6 +711,7 @@ type Product {
     client_offers: [ClientOffer!] @hasMany(relation: "clientOffers")
     status: ProductStatus
     type: ProductType
+    type_ar: String
     quantity: Int
     is_vip: Int
     vip_status: VipStatuses
