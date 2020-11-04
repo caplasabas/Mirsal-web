@@ -65,4 +65,61 @@ class DriverRequest extends Model
     {
         return $this->belongsTo('App\Model\ImageFile');
     }
+
+    // CANCELLED - ملغية
+    // PENDING - قيد الانتظار
+    // SKIPPED - تم تجاهلها
+    // ACCEPTED -تم قبولها
+    // COMPLETED - مكتملة 
+
+    public function getStatusArAttribute()
+    {
+        return $this->statusTranslate($this->status);
+    }
+
+    public function statusTranslate($status)
+    {   
+        $value = "";
+        switch ($status) {
+            case 'CANCELLED':
+                $value = "ملغية";
+                break;
+            case 'PENDING':
+                $value = "قيد الانتظار";
+                break;
+            case 'SKIPPED':
+                $value = "تم تجاهلها";
+                break;
+            case 'ACCEPTED':
+                $value = "تم قبولها";
+                break;
+            case 'COMPLETED':
+                $value = "مكتملة ";
+                break;
+        }
+
+        return $value;
+    }
+
+    public function getTypeArAttribute()
+    {
+        return $this->typeTranslate($this->type);
+    }
+
+    // SHARE تشاركي
+    // PRIVATE - خاص
+    public function typeTranslate($type)
+    {   
+        $value = "";
+        switch ($type) {
+            case 'SHARE':
+                $value = "تشاركي";
+                break;
+            case 'PRIVATE':
+                $value = "خاص";
+                break;
+        }
+
+        return $value;
+    }
 }

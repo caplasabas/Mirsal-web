@@ -65,4 +65,58 @@ class VetRequest extends Model
     {
         return $this->belongsTo('App\Model\VetTimeSlot');
     }
+
+    public function getTypeArAttribute()
+    {
+        return $this->typeTranslate($this->type);
+    }
+
+    // SHARE تشاركي
+    // PRIVATE - خاص
+    public function typeTranslate($type)
+    {   
+        $value = "";
+        switch ($type) {
+            case 'VISIT':
+                $value = "زيارة";
+                break;
+            case 'CONSULTATION':
+                $value = "استشارة";
+                break;
+        }
+
+        return $value;
+    }
+    
+
+    public function getStatusArAttribute()
+    {
+        return $this->statusTranslate($this->status);
+    }
+
+    public function statusTranslate($status)
+    {   
+        $value = "";
+        switch ($status) {
+            case 'CANCELLED':
+                $value = "ملغية";
+                break;
+            case 'PENDING':
+                $value = "قيد الانتظار";
+                break;
+            case 'SKIPPED':
+                $value = "تم تجاهلها";
+                break;
+            case 'ACCEPTED':
+                $value = "تم قبولها";
+                break;
+            case 'COMPLETED':
+                $value = "مكتملة";
+                break;
+        }
+
+        return $value;
+    }
+
+
 }

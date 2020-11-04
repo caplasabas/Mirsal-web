@@ -607,7 +607,9 @@ type VetRequest {
     client: User
     vet_offers: [VetOffer!] @hasMany(relation: "vetOffers")
     type: VetRequestTypes
+    type_ar: String
     status: VetRequestStatuses
+    status_ar: String
     animal: Animal
     size: Size
     description: String
@@ -628,6 +630,7 @@ type VetOffer {
     invoice: Invoice @hasOne(relation: "invoice")
     price: String
     status: VetOfferStatuses
+    status_ar: String
     rating: Rating
     created_at: String
     updated_at: String
@@ -638,7 +641,9 @@ type DriverRequest {
     client: User
     driver_offers: [DriverOffer!] @hasMany(relation: "driverOffers")
     type: DriverRequestTypes
+    type_ar: String
     status: DriverRequestStatuses
+    status_ar: String
     animal: Animal
     size: Size
     quantity: Int
@@ -663,6 +668,7 @@ type DriverOffer {
     tax_price: String
     total: String
     status: String
+    status_ar: String
     rating: Rating
     created_at: String
     updated_at: String
@@ -710,6 +716,7 @@ type Product {
     address: Address @belongsTo(relation: "address")
     client_offers: [ClientOffer!] @hasMany(relation: "clientOffers")
     status: ProductStatus
+    status_ar: String
     type: ProductType
     type_ar: String
     quantity: Int

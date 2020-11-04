@@ -69,7 +69,34 @@ class Product extends Model
     {
         return $this->belongsTo('App\Model\ImageFile');
     }
-    
+
+    // CANCELLED - ملغية
+    // PENDING - قيد الانتظار 
+    // SOLD - تم البيع
+    public function getStatusArAttribute()
+    {
+        return $this->statusTranslate($this->status);
+    }
+
+    public function statusTranslate($status)
+    {   
+
+        $value = "";
+        switch ($status) {
+            case 'CANCELLED':
+                $value = "ملغية";
+                break;
+            case 'PENDING':
+                $value = "قيد الانتظار";
+                break;
+            case 'SOLD':
+                $value = "تم البيع";
+                break;
+        }
+
+        return $value;
+    }
+
     public function getTypeArAttribute()
     {
         return $this->typeTranslate($this->type);

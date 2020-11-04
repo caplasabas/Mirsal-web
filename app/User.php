@@ -74,6 +74,30 @@ class User extends Authenticatable
         return $summaryRating;
     }
 
+    public function getVetStatusArAttribute()
+    {
+        return $this->vetStatusTranslate($this->vet_status);
+    }
+
+    // REJECTED مرفوضة
+    public function vetStatusTranslate($vet_status)
+    {   
+        $value = "";
+        switch ($vet_status) {
+            case 'REJECTED':
+                $value = "مرفوضة";
+                break;
+            case 'PENDING':
+                $value = "قيد الانتظار";
+                break;
+            case 'ACCEPTED':
+                $value = "تم قبولها";
+                break;
+        }
+
+        return $value;
+    }
+
 
 
 }
