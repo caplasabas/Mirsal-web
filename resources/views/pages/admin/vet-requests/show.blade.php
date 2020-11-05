@@ -113,7 +113,7 @@
                                     </div>
                                    
                                     <div class="card-body">
-                                        @if(isset($data['vetRequest']->vetOfferAccepted))
+                                        @if(isset($data['vetRequest']->acceptedVetOffer))
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="row">
@@ -121,19 +121,19 @@
                                                         {{ __('lang.veterinarian') }} :
                                                     </div>
                                                     <div class="col-7">
-                                                    <strong>{{ $data['vetRequest']->vetOfferAccepted->veterinarian->name}}</strong>  
+                                                    <strong>{{ $data['vetRequest']->acceptedVetOffer->veterinarian->name}}</strong>  
                                                     </div>
                                                     <div class="col-5 text-strong">
                                                         {{ __('lang.status') }} :
                                                     </div>
                                                     <div class="col-7">
-                                                        <strong>{{ $data['vetRequest']->vetOfferAccepted->status}}</strong>  
+                                                        <strong>{{ $data['vetRequest']->acceptedVetOffer->status}}</strong>  
                                                     </div>
                                                     <div class="col-5 text-strong">
                                                         {{ __('lang.price') }} :
                                                     </div>
                                                     <div class="col-7">
-                                                        <strong>SA {{ $data['vetRequest']->vetOfferAccepted->price}}</strong>  
+                                                        <strong>SA {{ $data['vetRequest']->acceptedVetOffer->price}}</strong>  
                                                     </div>
 
                                                 </div>

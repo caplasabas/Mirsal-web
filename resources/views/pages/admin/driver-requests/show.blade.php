@@ -127,7 +127,7 @@
                                     {{ __('lang.delivery_accepted_offer') }} 
                                 </div>
                                 <div class="card-body">
-                                    @if(isset($data['driverRequest']->driverOfferAccepted))
+                                    @if(isset($data['driverRequest']->acceptedDriverOffer))
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="row">
@@ -135,19 +135,19 @@
                                                     {{ __('lang.driver') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->driverOfferAccepted->driver->name}}</strong>  
+                                                <strong>{{ $data['driverRequest']->acceptedDriverOffer->driver->name}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>{{ $data['driverRequest']->driverOfferAccepted->status}}</strong>  
+                                                    <strong>{{ $data['driverRequest']->acceptedDriverOffer->status}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.price') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                    <strong>SA {{ $data['driverRequest']->driverOfferAccepted->price}}</strong>  
+                                                    <strong>SA {{ $data['driverRequest']->acceptedDriverOffer->price}}</strong>  
                                                 </div>
 
                                             </div>
