@@ -28,10 +28,10 @@
                                     {{ __('lang.image') }} 
                                 </div>
                                 <div class="card-body img-centered">
-                                    @if(isset($data['product']->image))
+                                    @if(isset($data['product']->image_uri))
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                    <img class="img-thumbnail" src="{{ $data['product']->image->path}}" alt="Default" height="200px" width="230px">
+                                                    <img class="img-thumbnail" src="{{ $data['product']->image_uri}}" alt="Default" height="200px" width="230px">
                                             </div>
                                         </div>
                                         @else

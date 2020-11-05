@@ -26,10 +26,10 @@
                                         {{ __('lang.image') }} 
                                     </div>
                                     <div class="card-body img-centered">
-                                        @if(isset($data['driverRequest']->image))
+                                        @if(isset($data['driverRequest']->image_uri))
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                    <img class="img-thumbnail" src="{{ $data['driverRequest']->image->path}}" alt="Default" height="200px" width="230px">
+                                                    <img class="img-thumbnail" src="{{ $data['driverRequest']->image_uri}}" alt="Default" height="200px" width="230px">
                                             </div>
 
                                         </div>
