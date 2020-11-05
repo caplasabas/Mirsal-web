@@ -64,6 +64,30 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header text-uppercase text-info">
+                            {{ __('lang.image') }} 
+                        </div>
+                        <div class="card-body img-centered">
+                            @if(isset($data['veterinarian']->national_id_url))
+                            <div class="row">
+                                <div class="col-lg-12">
+                                        <img class="img-thumbnail" src="{{ $data['veterinarian']->national_id_url}}" alt="Default" height="200px" width="230px">
+                                </div>
+
+                            </div>
+                            @else
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    {{ __('lang.nothing_found') }} 
+                                </div>
+
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
                 
             </div>
             <div class="row">
