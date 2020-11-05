@@ -15,8 +15,8 @@ class OTPVerification
         $user = User::where('phone', $args['phone'])->where('otp_code',$args['otp_code'])->first();
 
         if(isset($user)){
-            Auth::login($user);
-            $user = Auth::user();
+            \Auth::login($user);
+            $user = \Auth::user();
             return array(
                 "status" => 1,
                 "message" => "Success",
