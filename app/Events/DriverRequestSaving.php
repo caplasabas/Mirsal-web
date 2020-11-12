@@ -10,20 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OnRegister
+use App\Model\DriverRequest;
+
+class DriverRequestSaving
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $driverRequest;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(DriverRequest $driverRequest)
     {
-        $this->user = $user;
+        $this->driverRequest = $driverRequest;
     }
 
     /**

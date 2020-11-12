@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Events\VetRequestSaving;
 
 class VetRequest extends Model
 {
@@ -25,6 +26,10 @@ class VetRequest extends Model
         'accepted_vet_offer_id',
         'image_uri',
     ]; 
+
+    protected $dispatchesEvents = [
+        'saving' => VetRequestSaving::class, 
+    ];
 
     public function client()
     {

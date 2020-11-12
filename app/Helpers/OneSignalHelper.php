@@ -69,18 +69,44 @@ class OneSignalHelper
                 $message="New Vet Offer";
                 $message_ar="New Vet Offer";
                 break;
+            case 'VET_OFFER_CANCELLED':
+                $message="Vet Offer Cancelled";
+                $message_ar="Vet Offer Cancelled";
+                break;
             case 'VET_OFFER_ACCEPTED':
                 $message="Offer Accepted";
                 $message_ar="Offer Accepted";
                 break;
+            
+            case 'VET_REQUEST_CANCELLED':
+                $message="VET REQUEST CANCELLED";
+                $message_ar="VET REQUEST CANCELLED";
+                break;
+
             case 'DRIVER_OFFER_CREATED':
+                $message="New Driver Offer";
+                $message_ar="New Driver Offer";
+                break;
+            
+            case 'DRIVER_OFFER_ACCEPTED':
                 $message="New Driver Offer";
                 $message_ar="New Vet Offer";
                 break;
+
+            case 'DRIVER_REQUEST_CANCELLED':
+                $message="Driver Request Cancelled";
+                $message_ar="Driver Request Cancelled";
+                break;
+
             case 'CLIENT_OFFER_CREATED':
                 $message="New Client Offer";
                 $message_ar="New Client Offer";
                 break;
+            case 'VET_ACCEPTED':
+                $message="Your registration accepted.";
+                $message_ar="Your registration accepted.";
+                break;
+                    
             
                 
         }

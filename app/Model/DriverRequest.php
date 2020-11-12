@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Events\DriverRequestSaving;
+
 
 class DriverRequest extends Model
 {
@@ -25,6 +27,11 @@ class DriverRequest extends Model
         'image_uri',
         'status',
     ]; 
+
+    protected $dispatchesEvents = [
+        'saving' => DriverRequestSaving::class, 
+    ];
+
 
     public function client()
     {

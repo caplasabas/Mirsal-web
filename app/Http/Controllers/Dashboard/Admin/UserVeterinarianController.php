@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 
+use App\Events\VeterinarianAccepted;
+
 class UserVeterinarianController extends Controller
 {
     /**
@@ -161,6 +163,7 @@ class UserVeterinarianController extends Controller
     {
         $vet = User::find($id);
         $vet->vet_status = "ACCEPTED";
+        event(new VeterinarianAccepted($vet));
         $vet->save();
 
         return redirect()->route('admins.veterinarians.index');

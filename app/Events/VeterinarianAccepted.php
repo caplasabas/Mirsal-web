@@ -10,7 +10,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OnRegister
+use App\User;
+
+class VeterinarianAccepted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,7 +23,7 @@ class OnRegister
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

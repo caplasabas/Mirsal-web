@@ -45,6 +45,17 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\MessageCreated' => [
             'App\Listeners\MessageCreatedListener',
         ],
+
+        'App\Events\VetRequestSaving' => [
+            'App\Listeners\VetRequestSavingListener',
+        ],
+        'App\Events\DriverRequestSaving' => [
+            'App\Listeners\DriverRequestSavingListener',
+        ],
+
+        'App\Events\VeterinarianAccepted' => [
+            'App\Listeners\VeterinarianAcceptedListener',
+        ],
         
     ];
 
