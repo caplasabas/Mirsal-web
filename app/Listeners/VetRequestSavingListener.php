@@ -29,7 +29,7 @@ class VetRequestSavingListener
     {
         $vetRequest = $event->vetRequest;
         
-        if($vetRequest->status == "CANCELLED"){
+        if($vetRequest->status == "CANCELLED" ){
             $filter = array(array("field"=>"tag","key"=>"userId","value"=>"userId_".$vetRequest->acceptedVetOffer->vet_id,"relation"=>"="));
             OneSignalHelper::notification(0,$vetRequest->client->id,$vetRequest->acceptedVetOffer->vet_id,"DRIVER_REQUEST_CANCELLED","request",$filter);
         }

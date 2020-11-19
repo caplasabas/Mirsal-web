@@ -113,8 +113,8 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     me: User @auth
 
-    getUsers(role: Roles @eq): [User!]! @paginate(model: "App\\User")
-    getUser(id: ID @eq): User! @paginate(model: "App\\User")
+    getUsers(role: Roles @eq, vet_status: VetStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"]) ): [User!]! @paginate(model: "App\\User")   
+    getUser(id: ID @eq): User! @find(model: "App\\User")
 
     currentConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
     previousConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient")
@@ -827,6 +827,7 @@ type LogNotification{
     user_to_notify: User @belongsTo(relation: "userToNotify")
     type: String
     message: String
+    message_ar: String
     read: Int
     created_at: String
     updated_at: String
@@ -872,7 +873,6 @@ enum ProductStatus{
 enum VipStatuses{
     PENDING
     ACCEPTED
-    COMPLETED
 }
 
 enum ProductType{

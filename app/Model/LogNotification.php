@@ -14,6 +14,7 @@ class LogNotification extends Model
         'user_id_to_notify',
         'type',
         'message',
+        'message_ar',
         'read',
     ];
 

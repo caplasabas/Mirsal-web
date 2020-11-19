@@ -6,7 +6,7 @@ use App\Model\LogNotification;
 
 class OneSignalHelper
 {
-    public static function notification($id,$user_id,$user_id_to_notify,$type,$group,$filter){
+    public static function notification($id,$user_id,$user_id_to_notify,$type,$group,$filter,$pushData = ""){
 
         // $filter3 = array(
         //     array("field"=>"tag","key"=>"userId","value"=>"userId_".$event->user->id,"relation"=>"=")
@@ -21,6 +21,7 @@ class OneSignalHelper
         $hashes_array = array();
         $fields = array(
             'app_id' => "467061a2-9264-4738-b764-5490c488502b",
+            'data'=> $pushData,
             'headings'=> $title,
             'contents' => $content,
             "android_group"=>$group,
@@ -51,9 +52,9 @@ class OneSignalHelper
         $logNotification->user_id = $user_id;
         $logNotification->user_id_to_notify = $user_id_to_notify;
         $logNotification->type = $type;
-        $logNotification->message = $message_ar;
+        $logNotification->message = $message;
         $logNotification->read = 0;
-        // $logNotification->message_ar = $message_ar;
+        $logNotification->message_ar = $message_ar;
         
         $logNotification->save();
     }
@@ -63,29 +64,29 @@ class OneSignalHelper
         switch ($type) {
             case 'MESSAGE':
                 $message=" New Message! ";
-                $message_ar=" New Message!";
+                $message_ar=" لديك رسالة جديدة";
                 break;
             case 'VET_OFFER_CREATED':
                 $message="New Vet Offer";
-                $message_ar="New Vet Offer";
+                $message_ar="لديك عرض جديد من البيطري";
                 break;
             case 'VET_OFFER_CANCELLED':
                 $message="Vet Offer Cancelled";
-                $message_ar="Vet Offer Cancelled";
+                $message_ar="تم رفض عرضك المقدم ";
                 break;
             case 'VET_OFFER_ACCEPTED':
                 $message="Offer Accepted";
-                $message_ar="Offer Accepted";
+                $message_ar="تم قبول عرضك المقدم";
                 break;
             
             case 'VET_REQUEST_CANCELLED':
-                $message="VET REQUEST CANCELLED";
-                $message_ar="VET REQUEST CANCELLED";
+                $message="Vet request cancelled";
+                $message_ar="تم الغاء الطلب";
                 break;
 
             case 'DRIVER_OFFER_CREATED':
                 $message="New Driver Offer";
-                $message_ar="New Driver Offer";
+                $message_ar="لديك عرض جديد ";
                 break;
             
             case 'DRIVER_OFFER_ACCEPTED':
@@ -95,20 +96,19 @@ class OneSignalHelper
 
             case 'DRIVER_REQUEST_CANCELLED':
                 $message="Driver Request Cancelled";
-                $message_ar="Driver Request Cancelled";
+                $message_ar="تم الغاء عرضك";
                 break;
 
             case 'CLIENT_OFFER_CREATED':
                 $message="New Client Offer";
-                $message_ar="New Client Offer";
+                $message_ar="لديك عرض جديد";
                 break;
+
             case 'VET_ACCEPTED':
-                $message="Your registration accepted.";
-                $message_ar="Your registration accepted.";
+                $message="Your registration has been accepted.";
+                $message_ar="تم قبولك لاستخدام التطبيق.";
                 break;
                     
-            
-                
         }
         return array(
             "en" =>  $message,
