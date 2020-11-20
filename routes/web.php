@@ -58,15 +58,15 @@ Route::middleware(['auth','csrf'])->group(function () {
 });
 
 
-Route::get('test', function(){
-    // $user = \App\User::find(28);
-    $vet = User::find(45);
-    event(new VeterinarianAccepted($vet));
+// Route::get('test', function(){
+//     // $user = \App\User::find(28);
+//     $vet = User::find(3);
+//     event(new VeterinarianAccepted($vet));
 
-    exit;
-    // event(new OnRegister($user));
+//     exit;
+//     // event(new OnRegister($user));
 
-});
+// });
 
 // Route::get('returnUrl', function(Request $request){
 //     // $user = \App\User::find(28);

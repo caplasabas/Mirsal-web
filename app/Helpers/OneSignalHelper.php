@@ -42,6 +42,11 @@ class OneSignalHelper
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         
         $response = curl_exec($ch);
+        echo "<pre>";
+        var_dump($fields);
+        var_dump($response); 
+        echo "</pre>";
+        exit;
         curl_close($ch);
 
         self::logNotification($user_id, $content['en'],$content['ar'], $type, $user_id_to_notify);
