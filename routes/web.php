@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Events\OnRegister;
 use Illuminate\Http\Request;
 use App\Model\VetRequest;
-use App\GraphQL\Mutations\VetOfferMutator;
 
+
+use App\Events\VeterinarianAccepted;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,17 +58,15 @@ Route::middleware(['auth','csrf'])->group(function () {
 });
 
 
-// Route::get('test', function(){
-//     // $user = \App\User::find(28);
-//     $vetOfferMutator = new VetOfferMutator;
-//     echo "<pre>";
-//     var_dump($vetOfferMutator::acceptVetOffer(null, array("vet_offer_id"=>6) ));
-//     echo "</pre>";
+Route::get('test', function(){
+    // $user = \App\User::find(28);
+    $vet = User::find(45);
+    event(new VeterinarianAccepted($vet));
 
-//     exit;
-//     // event(new OnRegister($user));
+    exit;
+    // event(new OnRegister($user));
 
-// });
+});
 
 // Route::get('returnUrl', function(Request $request){
 //     // $user = \App\User::find(28);
@@ -76,3 +76,4 @@ Route::middleware(['auth','csrf'])->group(function () {
     
 //     return view('pages.returnUrl')->with(compact('response'));
 // });
+
