@@ -60,20 +60,20 @@ class User extends Authenticatable
         return $this->hasMany('App\Model\VetTimeSlot','vet_id');
     }
 
-    public function getSummaryRatingAttribute()
-    {
-        $summaryRating = 0;
+    // public function getSummaryRatingAttribute()
+    // {
+    //     $summaryRating = 0;
 
-        $ratings = Rating::where("rated_user_id", $this->id);
-        if(!$ratings->get()->isEmpty()){
-            $arr_val = $ratings->pluck('star_rating')->all();
-            $count = sizeof($arr_val);
-            $sum = array_sum($arr_val);
-            $summaryRating = $sum / $count;
-        }
+    //     $ratings = Rating::where("rated_user_id", $this->id);
+    //     if(!$ratings->get()->isEmpty()){
+    //         $arr_val = $ratings->pluck('star_rating')->all();
+    //         $count = sizeof($arr_val);
+    //         $sum = array_sum($arr_val);
+    //         $summaryRating = $sum / $count;
+    //     }
 
-        return $summaryRating;
-    }
+    //     return $summaryRating;
+    // }
 
     public function getVetStatusArAttribute()
     {

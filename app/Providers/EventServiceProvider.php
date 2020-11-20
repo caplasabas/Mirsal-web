@@ -57,6 +57,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\VeterinarianAcceptedListener',
         ],
         
+        'App\Events\RatingCreated' => [
+            'App\Listeners\RatingCreatedListener',
+        ],
+        
     ];
 
     /**

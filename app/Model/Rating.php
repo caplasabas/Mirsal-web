@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Events\RatingCreated;
 
 class Rating extends Model
 {
@@ -14,6 +15,10 @@ class Rating extends Model
         'rated_user_id',
         'rated_by_user_id',
         'service_type',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => RatingCreated::class, 
     ];
 
     public function vetOffer()
