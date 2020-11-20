@@ -24,7 +24,8 @@ class User extends Authenticatable
         'longitude',
         'formatted_address',
         'national_id_url',
-        
+        'consultation_price',
+        'visit_price',
     ]; 
 
     protected $hidden = [

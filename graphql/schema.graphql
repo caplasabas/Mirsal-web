@@ -42,6 +42,8 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest! @update(model: "App\\Model\\VetRequest")
     deleteVetRequest(id: ID!): VetRequest! @delete(model: "App\\Model\\VetRequest")
 
+    createVetRequestWithVet(input: CreateVetRequestWithVetInput @spread): createVetRequestWithVetResponse! @field(resolver: "CreateVetRequestWithVet@createWithVet")
+
     createVetOffer(input: CreateVetOfferInput @spread): VetOffer! @create(model: "App\\Model\\VetOffer")
     updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
@@ -197,6 +199,8 @@ type User {
     formatted_address: String 
     national_id_url: String
     summary_rating: String
+    consultation_price: String
+    visit_price: String
 }
 
 type OtpVerifyResponse{
@@ -248,6 +252,8 @@ input UpdateUserInput {
     longitude: String
     formatted_address: String
     national_id_url: String
+    visit_price: String
+    consultation_price: String
 }
 
 input OrderByInput{
@@ -304,7 +310,6 @@ input CreateVetRequestInput {
     size_id: ID!
     description: String!
     address: CreateAddressOperations @nest
-    image_id: ID
     created_at: String
     updated_at: String
     vet_offers: CreateVetOfferInput @create(relation: "vetOffers")
@@ -313,7 +318,18 @@ input CreateVetRequestInput {
     preferred_date: Date
     preferred_time: String
     status: VetRequestStatuses
+}
 
+input CreateVetRequestWithVetInput {
+    client_id: ID
+    type: VetRequestTypes
+    animal_id: ID!
+    size_id: ID!
+    description: String!
+    address: CreateAddressOperations @nest
+    vet_time_slot_id: ID
+    image_uri: String
+    vet_id: ID
 }
 
 input UpdateVetRequestInput {
@@ -831,6 +847,11 @@ type LogNotification{
     read: Int
     created_at: String
     updated_at: String
+}
+
+type createVetRequestWithVetResponse{
+    vet_request: VetRequest
+    invoice: Invoice
 }
 
 #Enums

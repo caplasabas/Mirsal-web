@@ -377,6 +377,7 @@ return [
     'delete_car_text' => "You want to delete this Car?",
     'delete_duration_text' => "You want to delete this Duration?",
     'delete_time_slot_text' => "You want to delete this Timeslot?",
+    'delete_product' => "You want to delete this Product?",
     'buyer'=> "Buyer"
 
 ];

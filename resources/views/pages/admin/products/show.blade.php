@@ -15,6 +15,8 @@
                     @if($data['product']->is_vip && $data['product']->vip_status == "PENDING")
                     <button type="button" class="btn btn-success btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#accept-product">{{ __('lang.accept') }}</button>
                     @endif
+                    <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-1" data-toggle="modal" data-target="#delete-product">{{ __('lang.delete') }}</button>
+
                     </div>
                 </div>
                 
@@ -289,3 +291,27 @@
 </div>
 
 @endif
+
+<div class="modal fade" id="delete-product" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-danger">
+        <form action="{{ route('admins.products.destroy', $data['product']->id) }}" method="POST" enctype="multipart/form-data" >
+            {{ method_field('DELETE') }}
+            <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+            <div class="modal-header bg-danger text-white">
+
+            {{ $data['product']->title }}
+            </div>
+            <div class="modal-body">
+            <div class="form-group">
+            {{ __('lang.delete_product') }}
+            </div>
+            </div>
+            <div class="modal-footer ">
+            <button type="button" class="btn btn-inverse-danger" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+            <button type="submit" class="btn btn-danger"><i class="fa fa-check-square-o"></i> {{ __('lang.delete') }} </button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
