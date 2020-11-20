@@ -115,7 +115,7 @@ extend type Query @middleware(checks: ["auth:api"]){
 
     me: User @auth
 
-    getUsers(role: Roles @eq, vet_status: VetStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"]) ): [User!]! @paginate(model: "App\\User")   
+    getUsers(role: Roles @eq, vet_status: VetStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id","consultation_price","visit_price","summary_rating"]) ): [User!]! @paginate(model: "App\\User")   
     getUser(id: ID @eq): User! @find(model: "App\\User")
 
     currentConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
