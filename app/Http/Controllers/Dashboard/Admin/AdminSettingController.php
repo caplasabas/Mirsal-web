@@ -76,6 +76,8 @@ class AdminSettingController extends Controller
         $company->tax_perc = $request->tax_perc;
         $company->admin_commission_perc = $request->admin_commission_perc;
         $company->first_payment_perc = $request->first_payment_perc;
+        $company->terms_and_conditions = $request->terms_and_conditions;
+        $company->terms_and_conditions_ar = $request->terms_and_conditions_ar;
         $company->save();
 
         return redirect()->route('admins.admin-settings.index');

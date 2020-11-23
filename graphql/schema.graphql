@@ -812,6 +812,8 @@ type AdminSetting{
     tax_perc: Int
     admin_commission_perc: Int
     first_payment_perc: Int
+    terms_and_conditions: String
+    terms_and_conditions_ar: String
 }
 
 type VetTimeSlot{
