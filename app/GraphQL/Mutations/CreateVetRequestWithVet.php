@@ -24,7 +24,7 @@ class CreateVetRequestWithVet
         $address = Address::create($args['address']['create']);
         $args['address_id'] = $address->id;
         $args['address_id'] = $address->id;
-        $args['create_with_vet'] = 1;
+        $args['created_with_vet'] = 1;
         $vet_request = VetRequest::create($args);
         $vet = User::find($args['vet_id']);
 

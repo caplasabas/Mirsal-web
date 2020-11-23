@@ -14,7 +14,7 @@ class AddImageUriToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('image_uri')->nullable();
+            $table->longText('image_uri')->nullable();
         });
     }
 
