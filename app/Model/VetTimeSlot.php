@@ -18,6 +18,7 @@ class VetTimeSlot extends Model
         'from',
         'duration',
         'price',
+        'taken',
     ]; 
 
     public function getAvailableDateArAttribute()
