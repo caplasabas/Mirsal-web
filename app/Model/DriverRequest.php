@@ -35,7 +35,7 @@ class DriverRequest extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\User')->withTrashed();;
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     public function animal()
