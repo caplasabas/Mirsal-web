@@ -15,11 +15,25 @@ class VetOffersByClient
 {
     public function byClient($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $client_id = $args['client_id'];
-        $status = $args['status'];
-        $vetRequestIds = VetRequest::where("client_id", $client_id)->pluck('id');
-        $vetOffers = VetOffer::where("status", $status)->whereIn('vet_request_id', $vetRequestIds);
-        return $vetOffers;
+        $vetOfferQuery = VetOffer::query();
+        $vetRequestQuery = VetRequest::query();
+        // echo json_encode($args); exit;
+        if(isset($args['client_id'])){
+            $vetRequestQuery = $vetRequestQuery->where("client_id",$args['client_id']);
+        }
+
+        if(isset($args['created_with_vet'])){
+            $vetRequestQuery = $vetRequestQuery->where("created_with_vet",$args['created_with_vet']);  
+        }
+
+        if(isset($args['created_with_vet']) || isset($args['client_id'])){
+            $vetRequestIds = $vetRequestQuery->pluck("id");
+            $vetOfferQuery = $vetOfferQuery->whereIn('vet_request_id', $vetRequestIds);
+        }
+        if(isset($args['status'])){
+            $vetOfferQuery = $vetOfferQuery->where("status",$args['status']);
+        }
+        return $vetOfferQuery;
     }
 
     public function excludeWithVet($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
