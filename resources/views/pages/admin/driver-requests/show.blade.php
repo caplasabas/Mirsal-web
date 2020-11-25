@@ -57,7 +57,7 @@
                                                     {{ __('lang.client') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->client()->name}}</strong>  
+                                                <strong>{{ $data['driverRequest']->client->name}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.type') }} :
