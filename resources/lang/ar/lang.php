@@ -376,5 +376,6 @@ return [
         'delete_duration_text' => "هل تريد حذف العمر ؟",
         'delete_time_slot_text' => "هل تريد حذف هذاالوقت؟",
         'delete_product' => "You want to delete this Product?",
-        'buyer'=> "البائع"
+        'buyer'=> "البائع",
+        'time_slot_taken' => "Vet time slot was already taken.",
 ];

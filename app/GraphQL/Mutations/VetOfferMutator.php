@@ -7,6 +7,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Model\VetOffer;
 use App\Model\VetRequest;
 use App\Model\Invoice;
+use App\Model\VetTimeSlot;
 use App\Model\AdminSetting;
 
 class VetOfferMutator
@@ -19,14 +20,27 @@ class VetOfferMutator
         $admin_setting = AdminSetting::get()->first();
         $vet_offer = VetOffer::find($vet_offer_id);
         $vet_request = VetRequest::find($vet_offer->vet_request_id);
-        
+        $vetTimeSlotQuery = VetTimeSlot::query();
+
+        if($vet_request->type == "VISIT" && $vet_request->vet_time_slot_id !== NULL){
+            $vetTimeSlot = $vetTimeSlotQuery->find($vet_request);
+            if($vetTimeSlot->taken == 1){
+                return array(
+                    'status' => 0,
+                    'message' => __('lang.time_slot_taken')
+                );
+            } else {
+                $vetTimeSlot->taken = 1;
+                $vetTimeSlot->save();
+            }
+        }
         
         if(isset($vet_offer_id)){
 
             // $vet_offer->status = "ACCEPTED";
             // $vet_request->status = "ACCEPTED";
             $existingInvoice = Invoice::where('vet_offer_id', $vet_offer_id)->where('payment_for','VETERINARIAN')->get();
-            
+        
             if($existingInvoice->isEmpty()){
                 
                 $invoice = new Invoice;

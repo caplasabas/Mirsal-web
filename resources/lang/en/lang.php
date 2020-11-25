@@ -378,6 +378,7 @@ return [
     'delete_duration_text' => "You want to delete this Duration?",
     'delete_time_slot_text' => "You want to delete this Timeslot?",
     'delete_product' => "You want to delete this Product?",
-    'buyer'=> "Buyer"
+    'buyer'=> "Buyer",
+    'time_slot_taken' => "Vet time slot was already taken.",
 
 ];
