@@ -5,6 +5,20 @@
 
 @section('content')
 <div class="container-fluid">
+    @if ($errors->any())
+    <div class="row" style="direction:rtl;text-align:right;">
+        <div class="col-md-6">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @endif
     <div class="row">
     <div class="col-12">
         <div class="card">
@@ -89,29 +103,20 @@
                 <input type="text" class="form-control" id="input-add-1" placeholder="Enter client Name " name="name" value="{{ $data['client']->name}}">
             </div>
             <div class="form-group">
-                <label for="input-add-4">{{ __('lang.phone') }}</label>
-                <input type="text" class="form-control" id="input-add-4" placeholder="Enter client Phone " name="phone" value="{{ $data['client']->phone}}">
-                @if($errors->has('phone'))
-                <label id="input-1-error" class="error" for="input-1">{{ $errors->first('phone') }}</label>
-                @endIf
+                <label for="input-add-4">{{ __('lang.phone') }}: {{ $data['client']->phone}}</label>
+                <input type="text" class="form-control" id="input-add-4" placeholder="Enter client Phone " name="phone" value="">
             </div>
             <div class="form-group">
                 <label for="input-add-3">{{ __('lang.password') }}</label>
                 <input type="password" class="form-control" id="input-add-3" placeholder="Enter client password " name="password" >
             </div>
             <div class="form-group">
-                <label for="input-add-2">{{ __('lang.email') }}</label>
-                <input type="text" class="form-control" id="input-add-2" placeholder="Enter client email " name="email" value="{{ $data['client']->email}}">
-                @if($errors->has('email'))
-                <label id="input-1-error" class="error" for="input-1">{{ $errors->first('email') }}</label>
-                @endIf
+                <label for="input-add-2">{{ __('lang.email') }}: {{ $data['client']->email}}</label>
+                <input type="text" class="form-control" id="input-add-2" placeholder="Enter client email " name="email" value="">
             </div>
             <div class="form-group">
                 <label for="input-add-5">{{ __('lang.avatar') }}</label>
                 <input type="file" class="form-control-file" id="input-add-5" placeholder="Enter client email " name="avatar" ></input>
-                @if($errors->has('avatar'))
-                <label id="input-5-error" class="error" for="input-5">{{ $errors->first('avatar') }}</label>
-                @endIf
             </div>
             
         </div>

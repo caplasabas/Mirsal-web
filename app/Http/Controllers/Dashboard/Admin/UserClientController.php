@@ -96,30 +96,22 @@ class UserClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $client = User::find($id);
 
-        $rules = array();
-        if($client->email != $request->email){
+        if($request->filled("email")){
             $client->email = $request->email;
-            $rules['email'] = 'unique:users|max:255';
         }
 
-        if($client->phone != $request->phone){
+        if($request->filled("phone")){
             $client->phone = $request->phone;
-            $rules['phone'] = 'unique:users|max:10';
         }
-        
-        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
-
 
         if(!empty($request->password))
             $client->password = bcrypt($request->password);
 
         $client->name = $request->name;
-
-        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
 
         if(isset($request->avatar)){
             $avatarName = $client->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();

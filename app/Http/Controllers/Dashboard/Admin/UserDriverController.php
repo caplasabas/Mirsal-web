@@ -32,7 +32,7 @@ class UserDriverController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $driver = new User;
         $driver->role = "DRIVER";
@@ -105,26 +105,18 @@ class UserDriverController extends Controller
     {
         $driver = User::find($id);
 
-        $rules = array();
-        if($driver->email != $request->email){
+        if($request->filled("email")){
             $driver->email = $request->email;
-            $rules['email'] = 'unique:users|max:255';
         }
 
-        if($driver->phone != $request->phone){
+        if($request->filled("phone")){
             $driver->phone = $request->phone;
-            $rules['phone'] = 'unique:users|max:10';
         }
-        
-        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
-
 
         if(!empty($request->password))
             $driver->password = bcrypt($request->password);
 
         $driver->name = $request->name;
-
-        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
 
         if(isset($request->avatar)){
             $avatarName = $driver->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();

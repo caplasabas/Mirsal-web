@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 
 use App\Events\VeterinarianAccepted;
+use App\Http\Requests\UserRequest;
 
 class UserVeterinarianController extends Controller
 {
@@ -45,7 +46,6 @@ class UserVeterinarianController extends Controller
         $vet = new User;
         $vet->role = "VETERINARIAN";
 
-        $rules = array();
         if($vet->email != $request->email){
             $vet->email = $request->email;
             $rules['email'] = 'unique:users|max:255';
@@ -109,30 +109,23 @@ class UserVeterinarianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $vet = User::find($id);
 
         $rules = array();
-        if($vet->email != $request->email){
+        if($request->filled("email")){
             $vet->email = $request->email;
-            $rules['email'] = 'unique:users|max:255';
         }
 
-        if($vet->phone != $request->phone){
+        if($request->filled("phone")){
             $vet->phone = $request->phone;
-            $rules['phone'] = 'unique:users|max:10';
         }
-        
-        $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
-
 
         if(!empty($request->password))
             $vet->password = bcrypt($request->password);
 
         $vet->name = $request->name;
-
-        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
 
         if(isset($request->avatar)){
             $avatarName = $vet->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
