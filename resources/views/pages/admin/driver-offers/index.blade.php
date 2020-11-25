@@ -18,7 +18,7 @@
                             <th scope="col">{{ __('lang.driver') }}</th>
                             <th scope="col">{{ __('lang.price') }}</th>
                             <th scope="col">{{ __('lang.client') }}</th>
-                            <th scope="col">{{ __('lang.action') }}</th>
+                            <!-- <th scope="col">{{ __('lang.action') }}</th> -->
                         </tr>
                         </thead>
                         <tbody>
