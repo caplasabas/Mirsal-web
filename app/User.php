@@ -99,6 +99,18 @@ class User extends Authenticatable
         return $value;
     }
 
+    public function VetRequests()
+    {
+        return $this->hasMany('App\Model\VetRequest');
+    }
+
+    public function DriverRequests()
+    {
+        return $this->hasMany('App\Model\DriverRequest');
+    }
+
+    
+
 
 
 }

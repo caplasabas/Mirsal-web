@@ -26,8 +26,7 @@
                             <tr>
                             <td>{{ $driverOffer->id }}</td>
                             <td>{{ $driverOffer->driver->name}}</td>
-                            <td>{{ $driverOffer->price}}</td>
-                            {{dd($driverOffer->driverRequest->client)}}   
+                            <td>{{ $driverOffer->price}}</td> 
                             <td>{{ $driverOffer->driverRequest->client->name}}</td>
                             
                             <!-- <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td> -->
