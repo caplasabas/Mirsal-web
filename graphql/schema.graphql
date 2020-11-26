@@ -142,7 +142,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     vetOffers(client_id: ID, exclude_client_id: ID, vet_request_id: ID,  vet_id: ID, exclude_vet_id: ID, status: VetOfferStatuses, type: VetRequestTypes, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOfferQuery")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")
 
-    vetTimeSlots(vet_id: ID @eq, type: VetRequestTypes @eq, available_date: DateRange @whereBetween, taken: Int @eq): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
+    vetTimeSlots(vet_id: ID @eq, type: VetRequestTypes @eq, available_date: DateRange @whereBetween, taken: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id","available_date"])): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
     vetTimeSlot(id: ID @eq): [VetTimeSlot!] @find(model: "App\\Model\\VetTimeSlot")
 
     driverRequestsBydriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DriverRequestCustom@excludes")
