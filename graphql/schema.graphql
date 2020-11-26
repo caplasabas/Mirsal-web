@@ -14,8 +14,8 @@ type Mutation {
     login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
     register(
     role: Roles!
-    name: String! @rules(apply: ["required", "string"] , messages: { max: "Required lang"})
-    email: String @rules(apply: ["email", "unique:users,email"])
+    name: String! @rules(apply: ["required", "string"])
+    email: String @rules(apply: ["unique:users,email"])
     phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
     password: String! @rules(apply: ["required", "confirmed", "min:8"]) 
     password_confirmation: String! 
