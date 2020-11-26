@@ -717,6 +717,7 @@ type Invoice {
     driver_offer: DriverOffer @belongsTo(relation: "driverOffer")
     payment_for: PaymentFor
     payment_status: InvoiceStatuses
+    payment_status_ar: String
     payment_response: String
     tax_rate: String
     tax_price: String
