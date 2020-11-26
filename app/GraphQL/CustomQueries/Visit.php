@@ -17,15 +17,17 @@ class Visit
     public function currentAsClient($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $client_id = $args['client_id'];
-
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "VISIT")->where("status","ACCEPTED")->where("created_with_vet", 0);
-        if($vetRequests->get()->isEmpty())
-            return $vetRequests;
-        $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
-        $vetOfferIds = Invoice::where('payment_status', 'PAID')->whereIn('vet_offer_id', $vetOfferIds)->where('payment_for','VETERINARIAN')->pluck('vet_offer_id');
-        
-        $vetOffers = VetOffer::whereIn("id", $vetOfferIds);
-        return $vetOffers;
+        $vetOfferQuery = VetOffer::query();
+        $vetRequestQuery = VetRequest::query();
+        $invoiceQuery = Invoice::query();
+        if(isset($args['client_id'])){
+            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","ACCEPTED")->where("created_with_vet", 0);
+            
+        }
+        $vetOfferIds = $vetRequestQuery->pluck('accepted_vet_offer_id');
+        $vetOfferIds = $invoiceQuery->where('payment_status', 'PAID')->whereIn('vet_offer_id', $vetOfferIds)->where('payment_for','VETERINARIAN')->pluck('vet_offer_id');
+        $vetOfferQuery = $vetOfferQuery->whereIn("id", $vetOfferIds);
+        return $vetOfferQuery;
 
     }
 
