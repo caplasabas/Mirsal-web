@@ -21,9 +21,9 @@ class VetOfferMutator
         $vet_offer = VetOffer::find($vet_offer_id);
         $vet_request = VetRequest::find($vet_offer->vet_request_id);
         $vetTimeSlotQuery = VetTimeSlot::query();
-
-        if($vet_request->type == "VISIT" && $vet_request->vet_time_slot_id !== NULL){
-            $vetTimeSlot = $vetTimeSlotQuery->find($vet_request);
+        // echo json_encode($vet_request); exit;
+        if($vet_request->type == "VISIT" && $vet_request->vet_time_slot_id != NULL){
+            $vetTimeSlot = $vetTimeSlotQuery->find($vet_request->vet_time_slot_id);
             if($vetTimeSlot->taken == 1){
                 return array(
                     'status' => 0,
@@ -50,8 +50,9 @@ class VetOfferMutator
                 $invoice->payment_for = "VETERINARIAN";
                 $price = str_replace(',', "", $vet_offer->price);
                 //Amount calculation
-                $invoice->amount_paid = $price; 
-                $invoice->amount_paid += ($price * ($admin_setting->tax_perc/100));
+                // $invoice->amount_paid = $price; 
+                $tax_percentage = $admin_setting->tax_perc/100;
+                $invoice->amount_paid = floatval($price) + ($price * $tax_percentage);
                 
                 $invoice->tax_price = $price * ($admin_setting->tax_perc/100);
                 $invoice->tax_rate = $admin_setting->tax_perc;
