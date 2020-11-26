@@ -24,7 +24,7 @@ class Visit
             $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","ACCEPTED");
         }
         if(isset($args['created_with_vet'])){
-            $vetRequestQuery = $vetRequestQuery->where("created_with_vet", 0);
+            $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);
         }
         $vetOfferIds = $vetRequestQuery->pluck('accepted_vet_offer_id');
         $vetOfferIds = $invoiceQuery->where('payment_status', 'PAID')->whereIn('vet_offer_id', $vetOfferIds)->where('payment_for','VETERINARIAN')->pluck('vet_offer_id');
@@ -43,11 +43,11 @@ class Visit
             $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","COMPLETED");
         }
         if(isset($args['created_with_vet'])){
-            $vetRequestQuery = $vetRequestQuery->where("created_with_vet", 0);
+            $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);
         }
         $vetOfferIds = $vetRequestQuery->pluck('accepted_vet_offer_id');
-        $vetOffers = $vetOfferQuery->whereIn("id", $vetOfferIds);
-        return $vetOffers;
+        $vetOfferQuery = $vetOfferQuery->whereIn("id", $vetOfferIds);
+        return $vetOfferQuery;
     }
 
     public function currentAsVet($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
@@ -65,7 +65,12 @@ class Visit
             return $invoices;
         $vetOfferIds = $invoices->pluck('vet_offer_id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED");
+
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
+
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
@@ -82,7 +87,10 @@ class Visit
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED");
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');

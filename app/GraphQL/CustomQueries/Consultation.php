@@ -18,7 +18,10 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","ACCEPTED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","ACCEPTED");
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
@@ -33,7 +36,10 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","COMPLETED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","COMPLETED");
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
@@ -56,7 +62,10 @@ class Consultation
             return $invoices;
         $vetOfferIds = $invoices->pluck('vet_offer_id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","ACCEPTED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","ACCEPTED");
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');
@@ -73,7 +82,10 @@ class Consultation
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","COMPLETED")->where("created_with_vet", 0);
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","COMPLETED");
+        if(isset($args['created_with_vet'])){
+            $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
+        }
         if($vetRequests->get()->isEmpty())
             return $vetRequests;
         $vetOfferIds = $vetRequests->pluck('accepted_vet_offer_id');

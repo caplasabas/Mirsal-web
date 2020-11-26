@@ -118,15 +118,15 @@ extend type Query @middleware(checks: ["auth:api"]){
     getUsers(role: Roles @eq, vet_status: VetStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id","consultation_price","visit_price","summary_rating"]) ): [User!]! @paginate(model: "App\\User")   
     getUser(id: ID @eq): User! @find(model: "App\\User")
 
-    currentConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
-    previousConsultationsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient")
-    currentConsultationsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet")
-    previousConsultationsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet")
+    currentConsultationsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
+    previousConsultationsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient")
+    currentConsultationsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet")
+    previousConsultationsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet")
 
-    currentVisitsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsClient")
-    previousVisitsAsClient(client_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsClient")
-    currentVisitsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
-    previousVisitsAsVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
+    currentVisitsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsClient")
+    previousVisitsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsClient")
+    currentVisitsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
+    previousVisitsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
 
     currentDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsClient")
     previousDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsClient")
