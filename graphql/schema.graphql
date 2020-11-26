@@ -637,6 +637,7 @@ type VetRequest {
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
     created_with_vet: Int
+    vetTimeSlot: VetTimeSlot @belongsto(relation: "vetTimeSlot")
 }
 
 type VetOffer {
@@ -828,7 +829,7 @@ type VetTimeSlot{
     to: String
     from: String
     duration: String
-    price: String
+    # price: String
     created_at: String
     updated_at: String
     taken: Int
