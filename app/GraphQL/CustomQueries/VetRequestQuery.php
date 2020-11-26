@@ -41,7 +41,6 @@ class VetRequestQuery
         if(isset($args['exclude_vet_id'])){
             $vetOfferQuery = $vetOfferQuery->where("vet_id", "!=", $args['exclude_vet_id']);  
         }
-        
 
         if(isset($args['exclude_vet_id']) || isset($args['vet_id'])){
             $vetRequestIds = $vetOfferQuery->pluck("vet_request_id");
