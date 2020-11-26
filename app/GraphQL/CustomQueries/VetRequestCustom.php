@@ -17,7 +17,7 @@ class VetRequestCustom
         $vet_id = $args['vet_id'];
         $vetRequestIds = VetOffer::where("vet_id", $vet_id)->pluck('vet_request_id');
         
-        $vetRequest = VetRequest::whereNotIn('id',$vetRequestIds);
+        $vetRequest = VetRequest::whereNotIn('id',$vetRequestIds)->where("status","PENDING");
 
         return $vetRequest;
     }

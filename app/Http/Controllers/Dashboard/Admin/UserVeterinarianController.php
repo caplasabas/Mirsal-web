@@ -113,7 +113,6 @@ class UserVeterinarianController extends Controller
     {
         $vet = User::find($id);
 
-        $rules = array();
         if($request->filled("email")){
             $vet->email = $request->email;
         }

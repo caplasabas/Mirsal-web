@@ -40,5 +40,34 @@ class ClientOffer extends Model
         return number_format($value, 2);
     }
 
+    public function getStatusArAttribute()
+    {
+        return $this->statusTranslate($this->status);
+    }
+
+    public function statusTranslate($status)
+    {   
+        $value = "";
+        switch ($status) {
+            case 'CANCELLED':
+                $value = "ملغية";
+                break;
+            case 'PENDING':
+                $value = "قيد الانتظار";
+                break;
+            case 'SKIPPED':
+                $value = "تم تجاهلها";
+                break;
+            case 'ACCEPTED':
+                $value = "تم قبولها";
+                break;
+            case 'COMPLETED':
+                $value = "مكتملة ";
+                break;
+        }
+
+        return $value;
+    }
+
 
 }

@@ -19,7 +19,7 @@
                             <th scope="col">{{ __('lang.product') }}</th>
                             <th scope="col">{{ __('lang.price') }}</th>
                             <th scope="col">{{ __('lang.seller') }}</th>
-                            <th scope="col">{{ __('lang.action') }}</th>
+                            <!-- <th scope="col">{{ __('lang.action') }}</th> -->
                         </tr>
                         </thead>
                         <tbody>
