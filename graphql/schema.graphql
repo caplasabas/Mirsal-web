@@ -137,7 +137,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     vetOffersByInvoice(vet_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice")
     vetOffersByClient(client_id: ID!, status: VetRequestStatuses, created_with_vet: Int , orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByClient@byClient")
 
-    vetRequests(client_id: ID, exclude_client_id: ID, vet_id: ID, exclude_vet_id: ID, type: VetRequestTypes, status: VetRequestStatuses,orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestQuery")
+    vetRequests(client_id: ID, exclude_client_id: ID, vet_id: ID, exclude_vet_id: ID, type: VetRequestTypes, status: VetRequestStatuses, excludeClientIds: [ID!], orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestQuery")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")
     vetOffers(client_id: ID, exclude_client_id: ID, vet_request_id: ID,  vet_id: ID, exclude_vet_id: ID, status: VetOfferStatuses, type: VetRequestTypes, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOfferQuery")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")

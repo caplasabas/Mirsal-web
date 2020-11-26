@@ -26,6 +26,10 @@ class VetRequestQuery
             $vetRequestQuery = $vetRequestQuery->where("client_id", "!=", $args['exclude_client_id']);  
         }
 
+        if(isset($args['excludeClientIds'])){
+            $vetRequestQuery = $vetRequestQuery->whereNotIn("client_id", $args['excludeClientIds']);  
+        }
+
         if(isset($args['created_with_vet'])){
             $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);  
         }
@@ -37,6 +41,7 @@ class VetRequestQuery
         if(isset($args['exclude_vet_id'])){
             $vetOfferQuery = $vetOfferQuery->where("vet_id", "!=", $args['exclude_vet_id']);  
         }
+        
 
         if(isset($args['exclude_vet_id']) || isset($args['vet_id'])){
             $vetRequestIds = $vetOfferQuery->pluck("vet_request_id");
