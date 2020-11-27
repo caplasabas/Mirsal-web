@@ -19,9 +19,20 @@ class InvoicesByProvider
     {
         $vet_id = $args['vet_id'];
         // $status = $args['status'];
-        $vetOffersIds = VetOffer::where("vet_id", $vet_id)->pluck('id');
-        $invoices = Invoice::whereIn('vet_offer_id', $vetOffersIds);
-        return $invoices;
+        $vetOfferQuery = VetOffer::query();
+        $vetRequestQuery = VetRequest::query();
+        $invoiceQuery = Invoice::query();
+        $vetOfferQuery = $vetOfferQuery->where("vet_id", $vet_id);
+        $vetOffersIds = $vetOfferQuery->pluck("id");
+        
+        if(isset($args['created_with_vet'])){
+            $vetRequestIds = $vetRequestQuery->where("created_with_vet", $args['created_with_vet'])->pluck("id");
+            $vetOffersIds = $vetOfferQuery->whereIn("vet_request_id", $vetRequestIds)->pluck("id");
+            // echo json_encode($vetOffersIds); exit;
+        } 
+        $invoiceQuery = $invoiceQuery->whereIn("vet_offer_id", $vetOffersIds);
+
+        return $invoiceQuery;
     }
 
     public function byDriver($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)

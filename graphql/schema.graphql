@@ -164,7 +164,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     productsByBuyer(buyer_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ProductsCustom@excludes")
 
     invoices(id: ID, client_id: ID , drivervetOffer_id: ID , vet_offer_id: ID ,driver_offer_id: ID , payment_status: InvoiceStatuses , payment_for: PaymentFor , reference_id: String, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoiceQuery")
-    invoicesByVet(vet_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
+    invoicesByVet(vet_id: ID!, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
     invoicesByDriver(driver_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byDriver")
 
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")

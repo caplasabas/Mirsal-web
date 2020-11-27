@@ -18,14 +18,6 @@ class InvoiceQuery
         $invoiceQuery = Invoice::query();
         $vetOfferQuery = VetOffer::query();
         $vetRequestQuery = VetRequest::query();
-        // echo json_encode($args); exit;
-        // id: ID @eq, 
-        // client_id: ID @eq, 
-        // vet_offer_id: ID @eq,
-        // driver_offer_id: ID @eq, 
-        // payment_status: InvoiceStatuses @eq, 
-        // payment_for: PaymentFor @eq, 
-        // reference_id: String @eq,
         if(isset($args['id'])){
             $invoiceQuery = $invoiceQuery->where('id',isset($args['id']));
         }
@@ -56,7 +48,7 @@ class InvoiceQuery
 
         if(isset($args['created_with_vet'])){
             $acceptedVetOfferIds = $vetRequestQuery->where("created_with_vet", $args['created_with_vet'])->pluck("accepted_vet_offer_id");
-            $invoiceQuery = $invoiceQuery->whereIn("vet_offer_id", $acceptedVetOfferIds);
+            $invoiceQuery = $invoiceQuery->whereNull('vet_offer_id')->orWhereIn("vet_offer_id", $acceptedVetOfferIds);
         }
 
         return $invoiceQuery;
