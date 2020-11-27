@@ -45,6 +45,9 @@ class CreateVetRequestWithVet
                 "price" => $price,
             )
         );
+
+        $vet_request->accepted_vet_offer_id = $vet_offer->id;
+        $vet_request->save();
         $input = array(
             "vet_offer_id" => $vet_offer->id,
         );
