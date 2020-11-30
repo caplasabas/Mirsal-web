@@ -33,7 +33,7 @@ type Mutation {
 }   
 
 extend type Mutation @middleware(checks: ["auth:api"]){
-    firebaseCustomToken(user_id: Int ): String! @field(resolver: "FirebaseCustomToken") 
+    firebaseCustomToken(user_id: Int! ): String! @field(resolver: "FirebaseCustomToken") 
 
     logout: LogoutResponse! @field(resolver: "LogoutMutator")
 
