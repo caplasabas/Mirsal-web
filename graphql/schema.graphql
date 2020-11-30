@@ -818,9 +818,9 @@ type UserFile {
 type AdminSetting{
     name: String
     name_ar: String
-    tax_perc: Int
-    admin_commission_perc: Int
-    first_payment_perc: Int
+    tax_perc: Float
+    admin_commission_perc: Float
+    first_payment_perc: Float
     terms_and_conditions: String
     terms_and_conditions_ar: String
 }

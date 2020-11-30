@@ -59,6 +59,9 @@ class VetOfferMutator
                 $invoice->tax_rate = $admin_setting->tax_perc;
                 $vet_offer->tax_price = $invoice->tax_price;
                 $vet_offer->total = $price + $vet_offer->tax_price;
+                
+                $invoice->service_provider_id = $vet_offer->vet_id;
+                $invoice->admin_commission = $price  * ($admin_setting->admin_commission_perc/100);
 
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id);

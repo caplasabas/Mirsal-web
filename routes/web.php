@@ -69,6 +69,7 @@ Route::middleware(['auth','csrf'])->group(function () {
     // $uid = '3';
     // $customToken = $authFirebase->createCustomToken($uid);
     // echo public_path().'/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json';
+    // echo 1000 + 1000 * 0.2;
 // }); 
 
 // Route::get('returnUrl', function(Request $request){

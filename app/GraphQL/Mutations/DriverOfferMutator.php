@@ -39,7 +39,10 @@ class DriverOfferMutator
                 $invoice->tax_price = $tax_price;
                 $invoice->tax_rate = $admin_setting->tax_perc;
                 $invoice->first_payment_perc = $admin_setting->first_payment_perc;
-                
+
+                $invoice->service_provider_id = $driver_offer->driver_id;
+                $invoice->admin_commission =  $first_payment_price * ($admin_setting->admin_commission_perc/100);
+
                 $driver_offer->tax_price = $tax_price;
                 $driver_offer->first_payment_price = $first_payment_total;
                 $invoice->amount_paid = $first_payment_total;
