@@ -33,9 +33,7 @@ class FirebaseCustomToken
         $uid = "".$args['user_id'];
         $customToken = $authFirebase->createCustomToken($uid);
 
-        return [
-            'fireBaseCustomToken' => $customToken,
-        ];
+        return $customToken;
 
     }
 }
