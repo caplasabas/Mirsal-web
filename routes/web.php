@@ -1,13 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Events\OnRegister;
-use Illuminate\Http\Request;
-use App\Model\VetRequest;
 
-
-use App\Events\VeterinarianAccepted;
-use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,14 +53,23 @@ Route::middleware(['auth','csrf'])->group(function () {
 
 
 // Route::get('test', function(){
-//     // $user = \App\User::find(28);
-//     $vet = User::find(3);
-//     event(new VeterinarianAccepted($vet));
+    // $user = \App\User::find(28);
+    // $vet = User::find(3);
+    // event(new VeterinarianAccepted($vet));
 
-//     exit;
-//     // event(new OnRegister($user));
+    // exit;
+    // event(new OnRegister($user));
 
-// });
+    // echo public_path();
+
+    // $factory = (new Factory)->withServiceAccount(public_path().'\mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json');
+    // $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
+    // $authFirebase = $factory->createAuth();
+
+    // $uid = '3';
+    // $customToken = $authFirebase->createCustomToken($uid);
+    // echo $customToken;
+// }); 
 
 // Route::get('returnUrl', function(Request $request){
 //     // $user = \App\User::find(28);

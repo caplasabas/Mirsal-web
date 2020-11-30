@@ -29,11 +29,11 @@ type Mutation {
     ): UserResponse! @field(resolver: "RegisterMutator")
 
     otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
-
-}
+    
+}   
 
 extend type Mutation @middleware(checks: ["auth:api"]){
-    
+    firebaseCustomToken(user_id: Int ): FirebaseCustomTokenResponse ! @field(resolver: "FirebaseCustomToken") 
 
     logout: LogoutResponse! @field(resolver: "LogoutMutator")
 
@@ -594,9 +594,14 @@ type Rating {
     driver_offer: DriverOffer @hasOne(relation: "driverOffer")
 }
 
+type FirebaseCustomTokenResponse {
+    fireBaseCustomToken: String!
+}
+
 type UserResponse {
     user: User!
     token: String!
+    fireBaseCustomToken: String
 }
 
 type RoleResponse {

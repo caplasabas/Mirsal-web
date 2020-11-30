@@ -11,6 +11,8 @@ use Illuminate\Auth\TokenGuard;
 
 use App\User;
 
+use Kreait\Firebase\Factory;
+
 class LoginMutator
 {
     /**
@@ -31,16 +33,24 @@ class LoginMutator
         $logged = Auth::attempt($userData);
 
         if($logged){
-
+            
             $token = Str::random(60).uniqid();
 
             $user = Auth::user();
             $user->api_token = $token;
             $user->save();
 
+            $factory = (new Factory)->withServiceAccount(public_path().'\mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json');
+            $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
+            $authFirebase = $factory->createAuth();
+        
+            $uid = "".$user->id;
+            $customToken = $authFirebase->createCustomToken($uid);
+
             return [
                 'user' => $user,
-                'token' => $token
+                'token' => $token,
+                'fireBaseCustomToken' => $customToken,
             ];
         }else{
             throw new GraphqlException(
