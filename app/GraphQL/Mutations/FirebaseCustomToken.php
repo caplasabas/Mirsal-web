@@ -26,7 +26,7 @@ class FirebaseCustomToken
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $factory = (new Factory)->withServiceAccount(public_path().'mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json');
+        $factory = (new Factory)->withServiceAccount(public_path().'/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json');
         $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
         $authFirebase = $factory->createAuth();
     
