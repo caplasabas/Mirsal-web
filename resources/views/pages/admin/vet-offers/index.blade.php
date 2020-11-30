@@ -27,7 +27,7 @@
                             <td>{{ $vetOffer->id }}</td>
                             <td>{{ $vetOffer->veterinarian->name}}</td>
                             <td>{{ $vetOffer->price}}</td>
-                            <td>{{ $vetOffer->vetRequest->['client']['name']}}</td>
+                            <td>{{ $vetOffer->vetRequest['client']['name']}}</td>
                             <!-- <td> <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#edit-terms">{{ __('lang.edit') }}</button></td> -->
                             </tr>
                         @endforeach
