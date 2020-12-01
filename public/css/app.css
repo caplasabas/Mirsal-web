@@ -25787,7 +25787,7 @@ p {
   outline: 0!important
 }
 a {
-    color: #E1EAFF;
+    color: #007bff;
 }
 a {
   outline: none!important
@@ -31179,4 +31179,7 @@ text-align:left;
   direction: rtl;
 }
 
+.a{
+  color: #007bff;
+}
 

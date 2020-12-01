@@ -52,6 +52,16 @@
           </ul>
         </li>
 
+        <li>
+          <a href="javaScript:void();">
+           <span>{{ __('lang.reports') }}</span>
+            <i class="fa fa-angle-left float-left"></i>
+          </a>
+          <ul class="sidebar-submenu">
+            <li><a href="{{ route('admins.service-provider-report.index') }}">{{ __('lang.service_providers') }}</a></li>
+          </ul>
+        </li>
+
         <li> <a href="{{ route('admins.invoices.index') }}">{{ __('lang.invoices') }}</a> </li>
         <li> <a href="{{ route('admins.animals.index') }}">{{ __('lang.animals') }}</a> </li>
         <li> <a href="{{ route('admins.sizes.index') }}">{{ __('lang.sizes') }}</a> </li>

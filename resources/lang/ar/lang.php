@@ -378,4 +378,13 @@ return [
         'delete_product' => "You want to delete this Product?",
         'buyer'=> "البائع",
         'time_slot_taken' => "Vet time slot was already taken.",
+
+        'reports' => "Reports",
+        'service_providers' => "Service Providers",
+        'service_provider' => "Service Provider",
+        'number_of_paid_service' => "Number of Paid Service",
+        'total_profit' => "Total Profit",
+        'app_commission' => "App Commission",
+        'provider_profit' => "Provider Profit",
+        'role' => "Role",
 ];

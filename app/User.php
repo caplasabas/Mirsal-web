@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Model\Rating;
+use App\Model\Invoice;
 
 class User extends Authenticatable
 {
@@ -60,24 +61,47 @@ class User extends Authenticatable
         return $this->hasMany('App\Model\VetTimeSlot','vet_id');
     }
 
-    // public function getSummaryRatingAttribute()
-    // {
-    //     $summaryRating = 0;
-
-    //     $ratings = Rating::where("rated_user_id", $this->id);
-    //     if(!$ratings->get()->isEmpty()){
-    //         $arr_val = $ratings->pluck('star_rating')->all();
-    //         $count = sizeof($arr_val);
-    //         $sum = array_sum($arr_val);
-    //         $summaryRating = $sum / $count;
-    //     }
-
-    //     return $summaryRating;
-    // }
 
     public function getVetStatusArAttribute()
     {
         return $this->vetStatusTranslate($this->vet_status);
+    }
+
+    public function getNumberOfPaidServicesAttribute(){
+        $numberOfPaidService = 0;
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
+        $numberOfPaidService = count($invoices);
+        return $numberOfPaidService;
+    }
+
+    public function getTotalProfit(){
+        $totalProfit = 0;
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
+        
+        foreach($invoices as $index => $invoice){
+            $totalProfit += str_replace(',', "", $invoice->provider_profit);
+        }
+        
+        return number_format($totalProfit, 2);
+    }
+
+    public function getTotalAppCommission(){
+        $totalAppCommission = 0;
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
+        
+        foreach($invoices as $index => $invoice){
+            $totalAppCommission += str_replace(',', "",$invoice->admin_commission);
+        }
+        
+        return number_format($totalAppCommission, 2);
+    }
+
+    public function providerInvoices(){
+        return $this->hasMany('App\Model\Invoice','service_provider_id');
+    }
+
+    public function acceptedInvoices(){
+        return $this->providerInvoices()->where('payment_status','PAID');
     }
 
     // REJECTED مرفوضة
