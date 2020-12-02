@@ -54,7 +54,7 @@ class LoginController extends Controller
         if (\Auth::attempt($credentials)) {
             $user = \Auth::user();
             if($user->role == "ADMIN")
-                return redirect()->route('home');
+                return redirect()->route('admins.service-provider-report.index');
                 else{
                     \Auth::logout();
                     return back()->withErrors(['credentials' => 'Credentials do not match']);
