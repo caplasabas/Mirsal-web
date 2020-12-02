@@ -8,6 +8,7 @@ use App\Model\Product;
 use App\Model\Animal;
 use App\Model\Size;
 use App\Model\TimeSlot;
+use App\Model\Duration;
 
 class ProductController extends Controller
 {
@@ -59,10 +60,12 @@ class ProductController extends Controller
         $sizes = Size::all();
         $animals = Animal::all();
         $timeslots = TimeSlot::all();
+        $durations = Duration::all();
         $data['product'] = $product;
         $data['sizes'] = $sizes;
         $data['animals'] = $animals;
         $data['timeslots'] = $timeslots;
+        $data['durations'] = $durations;
 
         return view('pages.admin.products.show')->with(compact("data"));
     }
@@ -87,7 +90,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->title = $request->title;
+        $product->type = $request->type;
+        $product->duration_id = $request->duration_id;
+
+        $product->save();
+
+        return redirect()->route('admins.products.show',  $id );
     }
 
     /**

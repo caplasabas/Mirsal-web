@@ -334,8 +334,8 @@ return [
         'payment_for' => "تم الدفع ل ",
         'amount_paid' => "المبلغ المدفوع",
         'type'=>"النوع",
-        'prefered_date'=>"التاريخ",
-        'prefered_time'=>"الوقت",
+        'preferred_date'=>"التاريخ",
+        'preferred_time'=>"الوقت",
         'veterinary_accepted_offer'=>"العروض المقبولة للبيطرين",
         'delivery_accepted_offer'=>"العروض المقبولة للسائقين",
         'payment_details' => "معلومات الدفغ",
@@ -387,4 +387,7 @@ return [
         'app_commission' => "App Commission",
         'provider_profit' => "Provider Profit",
         'role' => "Role",
+        "terms_and_conditions_ar" => "Terms And Conditions AR",
+        'change_password' => "Change Password",
+        'vip' => "VIP",
 ];

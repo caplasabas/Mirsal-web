@@ -63,13 +63,13 @@
                                                     {{ __('lang.type') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->type}}</strong>  
+                                                <strong>{{ \App::getLocale() === "ar" ? $data['driverRequest']->type_ar : $data['driverRequest']->type }}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->status}}</strong>  
+                                                <strong>{{ \App::getLocale() === "ar" ? $data['driverRequest']->status_ar : $data['driverRequest']->status }}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.animal') }} :
@@ -102,16 +102,16 @@
                                                 <strong>{{ $data['driverRequest']->addressTo->CompleteAddress}}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.prefered_date') }} :
+                                                    {{ __('lang.preferred_date') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->prefered_date}}</strong>  
+                                                <strong>{{ \App::getLocale() === "ar" ? $data['driverRequest']->preferred_date_ar : $data['driverRequest']->preferred_date }}</strong>  
                                                 </div>
                                                 <div class="col-5 text-strong">
-                                                    {{ __('lang.prefered_time') }} :
+                                                    {{ __('lang.preferred_time') }} :
                                                 </div>
                                                 <div class="col-7">
-                                                <strong>{{ $data['driverRequest']->prefered_time}}</strong>  
+                                                <strong>{{ $data['driverRequest']->preferred_time}}</strong>  
                                                 </div>
                                             </div>
                                         </div>
@@ -291,14 +291,14 @@
 
             <div class="form-group">
                 <label for="input-add-5">{{ __('lang.date') }}</label>
-                <input type="date" class="form-control" name="prefered_date" value="{{$data['driverRequest']->prefered_date}}">
+                <input type="date" class="form-control" name="preferred_date" value="{{$data['driverRequest']->preferred_date}}">
             </div>
 
             <div class="form-group">
                 <label for="input-add-5">{{ __('lang.time') }}</label>
-                <select class="form-control" name="prefered_time" id="input-1">
+                <select class="form-control" name="preferred_time" id="input-1">
                 @foreach($data['timeslots'] as $index => $timeslot )
-                    <option value="{{ $timeslot->name_ar  }}" @if ($timeslot->name_ar == $data['driverRequest']->prefered_time) selected @endif >{{ $timeslot->name_ar }}</option>
+                    <option value="{{ $timeslot->name_ar  }}" @if ($timeslot->name_ar == $data['driverRequest']->preferred_time) selected @endif >{{ $timeslot->name_ar }}</option>
                 @endforeach
                 </select>
             </div>

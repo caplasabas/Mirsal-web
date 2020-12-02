@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\DriverRequestSaving;
+use App\Helpers\DateArFomatter;
 
 
 class DriverRequest extends Model
@@ -128,5 +129,11 @@ class DriverRequest extends Model
         }
 
         return $value;
+    }
+
+    public function getPreferredDateArAttribute()
+    {
+        $date = $this->preferred_date;
+        return DateArFomatter::dateARFormat($date);
     }
 }

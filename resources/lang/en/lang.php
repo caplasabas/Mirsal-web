@@ -336,8 +336,8 @@ return [
     'payment_for' => "Payment For",
     'amount_paid' => "Price",
     'type'=>"Type",
-    'prefered_date'=>"Date",
-    'prefered_time'=>"Time",
+    'preferred_date'=>"Date",
+    'preferred_time'=>"Time",
     'veterinary_accepted_offer'=>"Accepted Offer",
     'delivery_accepted_offer'=>"Accepted Offer",
     'payment_details' => "Payment Details",
@@ -389,4 +389,7 @@ return [
     'app_commission' => "App Commission",
     'provider_profit' => "Provider Profit",
     'role' => "Role",
+    "terms_and_conditions_ar" => "Terms And Conditions AR",
+    'change_password' => "Change Password",
+    'vip' => "VIP",
 ];

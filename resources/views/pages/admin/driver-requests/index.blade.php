@@ -11,11 +11,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-black">
-                    <table class="datatable table">
+                    <table data-order='[[ 0, "desc" ]]' class="datatable table">
                         <thead class="thead-info">
                         <tr>
                             <th scope="col">#</th>
                             <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                            <th scope="col">{{ __('lang.type') }}</th>
                             <th scope="col">{{ __('lang.animal') }}</th>
                             <th scope="col">{{ __('lang.description') }}</th>
                             <th scope="col">{{ __('lang.action') }}</th>
@@ -24,7 +25,8 @@
                         <tbody>
                         @foreach($data['driverRequests'] as $index => $driverRequest)
                             <tr>
-                            <td>{{ $index }}</td>
+                            <td>{{ $driverRequest->id}}</td>
+                            <td>{{ \App::getLocale() === "ar" ? $driverRequest->type_ar : $driverRequest->type }}</td>
                             <td>{{ $driverRequest->animal->name}}</td>
                             <td>{{ $driverRequest->description}}</td>
                             <td> 

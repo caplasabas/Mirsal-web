@@ -96,8 +96,8 @@ class DriverRequestController extends Controller
         $driverRequest->animal_id = $request->animal_id;
         $driverRequest->size_id = $request->size_id;
         $driverRequest->quantity = $request->quantity;
-        $driverRequest->prefered_date = $request->prefered_date;
-        $driverRequest->prefered_time = $request->prefered_time;
+        $driverRequest->preferred_date = $request->preferred_date;
+        $driverRequest->preferred_time = $request->preferred_time;
 
         $driverRequest->save();
 

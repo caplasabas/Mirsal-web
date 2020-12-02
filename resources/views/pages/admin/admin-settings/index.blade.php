@@ -5,6 +5,20 @@
 
 @section('content')
 <div class="container-fluid"  style="text-align:right; direction: rtl;">
+@if ($errors->any())
+<div class="row" style="direction:rtl;text-align:right;">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="row">
 <div class="col-6">
 <div class="card">
@@ -12,6 +26,10 @@
     {{ __('lang.general_settings') }} 
     <button class="btn btn-warning waves-effect btn-sm waves-light m-1 text-white" data-toggle="modal" data-target="#edit-general-setting">
     {{ __('lang.edit') }}
+    </button>
+
+    <button class="btn btn-dark waves-effect btn-sm waves-light m-1 text-white float-left" data-toggle="modal" data-target="#change-password">
+    {{ __('lang.change_password') }}
     </button>
 
     </div>
@@ -100,6 +118,39 @@
         <div class="modal-footer">
         <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
         <button type="submit" class="btn btn-warning"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="change-password" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border-dark">
+        <form action="{{ route('admins.admin-settings.change-password', 1 ) }}" method="POST"  >
+        {{ method_field('PUT') }}
+        <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+        <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white">{{ __('lang.change_password') }}</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="input-add-1">{{ __('lang.password') }} </label>
+                <input type="password" class="form-control" id="input-add-1"  name="password" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="input-add-1">{{ __('lang.password_confirmation') }} </label>
+                <input type="password"  class="form-control" id="input-add-1"  name="password_confirmation" value="" required>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-inverse-dark" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
+        <button type="submit" class="btn btn-dark"><i class="fa fa-check-square-o"></i> {{ __('lang.save') }} </button>
         </div>
         </form>
     </div>

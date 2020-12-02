@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-uppercase text-info">
-                {{ __('lang.reports') }} 
+                {{ __('lang.service_providers') }} 
 
                 </div>
                 <div class="card-body">

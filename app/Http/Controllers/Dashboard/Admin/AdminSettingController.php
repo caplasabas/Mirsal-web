@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\AdminSetting;
+use App\User;
 
 class AdminSettingController extends Controller
 {
@@ -92,5 +93,18 @@ class AdminSettingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        $admin_user = User::find(1);
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $admin_user->password = bcrypt($request->password);
+        $admin_user->save();
+
+        return redirect()->route('admins.admin-settings.index');
     }
 }

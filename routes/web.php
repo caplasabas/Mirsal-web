@@ -42,6 +42,8 @@ Route::middleware(['auth','csrf'])->group(function () {
         Route::resource('client-offers','ClientOfferController');
 
         Route::resource('admin-settings','AdminSettingController');
+        Route::put('admin-settings/change-password/{veterinarian}', 'AdminSettingController@changePassword')->name('admin-settings.change-password');
+        
         Route::resource('veterinarians','UserVeterinarianController');
         Route::put('veterinarians/accept/{veterinarian}', 'UserVeterinarianController@accept')->name('veterinarians.accept');
 

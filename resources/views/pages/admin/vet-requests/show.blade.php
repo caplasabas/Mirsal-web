@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header text-uppercase text-info">
                 <div class="row">
-                    <div class="col-lg-6">{{ __('lang.veterinary_requests') }} </div>
+                    <div class="col-lg-6">{{ __('lang.veterinary_requests') }}  #{{$data['vetRequest']->id}}</div>
                     
                     <div class="col-lg-6 text-left"> 
 
@@ -83,7 +83,7 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->size->name_ar}}</strong>  
                                                 </div>
-                                                @if(isset($data['vetRequest']->vetTimeSlot))
+                                                @if(isset($data['vetRequest']->vetTimeSlot) && $data['vetRequest']->type == "VISIT")
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.prefered_date') }} :
                                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="card-body">
                                         @if(isset($data['vetRequest']->acceptedVetOffer))
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-8">
                                                 <div class="row">
                                                     <div class="col-5 text-strong">
                                                         {{ __('lang.veterinarian') }} :
@@ -127,7 +127,7 @@
                                                         {{ __('lang.status') }} :
                                                     </div>
                                                     <div class="col-7">
-                                                        <strong>{{ $data['vetRequest']->acceptedVetOffer->status}}</strong>  
+                                                        <strong>{{ \App::getLocale() === "ar" ? $data['vetRequest']->acceptedVetOffer->status_ar : $data['vetRequest']->acceptedVetOffer->status }}</strong>  
                                                     </div>
                                                     <div class="col-5 text-strong">
                                                         {{ __('lang.price') }} :
@@ -139,7 +139,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
 
                                             </div>
                                         </div>
@@ -181,7 +181,7 @@
                                                 <tr>
                                                 <td>{{ $index }}</td>
                                                 <td>{{ $vetOffer->veterinarian->name}}</td>
-                                                <td>{{ $vetOffer->status}}</td>
+                                                <td>{{ \App::getLocale() === "ar" ? $vetOffer->status_ar : $vetOffer->status }}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -279,20 +279,6 @@
                 <select class="form-control" name="size_id" id="input-1">
                 @foreach($data['sizes'] as $index => $size )
                     <option value="{{ $size->id }}" @if ($size->id == $data['vetRequest']->size->id) selected @endif >{{ $size->name_ar }}</option>
-                @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="input-add-5">{{ __('lang.date') }}</label>
-                <input type="date" class="form-control" name="prefered_date" value="{{$data['vetRequest']->prefered_date}}">
-            </div>
-
-            <div class="form-group">
-                <label for="input-add-5">{{ __('lang.time') }}</label>
-                <select class="form-control" name="prefered_time" id="input-1">
-                @foreach($data['timeslots'] as $index => $timeslot )
-                    <option value="{{ $timeslot->name_ar  }}" @if ($timeslot->name_ar == $data['vetRequest']->prefered_time) selected @endif >{{ $timeslot->name_ar }}</option>
                 @endforeach
                 </select>
             </div>

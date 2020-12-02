@@ -68,12 +68,7 @@
                                                 <div class="col-8">
                                                 <strong>{{ $data['product']->type}}</strong>  
                                                 </div>
-                                                <div class="col-4 text-strong">
-                                                    {{ __('lang.status') }} :
-                                                </div>
-                                                <div class="col-8">
-                                                <strong>{{ $data['product']->status}}</strong>  
-                                                </div>
+                                                
                                                 <div class="col-4 text-strong">
                                                     {{ __('lang.seller') }} :
                                                 </div>
@@ -85,7 +80,7 @@
                                                     {{ __('lang.is_vip') }} :
                                                 </div>
                                                 <div class="col-8">
-                                                <strong>@if($data['product']->is_vip) {{ __('lang.yes') }} @else {{ __('lang.no') }} @endif</strong>  
+                                                <strong>@if($data['product']->is_vip) {{ __('lang.vip') }} @else {{ __('lang.general') }} @endif</strong>  
                                                 </div>
                                                 @if($data['product']->is_vip)
                                                 <div class="col-4 text-strong">
@@ -101,12 +96,8 @@
                                                 <div class="col-8">
                                                 <strong>{{ $data['product']->duration->name}}</strong>  
                                                 </div>
-
-                                                
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                                 </div>
@@ -145,11 +136,8 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['product']->iban}}</strong>  
                                                 </div>
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                                 </div>
@@ -243,18 +231,29 @@
 
         </div>
         <div class="modal-body">
+            
+            <div class="form-group">
+                <label for="input-add-2">{{ __('lang.title') }}</label>
+                <input type="text" class="form-control" id="input-add-2" placeholder="Enter title" name="title" value="{{$data['product']->title}}">
+            </div>
 
             <div class="form-group">
                 <label for="input-1">{{ __('lang.type') }}</label>
                 <select class="form-control" name="type" id="input-1">
-                    <option value="CONSULTATION" @if ($data['product']->type == "CONSULTATION") selected @endif >{{ __('lang.consultation') }}</option>
-                    <option value="VISIT" @if ($data['product']->type == "VISIT") selected @endif >{{ __('lang.visit') }}</option>
+                    <option value="PRODUCT" @if ($data['product']->type == "PRODUCT") selected @endif >{{ __('lang.product') }}</option>
+                    <option value="ANIMAL" @if ($data['product']->type == "ANIMAL") selected @endif >{{ __('lang.animal') }}</option>
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="input-1">{{ __('lang.size') }}</label>
+                <select class="form-control" name="duration_id" id="input-1">
+                @foreach($data['durations'] as $index => $duration )
+                    <option value="{{ $duration->id }}" @if ($duration->id == $data['product']->duration_id) selected @endif >{{ $duration->name_ar }}</option>
+                @endforeach
+                </select>
+            </div>
 
-           
-            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
@@ -265,7 +264,7 @@
     </div>
 </div>
 
-@if($data['product']->status == "PENDING")
+@if($data['product']->vip_status == "PENDING")
   
 <div class="modal fade" id="accept-product" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">

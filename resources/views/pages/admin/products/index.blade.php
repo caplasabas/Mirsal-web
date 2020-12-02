@@ -11,11 +11,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-black">
-                    <table class="datatable table">
+                    <table data-order='[[ 0, "desc" ]]' class="datatable table">
                         <thead class="thead-info">
                         <tr>
                             <th scope="col">#</th>
                             <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                            <th scope="col">{{ __('lang.type') }}</th>
                             <th scope="col">{{ __('lang.title') }}</th>
                             <th scope="col">{{ __('lang.description') }}</th>
                             <th scope="col">{{ __('lang.price') }}</th>
@@ -26,6 +27,7 @@
                         @foreach($data['products'] as $index => $product)
                             <tr>
                             <td>{{ $index }}</td>
+                            <td>{{ \App::getLocale() === "ar" ? $product->type_ar : $product->type }}</td>
                             <td>{{ $product->title}}</td>
                             <td>{{ $product->description}}</td>
                             <td>{{ $product->price}}</td>
