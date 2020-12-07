@@ -56,31 +56,7 @@ Route::middleware(['auth','csrf'])->group(function () {
 
 
 // Route::get('test', function(){
-    // $user = \App\User::find(28);
-    // $vet = User::find(3);
-    // event(new VeterinarianAccepted($vet));
 
-    // exit;
-    // event(new OnRegister($user));
-
-    // echo public_path();
-
-    // $factory = (new Factory)->withServiceAccount(public_path().'\mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json');
-    // $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
-    // $authFirebase = $factory->createAuth();
-
-    // $uid = '3';
-    // $customToken = $authFirebase->createCustomToken($uid);
-    // echo public_path().'/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json';
-    // echo 1000 + 1000 * 0.2;
 // }); 
 
-// Route::get('returnUrl', function(Request $request){
-//     // $user = \App\User::find(28);
-//     // event(new OnRegister($user));
-//     // echo $request->payment_reference;exit;
-//     $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath);
-    
-//     return view('pages.returnUrl')->with(compact('response'));
-// });
 
