@@ -31,7 +31,8 @@ class RegisterMutator
         $user = new User();
         $user->role = $args['role'];
         $user->name = $args['name'];
-        $user->email = $args['email'];
+        if(isset($args['email']))
+            $user->email = $args['email'];
         $user->phone = $args['phone'];
         $user->password = bcrypt($args['password']);
         $user->api_token = $token;
