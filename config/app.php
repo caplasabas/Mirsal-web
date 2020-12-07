@@ -125,7 +125,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | One Signal Token
+    | Defined Tokens
     |--------------------------------------------------------------------------
     |
     | This array of class aliases will be registered when this application
@@ -135,6 +135,7 @@ return [
     */
 
     'os_push_notif_token' => env('OS_PUSH_NOTIF_TOKEN',"ZmE3NTk1ZDgtY2QxNy00ZTY3LWFlZGMtMzQ3N2MyM2YwMjEw"),
+    'sms_password' => env('SMS_PASSWORD',"mersal225500"),
 
     /*
     |--------------------------------------------------------------------------

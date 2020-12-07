@@ -40,8 +40,8 @@ class SendOTPVerificationSMS
         $message = urlencode($message);
         $trimmed_phone = substr($phone, 1); 
         $new_phone_format = "966".$trimmed_phone;
-
-        $url = "https://www.hisms.ws/api.php?send_sms&username=966564544702&password=brains221-1&numbers=".$new_phone_format."&sender=mirsal&message=".$message;
+        $sms_password = config('app.sms_password');
+        $url = "https://www.hisms.ws/api.php?send_sms&username=966564544702&password=".$sms_password."&numbers=".$new_phone_format."&sender=mirsal&message=".$message;
 
         $ch = curl_init();
         // echo "URL: ".$url."<br>";
