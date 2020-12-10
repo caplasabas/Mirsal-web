@@ -106,7 +106,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 type Query {
 
-    
+    adminSetting: AdminSetting @first(model: "App\\Model\\AdminSetting")
     allProducts(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
 
 }                                                                                                                                                                                                                                                                                                                              
@@ -177,7 +177,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     ratings(id: ID @eq, rated_by_user_id: ID @eq, rated_user_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
     suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
     logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, read: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [LogNotification!] @paginate(model: "App\\Model\\LogNotification")
-    adminSetting: AdminSetting @first(model: "App\\Model\\AdminSetting")
+    
 }
 
 
