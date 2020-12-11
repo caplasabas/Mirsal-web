@@ -155,7 +155,7 @@ extend type Query @middleware(checks: ["auth:api"]){
     driverOffer(id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
 
     ##OFFERS
-    products(seller_id: ID @eq, is_vip: Int @eq, status: ProductStatus @eq, excludeSellerIds: [ID!] @notIn(key: "seller_id"), excludeProductIds: [ID!] @notIn(key: "id"), vip_status: VipStatuses @eq, type: ProductType @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
+    products(title: String, seller_id: ID , is_vip: Int , status: ProductStatus , excludeSellerIds: [ID!] , excludeProductIds: [ID!] , vip_status: VipStatuses, type: ProductType , orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(builder: "App\\GraphQL\\CustomQueries\\ProductQuery")
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
     clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
     clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
