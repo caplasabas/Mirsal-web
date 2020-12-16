@@ -65,12 +65,12 @@
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->type}}</strong>  
                                                 </div>
-                                                <!-- <div class="col-5 text-strong">
+                                                <div class="col-5 text-strong">
                                                     {{ __('lang.status') }} :
                                                 </div>
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->status}}</strong>  
-                                                </div> -->
+                                                </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.animal') }} :
                                                 </div>
@@ -89,13 +89,13 @@
                                                 </div>
                                                 <div class="col-7">
                                                 <strong>{{ $data['vetRequest']->vetTimeSlot->available_date_ar}}</strong>  
-                                                </div>
+                                                <!-- </div>
                                                 <div class="col-5 text-strong">
                                                     {{ __('lang.prefered_time') }} :
                                                 </div>
                                                 <div class="col-7">
                                                 <strong>{{ __('lang.from') }} {{ $data['vetRequest']->vetTimeSlot->from}} {{ __('lang.to') }} {{ $data['vetRequest']->vetTimeSlot->from}}</strong>  
-                                                </div>
+                                                </div> -->
                                                 @endif
 
                                             </div>
@@ -243,7 +243,7 @@
         {{ method_field('PUT') }}
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         <div class="modal-header bg-warning">
-        <h5 class="modal-title text-white">{{ __('lang.edit_veterinarian') }}</h5>
+        <h5 class="modal-title text-white">{{ __('lang.edit_vet_request') }}</h5>
 
         </div>
         <div class="modal-body">
@@ -256,17 +256,18 @@
                 </select>
             </div>
 
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label for="input-1">{{ __('lang.status') }}</label>
                 <select class="form-control" name="status" id="input-1">
                     <option value="PENDING" @if ($data['vetRequest']->status == "PENDING") selected @endif >{{ __('lang.pending') }}</option>
                     <option value="SKIPPED" @if ($data['vetRequest']->status == "SKIPPED") selected @endif >{{ __('lang.skipped') }}</option>
                     <option value="ACCEPTED" @if ($data['vetRequest']->status == "ACCEPTED") selected @endif >{{ __('lang.accepted') }}</option>
                     <option value="COMPLETED" @if ($data['vetRequest']->status == "COMPLETED") selected @endif >{{ __('lang.completed') }}</option>
+                    <option value="COMPLETED" @if ($data['vetRequest']->status == "CANCELLED") selected @endif >{{ __('lang.cancelled') }}</option>
                 </select>
-            </div> -->
+            </div>
             <div class="form-group">
-                <label for="input-1">{{ __('lang.size') }}</label>
+                <label for="input-1">{{ __('lang.animal') }}</label>
                 <select class="form-control" name="animal_id" id="input-1">
                 @foreach($data['animals'] as $index => $animal )
                     <option value="{{ $animal->id }}" @if ($animal->id == $data['vetRequest']->animal->id) selected @endif >{{ $animal->name_ar }}</option>
@@ -282,6 +283,45 @@
                 @endforeach
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="input-add-1">{{ __('lang.description') }} </label>
+                <textarea rows="5" class="form-control" id="basic-textarea-1" name="description">{{ $data['vetRequest']->description}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="input-add-1">{{ __('lang.address') }} </label>
+            </div>
+
+            <div class="form-group">
+                <label for="input-2">{{ __('lang.house_number') }}</label>
+                <input type="text" class="form-control" name="house_number" value="{{ $data['vetRequest']->address->house_number}}">
+           </div>
+
+           <div class="form-group">
+                <label for="input-2">{{ __('lang.street') }}</label>
+                <input type="text" class="form-control" name="street" value="{{ $data['vetRequest']->address->street}}">
+           </div>
+
+           <div class="form-group">
+                <label for="input-2">{{ __('lang.city') }}</label>
+                <input type="text" class="form-control" name="city" value="{{ $data['vetRequest']->address->city}}">
+           </div>
+
+           <div class="form-group">
+                <label for="input-2">{{ __('lang.postal_code') }}</label>
+                <input type="text" class="form-control" name="postal_code" value="{{ $data['vetRequest']->address->postal_code}}">
+           </div>
+           
+           <div class="form-group">
+                <label for="input-2">{{ __('lang.loc_lat') }}</label>
+                <input type="text" class="form-control" name="postal_code" value="{{ $data['vetRequest']->address->postal_code}}">
+           </div>
+
+           <div class="form-group">
+                <label for="input-2">{{ __('lang.loc_long') }}</label>
+                <input type="text" class="form-control" name="postal_code" value="{{ $data['vetRequest']->address->postal_code}}">
+           </div>
            
             
         </div>

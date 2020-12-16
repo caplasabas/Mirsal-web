@@ -92,7 +92,15 @@ class VetRequestController extends Controller
         $vetRequest->type = $request->type;
         $vetRequest->animal_id = $request->animal_id;
         $vetRequest->size_id = $request->size_id;
-
+        $vetRequest->status = $request->status;
+        $vetRequest->description = $request->description;
+        $vetRequest->address->house_number = $request->house_number;
+        $vetRequest->address->street = $request->street;
+        $vetRequest->address->city = $request->city;
+        $vetRequest->address->postal_code = $request->postal_code;
+        $vetRequest->address->loc_lat = $request->loc_lat;
+        $vetRequest->address->loc_lat = $request->loc_long;
+        $vetRequest->address->save();
         $vetRequest->save();
 
         return redirect()->route('admins.vet-requests.show',  $id );

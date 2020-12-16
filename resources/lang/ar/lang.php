@@ -390,4 +390,8 @@ return [
         "terms_and_conditions_ar" => "Terms And Conditions AR",
         'change_password' => "Change Password",
         'vip' => "VIP",
+        'address' => "Address",
+        'loc_lat' => "Latitude",
+        'loc_long' => "Longitude",
+
 ];
