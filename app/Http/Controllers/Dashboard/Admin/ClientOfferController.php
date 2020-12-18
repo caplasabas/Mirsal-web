@@ -73,7 +73,14 @@ class ClientOfferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $clientOffer = ClientOffer::find($id);
+
+        $clientOffer->offered_price = $request->offered_price;
+        $clientOffer->note = $request->note;
+
+        $clientOffer->save();
+
+        return redirect()->route('admins.client-offers.index');
     }
 
     /**

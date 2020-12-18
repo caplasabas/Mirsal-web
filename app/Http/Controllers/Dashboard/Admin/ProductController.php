@@ -19,8 +19,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $data['products'] = $products;
+        $data['vips'] = Product::where('is_vip', 1)->get();
+        $data['animals'] = Product::where('is_vip', 0)->where('type', "ANIMAL")->get();
+        $data['products'] = Product::where('is_vip', 0)->where('type', "PRODUCT")->get();
 
         return view('pages.admin.products.index')->with(compact('data'));
     }

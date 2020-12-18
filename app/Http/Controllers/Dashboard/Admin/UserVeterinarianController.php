@@ -19,8 +19,9 @@ class UserVeterinarianController extends Controller
      */
     public function index()
     {
-        $veterinarians = User::where("role","VETERINARIAN")->get();
-        $data['veterinarians'] = $veterinarians;
+
+        $data['accepted_veterinarians'] = User::where("role","VETERINARIAN")->where("vet_status","ACCEPTED")->get();
+        $data['pending_veterinarians'] = User::where("role","VETERINARIAN")->where("vet_status","PENDING")->get();
 
         return view('pages.admin.veterinarians.index')->with(compact('data'));
     }

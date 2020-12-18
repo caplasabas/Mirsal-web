@@ -396,4 +396,10 @@ return [
     'loc_lat' => "Latitude",
     'loc_long' => "Longitude",
     'edit_vet_request' => "Edit Vet Request",
+    'goods' => "Goods",
+    'delete_vet_offer_text' => "You want to delete this Vet Offer?",
+    'delete_driver_offer_text' => "You want to delete this Driver Offer?",
+    'delete_client_offer_text' => "You want to delete this Client Offer?",
+    'driver_offers' => "Delivery Offers",
+    'driver_offer' => "Delivery Offer",
 ];

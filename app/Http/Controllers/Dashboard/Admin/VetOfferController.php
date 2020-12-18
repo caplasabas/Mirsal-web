@@ -84,6 +84,9 @@ class VetOfferController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vetOffer = VetOffer::find($id);
+        $vetOffer->delete();
+
+        return redirect()->route('admins.vet-offers.index');
     }
 }

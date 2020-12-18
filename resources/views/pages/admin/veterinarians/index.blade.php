@@ -1,59 +1,115 @@
 @extends('layouts.admin')
 
 @section('content')
-<pre>
-</pre>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <div class="card">
+    <div class="col-lg-12">
+           <div class="card">
                 <div class="card-header text-uppercase text-info">
                 {{ __('lang.veterinarians') }} 
                 <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-veterinarian"><i aria-hidden="true" class="fa fa-plus"></i></button>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive text-black">
-                    <table class="datatable table" data-order='[[ 0, "desc" ]]'>
-                        <thead class="thead-info">
-                        <tr>
-                            <th scope="col">#</th>
-                            <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
-                            <th scope="col">{{ __('lang.name') }}</th>
-                            <th scope="col">{{ __('lang.phone') }}</th>
-                            <th scope="col">{{ __('lang.email') }}</th>
-                            <th scope="col">{{ __('lang.status') }}</th>
-                            <th scope="col">{{ __('lang.action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($data['veterinarians'] as $index => $veterinarian)
-                            <tr>
-                            <td>{{ $veterinarian->id }}</td>
-                            <td>{{ $veterinarian->phone }}</td>
-                            <td>{{ $veterinarian->name}}</td>
-                            <td>{{ $veterinarian->email}}</td>
-                            <td>{{ $veterinarian->vet_status}}</td>
-                            <td> 
-                                <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
-                            <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
-                            </td>
-                            </tr>
+              <div class="card-body"> 
+              <ul class="nav nav-pills nav-pills-info nav-justified" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#piil-13"> <span class="hidden-xs">{{ __('lang.pending') }}</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#piil-14"> <span class="hidden-xs">{{ __('lang.accepted') }}</span></a>
+                  </li>
+                </ul>
 
-                            
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div id="piil-13" class="tab-pane active">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="table-responsive text-black">
+                            <table class="datatable table" data-order='[[ 0, "desc" ]]'>
+                                <thead class="thead-info">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                                    <th scope="col">{{ __('lang.name') }}</th>
+                                    <th scope="col">{{ __('lang.phone') }}</th>
+                                    <th scope="col">{{ __('lang.email') }}</th>
+                                    <th scope="col">{{ __('lang.status') }}</th>
+                                    <th scope="col">{{ __('lang.action') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($data['pending_veterinarians'] as $index => $veterinarian)
+                                    <tr>
+                                    <td>{{ $veterinarian->id }}</td>
+                                    <td>{{ $veterinarian->phone }}</td>
+                                    <td>{{ $veterinarian->name}}</td>
+                                    <td>{{ $veterinarian->email}}</td>
+                                    <td>{{ $veterinarian->vet_status}}</td>
+                                    <td> 
+                                        <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
+                                    <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
+                                    </td>
+                                    </tr>
 
-                        @endforeach
-                        </tbody>
-                    </table>
+                                    
+
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  <div id="piil-14" class="tab-pane fade">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <div class="table-responsive text-black">
+                            <table class="datatable table" data-order='[[ 0, "desc" ]]'>
+                                <thead class="thead-info">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <!-- <th scope="col">{{ __('lang.terms_and_conditions') }} {{ __('lang.en') }}</th> -->
+                                    <th scope="col">{{ __('lang.name') }}</th>
+                                    <th scope="col">{{ __('lang.phone') }}</th>
+                                    <th scope="col">{{ __('lang.email') }}</th>
+                                    <th scope="col">{{ __('lang.status') }}</th>
+                                    <th scope="col">{{ __('lang.action') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($data['accepted_veterinarians'] as $index => $veterinarian)
+                                    <tr>
+                                    <td>{{ $veterinarian->id }}</td>
+                                    <td>{{ $veterinarian->phone }}</td>
+                                    <td>{{ $veterinarian->name}}</td>
+                                    <td>{{ $veterinarian->email}}</td>
+                                    <td>{{ $veterinarian->vet_status}}</td>
+                                    <td> 
+                                        <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
+                                    <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
+                                    </td>
+                                    </tr>
+
+                                    
+
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+           </div>
+
         </div>
     </div>
 </div>
 @endsection
 
 
-@foreach($data['veterinarians'] as $index => $veterinarian)
+@foreach($data['pending_veterinarians'] as $index => $veterinarian)
 
 
 @if($veterinarian->vet_status == "PENDING")
