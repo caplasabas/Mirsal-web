@@ -44,7 +44,7 @@
                                     <td>{{ $veterinarian->phone }}</td>
                                     <td>{{ $veterinarian->name}}</td>
                                     <td>{{ $veterinarian->email}}</td>
-                                    <td>{{ \App::getLocale() === "ar" ? $vetRequest->vet_status_ar : $vetRequest->vet_status }}</td>
+                                    <td>{{ \App::getLocale() === "ar" ? $veterinarian->vet_status_ar : $veterinarian->vet_status }}</td>
                                     <td> 
                                         <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
                                     <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
@@ -83,7 +83,7 @@
                                     <td>{{ $veterinarian->phone }}</td>
                                     <td>{{ $veterinarian->name}}</td>
                                     <td>{{ $veterinarian->email}}</td>
-                                    <td>{{ \App::getLocale() === "ar" ? $vetRequest->vet_status_ar : $vetRequest->vet_status }}</td>
+                                    <td>{{ \App::getLocale() === "ar" ? $veterinarian->vet_status_ar : $veterinarian->vet_status }}</td>
                                     <td> 
                                         <!-- <button class="btn btn-warning  m-1" data-toggle="modal" data-target="#accept-vet-{{ $veterinarian->id }}">{{ __('lang.edit') }}</button> -->
                                     <a class="btn btn-info  m-1" href="{{ route('admins.veterinarians.show', $veterinarian->id ) }}">{{ __('lang.show') }}</a>
