@@ -85,6 +85,13 @@ class DriverRequest extends Model
         return $this->statusTranslate($this->status);
     }
 
+    public function getFullPriceAttribute()
+    {   
+        if($this->acceptedDriverOffer()->exists())
+            return $this->acceptedDriverOffer->price;
+        return null;
+    }
+
     public function statusTranslate($status)
     {   
         $value = "";

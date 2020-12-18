@@ -58,4 +58,20 @@ class Invoice extends Model
 
         return $value;
     }
+
+    public function getFullPriceAttribute()
+    {   
+        if($this->payment_for == "VETERINARIAN"){
+            if($this->vetOffer()->exists())
+                return $this->vetOffer->price;
+            return null;
+        }
+        if($this->payment_for == "DRIVER"){
+            if($this->driverOffer()->exists())
+                return $this->driverOffer->price;
+            return null;
+        }
+        return null;
+            
+    }
 }

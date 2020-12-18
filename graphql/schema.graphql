@@ -443,9 +443,9 @@ input CreateDriverOfferInput {
     driver_id: ID!
     driver_request_id: ID!
     price: String
-    first_payment_price: String
-    tax_price: String
-    total: String
+    # first_payment_price: String
+    # tax_price: String
+    # total: String
     status: DriverOfferStatuses
 }
 
@@ -679,6 +679,7 @@ type DriverRequest {
     created_at: String
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
+    full_price: String
 }
 
 type DriverOffer {
@@ -729,6 +730,7 @@ type Invoice {
     tax_price: String
     first_payment_perc: String
     amount_paid: String
+    full_price: String
     reference_id: String
     payment_gateway: String
     created_at: String
