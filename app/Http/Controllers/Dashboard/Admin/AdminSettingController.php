@@ -74,7 +74,7 @@ class AdminSettingController extends Controller
     public function update(Request $request, $id)
     {
         $company = AdminSetting::find(1);
-        $company->tax_perc = $request->tax_perc;
+        // $company->tax_perc = $request->tax_perc;
         $company->admin_commission_perc = $request->admin_commission_perc;
         $company->first_payment_perc = $request->first_payment_perc;
         $company->terms_and_conditions = $request->terms_and_conditions;
