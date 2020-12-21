@@ -33,6 +33,10 @@ class DriverOfferCreatedListener
             array("field"=>"tag","key"=>"userId","value"=>"userId_".$driverRequest->client->id,"relation"=>"=")
         );
         OneSignalHelper::notification(0,$event->driverOffer->driver_id,$driverRequest->client->id,"DRIVER_OFFER_CREATED","offer",$filter);
+        $price = str_replace(',', "", $event->driverOffer->price);
+        $event->driverOffer->first_payment_price  = $price  * ($event->driverOffer->first_payment_perc/100);
+
+        $event->driverOffer->save();
         
     }
 }
