@@ -33,7 +33,7 @@ class DriverOfferMutator
                 $invoice->payment_for = "Driver";
                 $price = str_replace(',', "", $driver_offer->price);
 
-                $first_payment_price  = $price  * ($admin_setting->admin_commission_perc/100);
+                $first_payment_price  = $price  * ($admin_setting->first_payment_perc/100);
                 $payable_amount = $price - $first_payment_price;
 
                 $amount_tax_price = $payable_amount * ($admin_setting->tax_perc/100);
