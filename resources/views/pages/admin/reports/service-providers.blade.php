@@ -24,6 +24,7 @@
                         </thead>
                         <tbody>
                         @foreach($data['service_providers'] as $index => $service_provider)
+                        @if($service_provider->role == "DRIVER" || ($service_provider->role == "VETERINARIAN" &&  $service_provider->vet_status == "ACCEPTED") )
                             <tr>
                             <td>{{$service_provider->id}}</td>
                             <td><a href="{{ route('admins.service-provider-report.show',$service_provider->id) }}">{{$service_provider->name}}</a></td>
@@ -36,6 +37,7 @@
                             <td>{{$service_provider->getTotalProfit()}}</td>
                             <td>{{$service_provider->getTotalAppCommission()}}</td>
                             </tr>
+                        @endif
                         @endforeach
                         </tbody>
                     </table>
