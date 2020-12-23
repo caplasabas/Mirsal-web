@@ -47,10 +47,17 @@ class InvoiceQuery
         }
 
         if(isset($args['created_with_vet'])){
-            $vetRequestIds = $vetRequestQuery->where("created_with_vet", $args['created_with_vet'])->pluck("id");
+            if(isset($args['client_id'])){
+                $vetRequestIds = $vetRequestQuery->where("client_id", $args['client_id'])->where("created_with_vet", $args['created_with_vet'])->pluck("id");
+            } else {
+                $vetRequestIds = $vetRequestQuery->where("created_with_vet", $args['created_with_vet'])->pluck("id"); 
+            }
             $vetOfferIds = $vetOfferQuery->whereIn("vet_request_id", $vetRequestIds)->pluck("id");
             $invoiceQuery = $invoiceQuery->whereNull('vet_offer_id')->orWhereIn("vet_offer_id", $vetOfferIds);
+            // echo json_encode($vetOfferIds,true);exit;
         }
+
+        
 
         return $invoiceQuery;
     }
