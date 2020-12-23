@@ -71,7 +71,7 @@ return [
     */
 
     'cache' => [
-        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', false),
+        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', true),
         'key' => env('LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema'),
         'ttl' => env('LIGHTHOUSE_CACHE_TTL', null),
     ],
