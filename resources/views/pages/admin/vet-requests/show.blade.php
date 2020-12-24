@@ -289,6 +289,7 @@
                 <textarea rows="5" class="form-control" id="basic-textarea-1" name="description">{{ $data['vetRequest']->description}}</textarea>
             </div>
 
+            @if($data['vetRequest']->address !== NULL)
             <div class="form-group">
                 <label for="input-add-1">{{ __('lang.address') }} </label>
             </div>
@@ -322,8 +323,7 @@
                 <label for="input-2">{{ __('lang.loc_long') }}</label>
                 <input type="text" class="form-control" name="postal_code" value="{{ $data['vetRequest']->address->postal_code}}">
            </div>
-           
-            
+            @endif
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-inverse-warning" data-dismiss="modal"><i class="fa fa-times"></i> {{ __('lang.close') }}</button>
