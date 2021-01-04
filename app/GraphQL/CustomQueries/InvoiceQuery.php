@@ -19,7 +19,7 @@ class InvoiceQuery
         $vetOfferQuery = VetOffer::query();
         $vetRequestQuery = VetRequest::query();
         if(isset($args['id'])){
-            $invoiceQuery = $invoiceQuery->where('id',isset($args['id']));
+            $invoiceQuery = $invoiceQuery->where('id',$args['id']);
         }
 
         if(isset($args['client_id'])){
