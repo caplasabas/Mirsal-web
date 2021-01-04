@@ -2,14 +2,14 @@
 
 namespace App\GraphQL\Mutations;
 
-use App\Exceptions\GraphqlException;
-use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use Illuminate\Support\Str;
-
-use App\User;
-use App\Model\UserFile;
 use App\Events\OnRegister;
+use App\Model\UserFile;
+use App\Model\UserToken;
+use App\User;
+use GraphQL\Type\Definition\ResolveInfo;
+use Illuminate\Support\Str;
+use JWTAuth;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class RegisterMutator
 {
@@ -26,58 +26,56 @@ class RegisterMutator
     {
         // TODO implement the resolver
 
-        $token = Str::random(60).uniqid();
+        $token = Str::random(60) . uniqid();
 
         $user = new User();
         $user->role = $args['role'];
         $user->name = $args['name'];
-        if(isset($args['email']))
+        if (isset($args['email'])) {
             $user->email = $args['email'];
+        }
+
         $user->phone = $args['phone'];
         $user->password = bcrypt($args['password']);
         $user->api_token = $token;
-        if(isset($args['car_plate_number']))
-        {
+        if (isset($args['car_plate_number'])) {
             $user->car_plate_number = $args['car_plate_number'];
         }
-        if(isset($args['latitude']))
-        {
+        if (isset($args['latitude'])) {
             $user->latitude = $args['latitude'];
         }
-        if(isset($args['longitude']))
-        {
+        if (isset($args['longitude'])) {
             $user->longitude = $args['longitude'];
         }
-        if(isset($args['formatted_address']))
-        {
+        if (isset($args['formatted_address'])) {
             $user->formatted_address = $args['formatted_address'];
         }
-        if(isset($args['national_id_url']))
-        {
+        if (isset($args['national_id_url'])) {
             $user->national_id_url = $args['national_id_url'];
         }
-        
 
         $user->save();
-        if(isset($args['avatar']))
-        {
+        $api_token = JWTAuth::fromUser($user);
+
+        $token = new UserToken();
+        $token->api_token = $api_token;
+        $token->user_id = $user->id;
+        $token->save();
+        if (isset($args['avatar'])) {
             $file = $args['avatar'];
-            if($file)
-            {
-                $avatarName = $user->id.'_userAvatar'.time().'.'.$file->getClientOriginalExtension();
-                $file->storeAs('user_avatars',$avatarName);
+            if ($file) {
+                $avatarName = $user->id . '_userAvatar' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('user_avatars', $avatarName);
                 $user->avatar = $avatarName;
                 $user->save();
             }
         }
 
-        if(isset($args['user_file']))
-        {
+        if (isset($args['user_file'])) {
             $file = $args['user_file'];
-            if($file)
-            {
-                $filename = $user->id.'_userFile'.time().'.'.$file->getClientOriginalExtension();
-                $file->storeAs('user_files',$filename);
+            if ($file) {
+                $filename = $user->id . '_userFile' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('user_files', $filename);
                 $userFile = new UserFile();
                 $userFile->user_id = $user->id;
                 $userFile->name = $filename;
@@ -85,11 +83,10 @@ class RegisterMutator
             }
         }
 
-        
         event(new OnRegister($user));
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $api_token,
         ];
     }
 }

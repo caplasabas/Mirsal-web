@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Model\VetOffer;
+use Illuminate\Http\Request;
 
 class VetOfferController extends Controller
 {
