@@ -2,17 +2,16 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Model\Invoice;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Model\Rating;
-use App\Model\Invoice;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes, Notifiable;
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -27,10 +26,10 @@ class User extends Authenticatable
         'national_id_url',
         'consultation_price',
         'visit_price',
-    ]; 
+    ];
 
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     public function devices()
@@ -48,65 +47,68 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Model\Interest', 'user_interests', 'user_id', 'interest_id');
     }
 
-
-
-    public function getPhoneFormattedAttribute(){
-        $trimmed_phone = substr($this->phone, 1); 
-        $new_phone_format = "+966".$trimmed_phone;
+    public function getPhoneFormattedAttribute()
+    {
+        $trimmed_phone = substr($this->phone, 1);
+        $new_phone_format = "+966" . $trimmed_phone;
         return $new_phone_format;
     }
-    
+
     public function vetTimeSlots()
     {
-        return $this->hasMany('App\Model\VetTimeSlot','vet_id');
+        return $this->hasMany('App\Model\VetTimeSlot', 'vet_id');
     }
-
 
     public function getVetStatusArAttribute()
     {
         return $this->vetStatusTranslate($this->vet_status);
     }
 
-    public function getNumberOfPaidServicesAttribute(){
+    public function getNumberOfPaidServicesAttribute()
+    {
         $numberOfPaidService = 0;
-        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status', 'PAID')->get();
         $numberOfPaidService = count($invoices);
         return $numberOfPaidService;
     }
 
-    public function getTotalProfit(){
+    public function getTotalProfit()
+    {
         $totalProfit = 0;
-        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
-        
-        foreach($invoices as $index => $invoice){
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status', 'PAID')->get();
+
+        foreach ($invoices as $index => $invoice) {
             $totalProfit += str_replace(',', "", $invoice->provider_profit);
         }
-        
+
         return number_format($totalProfit, 2);
     }
 
-    public function getTotalAppCommission(){
+    public function getTotalAppCommission()
+    {
         $totalAppCommission = 0;
-        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status','PAID')->get();
-        
-        foreach($invoices as $index => $invoice){
-            $totalAppCommission += str_replace(',', "",$invoice->admin_commission);
+        $invoices = Invoice::where("service_provider_id", $this->id)->where('payment_status', 'PAID')->get();
+
+        foreach ($invoices as $index => $invoice) {
+            $totalAppCommission += str_replace(',', "", $invoice->admin_commission);
         }
-        
+
         return number_format($totalAppCommission, 2);
     }
 
-    public function providerInvoices(){
-        return $this->hasMany('App\Model\Invoice','service_provider_id');
+    public function providerInvoices()
+    {
+        return $this->hasMany('App\Model\Invoice', 'service_provider_id');
     }
 
-    public function acceptedInvoices(){
-        return $this->providerInvoices()->where('payment_status','PAID');
+    public function acceptedInvoices()
+    {
+        return $this->providerInvoices()->where('payment_status', 'PAID');
     }
 
     // REJECTED مرفوضة
     public function vetStatusTranslate($vet_status)
-    {   
+    {
         $value = "";
         switch ($vet_status) {
             case 'REJECTED':
@@ -132,9 +134,24 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\DriverRequest');
     }
+    public function UserTokens()
+    {
+        return $this->hasMany('App\Model\UserToken');
+    }
 
-    
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
-
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
 }

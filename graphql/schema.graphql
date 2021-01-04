@@ -1,185 +1,475 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 "A date string with format `Y-m-d`, e.g. `2011-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 "Can be used as an argument to upload files using https://github.com/jaydenseric/graphql-multipart-request-spec"
-scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+scalar Upload
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 scalar Mixed @scalar(class: "MLL\\GraphQLScalars\\Mixed")
 
-
 type Mutation {
-    login(input: LoginInput @spread): UserResponse! @field(resolver: "LoginMutator") 
+    login(input: LoginInput @spread): UserResponse!
+        @field(resolver: "LoginMutator")
     register(
-    role: Roles!
-    name: String! @rules(apply: ["required", "string"])
-    email: String @rules(apply: ["unique:users,email"])
-    phone: String! @rules(apply: ["required", "min:10", "unique:users,phone"])
-    password: String! @rules(apply: ["required", "confirmed", "min:8"]) 
-    password_confirmation: String! 
-    user_file: Upload
-    car_plate_number: String
-    avatar: String
-    latitude: String
-    longitude: String
-    formatted_address: String 
-    national_id_url: String
+        role: Roles!
+        name: String! @rules(apply: ["required", "string"])
+        email: String @rules(apply: ["unique:users,email"])
+        phone: String!
+            @rules(apply: ["required", "min:10", "unique:users,phone"])
+        password: String! @rules(apply: ["required", "confirmed", "min:8"])
+        password_confirmation: String!
+        user_file: Upload
+        car_plate_number: String
+        avatar: String
+        latitude: String
+        longitude: String
+        formatted_address: String
+        national_id_url: String
     ): UserResponse! @field(resolver: "RegisterMutator")
 
-    otpVerify(phone: String!, otp_code: String! ): OtpVerifyResponse! @field(resolver: "OTPVerification@otpVerify" )
-    
-}   
+    otpVerify(phone: String!, otp_code: String!): OtpVerifyResponse!
+        @field(resolver: "OTPVerification@otpVerify")
+}
 
-extend type Mutation @middleware(checks: ["auth:api"]){
-    firebaseCustomToken(user_id: Int! ): String! @field(resolver: "FirebaseCustomToken") 
+extend type Mutation @guard(checks: ["auth:api"]) {
+    firebaseCustomToken(user_id: Int!): String!
+        @field(resolver: "FirebaseCustomToken")
 
     logout: LogoutResponse! @field(resolver: "LogoutMutator")
 
     #VETERINARIAN
-    createVetRequest(input: CreateVetRequestInput @spread): VetRequest! @create(model: "App\\Model\\VetRequest")
-    updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest! @update(model: "App\\Model\\VetRequest")
-    deleteVetRequest(id: ID!): VetRequest! @delete(model: "App\\Model\\VetRequest")
+    createVetRequest(input: CreateVetRequestInput @spread): VetRequest!
+        @create(model: "App\\Model\\VetRequest")
+    updateVetRequest(input: UpdateVetRequestInput @spread): VetRequest!
+        @update(model: "App\\Model\\VetRequest")
+    deleteVetRequest(id: ID!): VetRequest!
+        @delete(model: "App\\Model\\VetRequest")
 
-    createVetRequestWithVet(input: CreateVetRequestWithVetInput @spread): createVetRequestWithVetResponse! @field(resolver: "CreateVetRequestWithVet@createWithVet")
+    createVetRequestWithVet(
+        input: CreateVetRequestWithVetInput @spread
+    ): createVetRequestWithVetResponse!
+        @field(resolver: "CreateVetRequestWithVet@createWithVet")
 
-    createVetOffer(input: CreateVetOfferInput @spread): VetOffer! @create(model: "App\\Model\\VetOffer")
-    updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer! @update(model: "App\\Model\\VetOffer")
+    createVetOffer(input: CreateVetOfferInput @spread): VetOffer!
+        @create(model: "App\\Model\\VetOffer")
+    updateVetOffer(input: UpdateVetOfferInput @spread): VetOffer!
+        @update(model: "App\\Model\\VetOffer")
     deleteVetOffer(id: ID!): VetOffer! @delete(model: "App\\Model\\VetOffer")
-    upsertVetOffer(input: UpdateVetOfferInput @spread): VetOffer @upsert(model: "App\\Model\\VetOffer")
+    upsertVetOffer(input: UpdateVetOfferInput @spread): VetOffer
+        @upsert(model: "App\\Model\\VetOffer")
 
     #DRIVER
-    createDriverRequest(input: CreateDriverRequestInput @spread): DriverRequest! @create(model: "App\\Model\\DriverRequest")
-    updateDriverRequest(input: UpdateDriverRequestInput @spread): DriverRequest! @update(model: "App\\Model\\DriverRequest")
-    deleteDriverRequest(id: ID!): DriverRequest! @delete(model: "App\\Model\\DriverRequest")
+    createDriverRequest(
+        input: CreateDriverRequestInput @spread
+    ): DriverRequest! @create(model: "App\\Model\\DriverRequest")
+    updateDriverRequest(
+        input: UpdateDriverRequestInput @spread
+    ): DriverRequest! @update(model: "App\\Model\\DriverRequest")
+    deleteDriverRequest(id: ID!): DriverRequest!
+        @delete(model: "App\\Model\\DriverRequest")
 
-    createDriverOffer(input: CreateDriverOfferInput @spread): DriverOffer! @create(model: "App\\Model\\DriverOffer")
-    updateDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @update(model: "App\\Model\\DriverOffer")
-    deleteDriverOffer(id: ID!): DriverOffer! @delete(model: "App\\Model\\DriverOffer")
-    upsertDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer! @upsert(model: "App\\Model\\DriverOffer")
-
+    createDriverOffer(input: CreateDriverOfferInput @spread): DriverOffer!
+        @create(model: "App\\Model\\DriverOffer")
+    updateDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer!
+        @update(model: "App\\Model\\DriverOffer")
+    deleteDriverOffer(id: ID!): DriverOffer!
+        @delete(model: "App\\Model\\DriverOffer")
+    upsertDriverOffer(input: UpdateDriverOfferInput @spread): DriverOffer!
+        @upsert(model: "App\\Model\\DriverOffer")
 
     #CLIENT
-    createProduct(input: CreateProductInput @spread): Product @create(model: "App\\Model\\Product")
-    updateProduct(input: UpdateProductInput @spread): Product @update(model: "App\\Model\\Product")
+    createProduct(input: CreateProductInput @spread): Product
+        @create(model: "App\\Model\\Product")
+    updateProduct(input: UpdateProductInput @spread): Product
+        @update(model: "App\\Model\\Product")
     deleteProduct(id: ID!): Product @delete(model: "App\\Model\\Product")
 
-    createClientOffer(input: CreateClientOfferInput @spread): ClientOffer! @create(model: "App\\Model\\ClientOffer")
-    updateClientOffer(input: UpdateClientOfferInput @spread): ClientOffer! @update(model: "App\\Model\\ClientOffer")
-    deleteClientOffer(id: ID!): ClientOffer! @delete(model: "App\\Model\\ClientOffer")
+    createClientOffer(input: CreateClientOfferInput @spread): ClientOffer!
+        @create(model: "App\\Model\\ClientOffer")
+    updateClientOffer(input: UpdateClientOfferInput @spread): ClientOffer!
+        @update(model: "App\\Model\\ClientOffer")
+    deleteClientOffer(id: ID!): ClientOffer!
+        @delete(model: "App\\Model\\ClientOffer")
 
     #INVOICE
-    createInvoice(input: CreateInvoiceInput @spread): Invoice! @create(model: "App\\Model\\Invoice")
-    updateInvoice(input: UpdateInvoiceInput @spread): Invoice! @update(model: "App\\Model\\Invoice")
+    createInvoice(input: CreateInvoiceInput @spread): Invoice!
+        @create(model: "App\\Model\\Invoice")
+    updateInvoice(input: UpdateInvoiceInput @spread): Invoice!
+        @update(model: "App\\Model\\Invoice")
 
     #Address
-    createAddress(input: CreateAddressInput @spread): Address! @create(model: "App\\Model\\Address")
+    createAddress(input: CreateAddressInput @spread): Address!
+        @create(model: "App\\Model\\Address")
 
     #VetTimeSlot
-    createVetTimeSlot(input: CreateVetTimeSlotInput @spread): VetTimeSlot! @create(model: "App\\Model\\VetTimeSlot")
-    updateVetTimeSlot(input: UpdateVetTimeSlotInput @spread): VetTimeSlot! @update(model: "App\\Model\\VetTimeSlot")
-    deleteVetTimeSlot(id: ID!): VetTimeSlot! @delete(model: "App\\Model\\VetTimeSlot")
-
+    createVetTimeSlot(input: CreateVetTimeSlotInput @spread): VetTimeSlot!
+        @create(model: "App\\Model\\VetTimeSlot")
+    updateVetTimeSlot(input: UpdateVetTimeSlotInput @spread): VetTimeSlot!
+        @update(model: "App\\Model\\VetTimeSlot")
+    deleteVetTimeSlot(id: ID!): VetTimeSlot!
+        @delete(model: "App\\Model\\VetTimeSlot")
 
     #FUNCTIONS
-    acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse @field(resolver: "VetOfferMutator@acceptVetOffer")
-    acceptDriverOffer(input: acceptDriverOfferInput @spread): AcceptDriverOfferResponse @field(resolver: "DriverOfferMutator@acceptDriverOffer")
+    acceptVetOffer(input: acceptVetOfferInput @spread): AcceptVetOfferResponse
+        @field(resolver: "VetOfferMutator@acceptVetOffer")
+    acceptDriverOffer(
+        input: acceptDriverOfferInput @spread
+    ): AcceptDriverOfferResponse
+        @field(resolver: "DriverOfferMutator@acceptDriverOffer")
 
-    imageUpload(image: Upload): ImageUploadResponse @field(resolver: "ImageUpload@imageUpload")
+    imageUpload(image: Upload): ImageUploadResponse
+        @field(resolver: "ImageUpload@imageUpload")
 
     #User
-    userUploadAvatar(id: ID @eq, avatar: Upload! ): User! @update(model: "App\\User")
+    userUploadAvatar(id: ID @eq, avatar: Upload!): User!
+        @update(model: "App\\User")
     updateUser(input: UpdateUserInput @spread): User @update(model: "App\\User")
 
     #suggestion
-    createSuggestion(input: CreateSuggestionInput @spread): Suggestion! @create(model: "App\\Model\\Suggestion")
-    updateSuggestion(input: UpdateSuggestionInput @spread): Suggestion! @update(model: "App\\Model\\Suggestion")
-    deleteSuggestion(id: ID!): Suggestion! @delete(model: "App\\Model\\Suggestion")
-    
-    #LogNotification
-    createLogNotification(input: CreateLogNotification @spread): LogNotification! @field(resolver: "CreateLogNotification@createLogNotification")
-    updateLogNotification(input: UpdateLogNotification @spread): LogNotification! @update(model: "App\\Model\\LogNotification")
-    deleteLogNotification(id: ID!): LogNotification! @delete(model: "App\\Model\\LogNotification")
+    createSuggestion(input: CreateSuggestionInput @spread): Suggestion!
+        @create(model: "App\\Model\\Suggestion")
+    updateSuggestion(input: UpdateSuggestionInput @spread): Suggestion!
+        @update(model: "App\\Model\\Suggestion")
+    deleteSuggestion(id: ID!): Suggestion!
+        @delete(model: "App\\Model\\Suggestion")
 
+    #LogNotification
+    createLogNotification(
+        input: CreateLogNotification @spread
+    ): LogNotification!
+        @field(resolver: "CreateLogNotification@createLogNotification")
+    updateLogNotification(
+        input: UpdateLogNotification @spread
+    ): LogNotification! @update(model: "App\\Model\\LogNotification")
+    deleteLogNotification(id: ID!): LogNotification!
+        @delete(model: "App\\Model\\LogNotification")
 }
 
 type Query {
-
     adminSetting: AdminSetting @first(model: "App\\Model\\AdminSetting")
-    allProducts(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(model: "App\\Model\\Product")
+    allProducts(
+        seller_id: ID @eq
+        is_vip: Int @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Product!]! @paginate(model: "App\\Model\\Product")
+}
 
-}                                                                                                                                                                                                                                                                                                                              
-
-extend type Query @middleware(checks: ["auth:api"]){
-
+extend type Query @guard(checks: ["auth:api"]) {
     me: User @auth
 
-    getUsers(role: Roles @eq, vet_status: VetStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id","consultation_price","visit_price","summary_rating"]) ): [User!]! @paginate(model: "App\\User")   
+    getUsers(
+        role: Roles @eq
+        vet_status: VetStatuses @eq
+        orderBy: _
+            @orderBy(
+                columns: [
+                    "created_at"
+                    "updated_at"
+                    "id"
+                    "consultation_price"
+                    "visit_price"
+                    "summary_rating"
+                ]
+            )
+    ): [User!]! @paginate(model: "App\\User")
     getUser(id: ID @eq): User! @find(model: "App\\User")
 
-    currentConsultationsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient")
-    previousConsultationsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient")
-    currentConsultationsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet")
-    previousConsultationsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet")
+    currentConsultationsAsClient(
+        client_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient"
+        )
+    previousConsultationsAsClient(
+        client_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient"
+        )
+    currentConsultationsAsVet(
+        vet_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet"
+        )
+    previousConsultationsAsVet(
+        vet_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet"
+        )
 
-    currentVisitsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsClient")
-    previousVisitsAsClient(client_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsClient")
-    currentVisitsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
-    previousVisitsAsVet(vet_id: ID, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
+    currentVisitsAsClient(
+        client_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsClient")
+    previousVisitsAsClient(
+        client_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsClient"
+        )
+    currentVisitsAsVet(
+        vet_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
+    previousVisitsAsVet(
+        vet_id: ID
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
 
-    currentDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsClient")
-    previousDeliveryAsClient(client_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsClient")
-    currentDeliveryAsDriver(driver_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsDriver")
-    previousDeliveryAsDriver(driver_id: ID, type: DriverRequestTypes, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsDriver")
+    currentDeliveryAsClient(
+        client_id: ID
+        type: DriverRequestTypes
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsClient"
+        )
+    previousDeliveryAsClient(
+        client_id: ID
+        type: DriverRequestTypes
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsClient"
+        )
+    currentDeliveryAsDriver(
+        driver_id: ID
+        type: DriverRequestTypes
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsDriver"
+        )
+    previousDeliveryAsDriver(
+        driver_id: ID
+        type: DriverRequestTypes
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsDriver"
+        )
 
-    vetRequestsByVet(vet_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestCustom@excludes")
-    vetOffersByInvoice(vet_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice")
-    vetOffersByClient(client_id: ID!, status: VetRequestStatuses, created_with_vet: Int , orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOffersByClient@byClient")
+    vetRequestsByVet(
+        vet_id: ID
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetRequest!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\VetRequestCustom@excludes"
+        )
+    vetOffersByInvoice(
+        vet_id: ID!
+        payment_status: InvoiceStatuses
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\VetOffersByInvoice@byInvoice"
+        )
+    vetOffersByClient(
+        client_id: ID!
+        status: VetRequestStatuses
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\VetOffersByClient@byClient"
+        )
 
-    vetRequests(client_id: ID, exclude_client_id: ID, vet_id: ID, exclude_vet_id: ID, type: VetRequestTypes, status: VetRequestStatuses, excludeClientIds: [ID!], orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestQuery")
+    vetRequests(
+        client_id: ID
+        exclude_client_id: ID
+        vet_id: ID
+        exclude_vet_id: ID
+        type: VetRequestTypes
+        status: VetRequestStatuses
+        excludeClientIds: [ID!]
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetRequest!]
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\VetRequestQuery")
     vetRequest(id: ID @eq): VetRequest! @find(model: "App\\Model\\VetRequest")
-    vetOffers(client_id: ID, exclude_client_id: ID, vet_request_id: ID,  vet_id: ID, exclude_vet_id: ID, status: VetOfferStatuses, type: VetRequestTypes, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [VetOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOfferQuery")
+    vetOffers(
+        client_id: ID
+        exclude_client_id: ID
+        vet_request_id: ID
+        vet_id: ID
+        exclude_vet_id: ID
+        status: VetOfferStatuses
+        type: VetRequestTypes
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [VetOffer!]
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\VetOfferQuery")
     vetOffer(id: ID @eq): VetOffer! @find(model: "App\\Model\\VetOffer")
 
-    vetTimeSlots(vet_id: ID @eq, type: VetRequestTypes @eq, available_date: DateRange @whereBetween, taken: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id","available_date"])): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
-    vetTimeSlot(id: ID @eq): [VetTimeSlot!] @find(model: "App\\Model\\VetTimeSlot")
+    vetTimeSlots(
+        vet_id: ID @eq
+        type: VetRequestTypes @eq
+        available_date: DateRange @whereBetween
+        taken: Int @eq
+        orderBy: _
+            @orderBy(
+                columns: ["created_at", "updated_at", "id", "available_date"]
+            )
+    ): [VetTimeSlot!] @paginate(model: "App\\Model\\VetTimeSlot")
+    vetTimeSlot(id: ID @eq): [VetTimeSlot!]
+        @find(model: "App\\Model\\VetTimeSlot")
 
-    driverRequestsBydriver(driver_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DriverRequestCustom@excludes")
-    driverOffersByInvoice(driver_id: ID!, payment_status: InvoiceStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DriverOffersByInvoice@byInvoice")
-    driverOffersByClient(client_id: ID!, status: DriverRequestStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\DriverOffersByClient@byClient")
+    driverRequestsBydriver(
+        driver_id: ID
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverRequest!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DriverRequestCustom@excludes"
+        )
+    driverOffersByInvoice(
+        driver_id: ID!
+        payment_status: InvoiceStatuses
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DriverOffersByInvoice@byInvoice"
+        )
+    driverOffersByClient(
+        client_id: ID!
+        status: DriverRequestStatuses
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\DriverOffersByClient@byClient"
+        )
 
-    driverRequests(client_id: ID @eq, type: DriverRequestTypes @eq, status: DriverRequestStatuses @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
-    driverRequest(id: ID @eq): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
-    driverOffers(driver_request_id: ID @eq, driver_id: ID @eq, status: DriverOfferStatuses, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
-    driverOffer(id: ID @eq): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
+    driverRequests(
+        client_id: ID @eq
+        type: DriverRequestTypes @eq
+        status: DriverRequestStatuses @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverRequest!] @paginate(model: "App\\Model\\DriverRequest")
+    driverRequest(id: ID @eq): [DriverRequest!]
+        @paginate(model: "App\\Model\\DriverRequest")
+    driverOffers(
+        driver_request_id: ID @eq
+        driver_id: ID @eq
+        status: DriverOfferStatuses
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [DriverOffer!] @paginate(model: "App\\Model\\DriverOffer")
+    driverOffer(id: ID @eq): [DriverOffer!]
+        @paginate(model: "App\\Model\\DriverOffer")
 
     ##OFFERS
-    products(title: String, seller_id: ID , is_vip: Int , status: ProductStatus , excludeSellerIds: [ID!] , excludeProductIds: [ID!] , vip_status: VipStatuses, type: ProductType , orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!]! @paginate(builder: "App\\GraphQL\\CustomQueries\\ProductQuery")
+    products(
+        title: String
+        seller_id: ID
+        is_vip: Int
+        status: ProductStatus
+        excludeSellerIds: [ID!]
+        excludeProductIds: [ID!]
+        vip_status: VipStatuses
+        type: ProductType
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Product!]!
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\ProductQuery")
     product(id: ID @eq): Product! @find(model: "App\\Model\\Product")
-    clientOffers(seller_id: ID @eq, is_vip: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
-    clientOffer(id: ID @eq): ClientOffer! @paginate(model: "App\\Model\\ClientOffer")
-    clientOffersBySeller(seller_id: ID!, status: ProductStatus!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [ClientOffer!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ClientOffersBySeller@bySeller")
+    clientOffers(
+        seller_id: ID @eq
+        is_vip: Int @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [ClientOffer!]! @paginate(model: "App\\Model\\ClientOffer")
+    clientOffer(id: ID @eq): ClientOffer!
+        @paginate(model: "App\\Model\\ClientOffer")
+    clientOffersBySeller(
+        seller_id: ID!
+        status: ProductStatus!
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [ClientOffer!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\ClientOffersBySeller@bySeller"
+        )
 
-    productsByBuyer(buyer_id: ID, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Product!] @paginate(builder: "App\\GraphQL\\CustomQueries\\ProductsCustom@excludes")
+    productsByBuyer(
+        buyer_id: ID
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Product!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\ProductsCustom@excludes"
+        )
 
-    invoices(id: ID, client_id: ID , drivervetOffer_id: ID , vet_offer_id: ID ,driver_offer_id: ID , payment_status: InvoiceStatuses , payment_for: PaymentFor , reference_id: String, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!]! @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoiceQuery")
-    invoicesByVet(vet_id: ID!, created_with_vet: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet")
-    invoicesByDriver(driver_id: ID!, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Invoice!] @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byDriver")
+    invoices(
+        id: ID
+        client_id: ID
+        drivervetOffer_id: ID
+        vet_offer_id: ID
+        driver_offer_id: ID
+        payment_status: InvoiceStatuses
+        payment_for: PaymentFor
+        reference_id: String
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Invoice!]!
+        @paginate(builder: "App\\GraphQL\\CustomQueries\\InvoiceQuery")
+    invoicesByVet(
+        vet_id: ID!
+        created_with_vet: Int
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Invoice!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byVet"
+        )
+    invoicesByDriver(
+        driver_id: ID!
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Invoice!]
+        @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\InvoicesByProvider@byDriver"
+        )
 
     animals: [Animal!] @paginate(model: "App\\Model\\Animal")
     sizes: [Size!] @paginate(model: "App\\Model\\Size")
     # timeSlots(taken: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"]) ): [TimeSlot!] @paginate(model: "App\\Model\\TimeSlot")
-    
+
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
     cars: [Car!]! @paginate(model: "App\\Model\\Car")
 
-    ratings(id: ID @eq, rated_by_user_id: ID @eq, rated_user_id: ID @eq, service_type: ServiceTypes @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Rating!] @paginate(model: "App\\Model\\Rating")
-    suggestions(id: ID @eq, user_id: ID @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
-    logNotifications(id: ID @eq, user_id: ID @eq,user_id_to_notify: ID @eq, read: Int @eq, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"])): [LogNotification!] @paginate(model: "App\\Model\\LogNotification")
-    
+    ratings(
+        id: ID @eq
+        rated_by_user_id: ID @eq
+        rated_user_id: ID @eq
+        service_type: ServiceTypes @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Rating!] @paginate(model: "App\\Model\\Rating")
+    suggestions(
+        id: ID @eq
+        user_id: ID @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [Suggestion!] @paginate(model: "App\\Model\\Suggestion")
+    logNotifications(
+        id: ID @eq
+        user_id: ID @eq
+        user_id_to_notify: ID @eq
+        read: Int @eq
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+    ): [LogNotification!] @paginate(model: "App\\Model\\LogNotification")
 }
-
 
 type User {
     id: ID!
@@ -196,18 +486,17 @@ type User {
     updated_at: DateTime!
     latitude: String
     longitude: String
-    formatted_address: String 
+    formatted_address: String
     national_id_url: String
     summary_rating: String
     consultation_price: String
     visit_price: String
 }
 
-type OtpVerifyResponse{
+type OtpVerifyResponse {
     status: Int
     message: String
 }
-
 
 # Inputs
 
@@ -235,7 +524,7 @@ input RegisterInput {
     avatar: String
     latitude: String
     longitude: String
-    formatted_address: String 
+    formatted_address: String
     national_id_url: String
 }
 
@@ -243,7 +532,7 @@ input UpdateUserInput {
     id: ID!
     name: String @rules(apply: ["string"])
     email: String @rules(apply: ["email", "unique:users,email"])
-    phone: String @rules(apply:  ["min:10", "unique:users,phone"])
+    phone: String @rules(apply: ["min:10", "unique:users,phone"])
     password: String @rules(apply: ["confirmed", "min:8"]) @bcrypt
     password_confirmation: String
     car_plate_number: String
@@ -256,29 +545,28 @@ input UpdateUserInput {
     consultation_price: String
 }
 
-input OrderByInput{
+input OrderByInput {
     field: String!
     order: SortOrder!
 }
 
 input CreateAddressOperations {
-  connect: ID
-  create: CreateAddressInput @create(relation: "address")
-  update: UpdateAddressInput @update(relation: "address")
+    connect: ID
+    create: CreateAddressInput @create(relation: "address")
+    update: UpdateAddressInput @update(relation: "address")
 }
 
 input CreateAddressToOperations {
-  connect: ID
-  create: CreateAddressInput @create(relation: "addressTo")
-  update: UpdateAddressInput @update(relation: "addressTo")
+    connect: ID
+    create: CreateAddressInput @create(relation: "addressTo")
+    update: UpdateAddressInput @update(relation: "addressTo")
 }
 
 input CreateAddressFromOperations {
-  connect: ID
-  create: CreateAddressInput @create(relation: "addressFrom")
-  update: UpdateAddressInput @update(relation: "addressFrom")
+    connect: ID
+    create: CreateAddressInput @create(relation: "addressFrom")
+    update: UpdateAddressInput @update(relation: "addressFrom")
 }
-
 
 input CreateAddressInput {
     house_number: String
@@ -348,7 +636,6 @@ input UpdateVetRequestInput {
     preferred_time: String
 }
 
-
 input CreateVetOfferInput {
     vet_id: ID
     vet_request_id: ID
@@ -365,11 +652,10 @@ input UpdateVetOfferInput {
     rating: CreateRatingOperations @nest
 }
 
-
 input CreateRatingOperations {
-  connect: ID
-  create: CreateRatingInput @create(relation: "rating")
-  update: UpdateRatingInput @update(relation: "rating")
+    connect: ID
+    create: CreateRatingInput @create(relation: "rating")
+    update: UpdateRatingInput @update(relation: "rating")
 }
 
 input CreateRatingInput {
@@ -385,7 +671,6 @@ input UpdateRatingInput {
     rated_by_user_id: ID
     rated_user_id: ID
 }
-
 
 input CreateInvoiceInput {
     client_id: ID!
@@ -419,7 +704,6 @@ input CreateDriverRequestInput {
     status: DriverRequestStatuses
     image_id: ID
     image_uri: String
-
 }
 
 input UpdateDriverRequestInput {
@@ -436,7 +720,6 @@ input UpdateDriverRequestInput {
     preferred_date: Date
     preferred_time: String
     image_uri: String
-
 }
 
 input CreateDriverOfferInput {
@@ -497,7 +780,6 @@ input UpdateProductInput {
     iban: String
     image_id: ID
     image_uri: String
-
 }
 
 input CreateClientOfferInput {
@@ -519,7 +801,7 @@ input UpdateClientOfferInput {
     note: String
 }
 
-input CreateVetTimeSlotInput{
+input CreateVetTimeSlotInput {
     vet_id: ID
     type: VetRequestTypes
     available_date: Date
@@ -529,7 +811,7 @@ input CreateVetTimeSlotInput{
     price: String
 }
 
-input UpdateVetTimeSlotInput{
+input UpdateVetTimeSlotInput {
     id: ID
     vet_id: ID
     type: VetRequestTypes
@@ -541,18 +823,18 @@ input UpdateVetTimeSlotInput{
 }
 
 input DateRange {
-  from: Date!
-  to: Date!
+    from: Date!
+    to: Date!
 }
 
-input CreateSuggestionInput{
+input CreateSuggestionInput {
     user_id: ID
     name: String
     phone: String
     message: String
 }
 
-input UpdateSuggestionInput{
+input UpdateSuggestionInput {
     id: ID!
     user_id: ID
     name: String
@@ -560,7 +842,7 @@ input UpdateSuggestionInput{
     message: String
 }
 
-input CreateLogNotification{
+input CreateLogNotification {
     user_id: String
     user_id_to_notify: String
     type: String
@@ -570,7 +852,7 @@ input CreateLogNotification{
     updated_at: String
 }
 
-input UpdateLogNotification{
+input UpdateLogNotification {
     id: ID
     user_id: String
     user_id_to_notify: String
@@ -580,7 +862,6 @@ input UpdateLogNotification{
     created_at: String
     updated_at: String
 }
-
 
 # Responses
 type Rating {
@@ -641,6 +922,7 @@ type VetRequest {
     acceptedVetOffer: VetOffer @belongsTo(relation: "acceptedVetOffer")
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
+    user_tokens: [UserToken] @hasMany
     created_with_vet: Int
     vetTimeSlot: VetTimeSlot @belongsto(relation: "vetTimeSlot")
 }
@@ -739,7 +1021,7 @@ type Invoice {
 type Product {
     id: ID
     title: String
-    seller: User @belongsTo(relation: "seller") 
+    seller: User @belongsTo(relation: "seller")
     address: Address @belongsTo(relation: "address")
     client_offers: [ClientOffer!] @hasMany(relation: "clientOffers")
     status: ProductStatus
@@ -808,7 +1090,6 @@ type TimeSlot {
     id: ID
     name: String
     name_ar: String
-
 }
 
 type UserFile {
@@ -817,7 +1098,7 @@ type UserFile {
     path: String
 }
 
-type AdminSetting{
+type AdminSetting {
     name: String
     name_ar: String
     tax_perc: Float
@@ -827,7 +1108,7 @@ type AdminSetting{
     terms_and_conditions_ar: String
 }
 
-type VetTimeSlot{
+type VetTimeSlot {
     id: ID
     vet_id: ID
     type: VetRequestTypes
@@ -842,7 +1123,7 @@ type VetTimeSlot{
     taken: Int
 }
 
-type Suggestion{
+type Suggestion {
     id: ID
     name: String
     phone: String
@@ -851,7 +1132,7 @@ type Suggestion{
     updated_at: String
 }
 
-type LogNotification{
+type LogNotification {
     id: ID
     user_id: String
     user: User
@@ -865,7 +1146,7 @@ type LogNotification{
     updated_at: String
 }
 
-type createVetRequestWithVetResponse{
+type createVetRequestWithVetResponse {
     vet_request: VetRequest
     invoice: Invoice
 }
@@ -894,30 +1175,30 @@ enum VetRequestTypes {
     VISIT
 }
 
-enum VetOfferStatuses{
+enum VetOfferStatuses {
     PENDING
     SKIPPED
     ACCEPTED
     COMPLETED
 }
 
-enum ProductStatus{
+enum ProductStatus {
     CANCELLED
     PENDING
     SOLD
 }
 
-enum VipStatuses{
+enum VipStatuses {
     PENDING
     ACCEPTED
 }
 
-enum ProductType{
+enum ProductType {
     ANIMAL
     PRODUCT
 }
 
-enum DriverOfferStatuses{
+enum DriverOfferStatuses {
     PENDING
     SKIPPED
     ACCEPTED
@@ -929,14 +1210,14 @@ enum DriverRequestTypes {
     PRIVATE
 }
 
-enum ClientOfferStatuses{
+enum ClientOfferStatuses {
     PENDING
     SKIPPED
     ACCEPTED
     COMPLETED
 }
 
-enum ClientOfferPaymentStatuses{
+enum ClientOfferPaymentStatuses {
     PENDING
     PAID
 }

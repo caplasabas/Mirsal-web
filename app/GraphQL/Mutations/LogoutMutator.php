@@ -2,9 +2,11 @@
 
 namespace App\GraphQL\Mutations;
 
+use App\Model\UserToken;
+use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Support\Facades\Auth;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class LogoutMutator
 {
@@ -21,12 +23,17 @@ class LogoutMutator
     {
         // TODO implement the resolver
         $user = Auth::user();
+        auth()->logout();
         $user->api_token = null;
-        $user->save();   
+        $user->save();
+        $AuthToken = $_SERVER['HTTP_AUTHORIZATION'];
+
+        $AuthToken = substr($AuthToken, 7);
+        $deletedRows = UserToken::where('api_token', $AuthToken)->where('user_id', $user->id)->delete();
 
         return [
             'status' => true,
-            'message' => 'success'
+            'message' => 'success',
         ];
 
     }
