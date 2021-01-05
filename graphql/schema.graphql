@@ -491,7 +491,7 @@ type User {
     summary_rating: String
     consultation_price: String
     visit_price: String
-    tokens: [Token] @hasMany
+    tokens: [UserTokens] @hasMany
 }
 
 type OtpVerifyResponse {
@@ -927,7 +927,7 @@ type VetRequest {
     created_with_vet: Int
     vetTimeSlot: VetTimeSlot @belongsto(relation: "vetTimeSlot")
 }
-type UserToken {
+type UserTokens {
     id: ID
     api_token: String
     firebase_token: String
