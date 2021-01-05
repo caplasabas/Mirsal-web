@@ -24,27 +24,31 @@ class LoginMutator
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $userData = array(
-            'phone' => $args['phone'],
-            'password' => $args['password'],
-        );
+        
+        // $userData = array(
+        //     'phone' => $args['phone'],
+        //     'password' => $args['password'],
+        // );
+        \Log::debug('heyow');
         $logged = JWTAuth::attempt(['phone' => $args['phone'], 'password' => $args['password']]);
+         \Log::debug('hmmm');
+        \Log::debug($logged);
         $user = User::where('phone', $args['phone'])->first();
         if ($logged) {
 
-            $token = Str::random(60) . uniqid();
+            // $token = Str::random(60) . uniqid();
 
-            $token = new UserToken();
-            $token->user_id = $user->id;
-            $token->api_token = $logged;
-            $token->save();
+            // $token = new UserToken();
+            // $token->user_id = $user->id;
+            // $token->api_token = $logged;
+            // $token->save();
 
-            $factory = (new Factory)->withServiceAccount(public_path() . "/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json");
-            $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
-            $authFirebase = $factory->createAuth();
+            // $factory = (new Factory)->withServiceAccount(public_path() . "/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json");
+            // $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
+            // $authFirebase = $factory->createAuth();
 
-            $uid = "" . $user->id;
-            $customToken = $authFirebase->createCustomToken($uid);
+            // $uid = "" . $user->id;
+            // $customToken = $authFirebase->createCustomToken($uid);
 
             return [
                 'user' => $user,
