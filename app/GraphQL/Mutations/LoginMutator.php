@@ -6,7 +6,6 @@ use App\Exceptions\GraphqlException;
 use App\Model\UserToken;
 use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
-use Illuminate\Support\Str;
 use JWTAuth;
 use Kreait\Firebase\Factory;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
@@ -25,9 +24,16 @@ class LoginMutator
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
 
-     
         $logged = JWTAuth::attempt(['phone' => $args['phone'], 'password' => $args['password']]);
 
+        $user = User::where('phone', $args['phone'])->first();
+        if ($logged) {
+
+        $userData = array(
+            'phone' => $args['phone'],
+            'password' => $args['password'],
+        );
+        $logged = JWTAuth::attempt($userData);
         $user = User::where('phone', $args['phone'])->first();
         if ($logged) {
 
