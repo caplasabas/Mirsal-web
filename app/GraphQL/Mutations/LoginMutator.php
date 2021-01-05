@@ -28,6 +28,12 @@ class LoginMutator
 
         $user = User::where('phone', $args['phone'])->first();
   
+
+        $userData = array(
+            'phone' => $args['phone'],
+            'password' => $args['password'],
+        );
+  
         if ($logged) {
 
             $token = new UserToken();
