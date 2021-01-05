@@ -491,7 +491,6 @@ type User {
     summary_rating: String
     consultation_price: String
     visit_price: String
-    tokens: [UserTokens] @hasMany
 }
 
 type OtpVerifyResponse {
