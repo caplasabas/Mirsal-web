@@ -23,17 +23,15 @@ class LoginMutator
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-
-        $logged = JWTAuth::attempt(['phone' => $args['phone'], 'password' => $args['password']]);
-
-        $user = User::where('phone', $args['phone'])->first();
-  
-
         $userData = array(
             'phone' => $args['phone'],
             'password' => $args['password'],
         );
-  
+
+        $logged = JWTAuth::attempt($userData);
+
+        $user = User::where('phone', $args['phone'])->first();
+
         if ($logged) {
 
             $token = new UserToken();
