@@ -27,14 +27,7 @@ class LoginMutator
         $logged = JWTAuth::attempt(['phone' => $args['phone'], 'password' => $args['password']]);
 
         $user = User::where('phone', $args['phone'])->first();
-        if ($logged) {
-
-        $userData = array(
-            'phone' => $args['phone'],
-            'password' => $args['password'],
-        );
-        $logged = JWTAuth::attempt($userData);
-        $user = User::where('phone', $args['phone'])->first();
+  
         if ($logged) {
 
             $token = new UserToken();
